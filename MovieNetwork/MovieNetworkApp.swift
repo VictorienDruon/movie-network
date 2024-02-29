@@ -11,7 +11,9 @@ import SwiftUI
 struct MovieNetworkApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .fontDesign(.rounded)
+                .foregroundColor(.neutral11)
         }
     }
 }
