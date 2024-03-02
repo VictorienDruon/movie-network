@@ -1,5 +1,5 @@
 //
-//  Tab.swift
+//  AppTab.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 18/02/2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Tab {
+enum AppTab {
     case discover
     case watchlist
     case feed

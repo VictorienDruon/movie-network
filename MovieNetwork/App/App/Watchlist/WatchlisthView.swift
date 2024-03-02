@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WatchlisthView: View {
-    @EnvironmentObject var navigation: Navigation
+    @EnvironmentObject var navigation: NavigationManager
     
     var body: some View {
         NavigationStack(path: $navigation.watchlistStack) {
@@ -23,5 +23,5 @@ struct WatchlisthView: View {
 
 #Preview {
     WatchlisthView()
-        .environmentObject(Navigation())
+        .environmentObject(NavigationManager())
 }

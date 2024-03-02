@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "slideovercard",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/joogps/SlideOverCard.git",
+      "state" : {
+        "revision" : "98af5370e49d3d51efb387aacee0245ec656e32b",
+        "version" : "2.1.0"
+      }
+    },
+    {
       "identity" : "supabase-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/supabase-community/supabase-swift.git",
@@ -34,6 +43,24 @@
       "state" : {
         "revision" : "60f13f60c4d093691934dc6cfdf5f508ada1f894",
         "version" : "2.6.0"
+      }
+    },
+    {
+      "identity" : "tmdb",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/adamayoung/TMDb.git",
+      "state" : {
+        "revision" : "6049b86f2d28abd35a114e962db5a41b5c2fb027",
+        "version" : "11.1.0"
+      }
+    },
+    {
+      "identity" : "wrappinghstack",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ksemianov/WrappingHStack",
+      "state" : {
+        "revision" : "3300f68b6bf5f8a75ee7ca8a40f136a558053d10",
+        "version" : "0.2.0"
       }
     }
   ],

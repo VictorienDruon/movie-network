@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct AppView: View {
-    @StateObject var session = AuthSession()
-    @StateObject var navigation = Navigation()
+    @StateObject var session = SessionManager()
+    @StateObject var navigation = NavigationManager()
 
     var body: some View {
         TabView(selection: $navigation.activeTab) {
             DiscoverView()
-                .tag(Tab.discover)
-                .tabItem { Image(systemName: Tab.discover.icon) }
+                .tag(AppTab.discover)
+                .tabItem { Image(systemName: AppTab.discover.icon) }
 
             WatchlisthView()
-                .tag(Tab.watchlist)
-                .tabItem { Image(systemName: Tab.watchlist.icon) }
+                .tag(AppTab.watchlist)
+                .tabItem { Image(systemName: AppTab.watchlist.icon) }
 
             FeedView()
-                .tag(Tab.feed)
-                .tabItem { Image(systemName: Tab.feed.icon) }
+                .tag(AppTab.feed)
+                .tabItem { Image(systemName: AppTab.feed.icon) }
         }
         .fullScreenCover(isPresented: $navigation.showingProfile) {
             ProfileView()

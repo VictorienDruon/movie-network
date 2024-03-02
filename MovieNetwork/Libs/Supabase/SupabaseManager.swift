@@ -1,5 +1,5 @@
 //
-//  AuthManager.swift
+//  SupabaseManager.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 26/02/2024.
@@ -9,9 +9,9 @@ import Foundation
 import Supabase
 
 @MainActor
-final class AuthManager {
-    static let shared = AuthManager()
-    var supabase: SupabaseClient
+final class SupabaseManager {
+    static let shared = SupabaseManager()
+    private var supabase: SupabaseClient
 
     private init() {
         guard
@@ -34,5 +34,11 @@ final class AuthManager {
 
     func signOut() async throws {
         try await supabase.auth.signOut()
+    }
+
+    func authListener(onChange: (AuthChangeEvent, Session?) -> Void) async {
+        for await (event, session) in await SupabaseManager.shared.supabase.auth.authStateChanges {
+            onChange(event, session)
+        }
     }
 }

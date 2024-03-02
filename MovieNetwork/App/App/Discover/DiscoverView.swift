@@ -8,20 +8,26 @@
 import SwiftUI
 
 struct DiscoverView: View {
-    @EnvironmentObject var navigation: Navigation
+    @EnvironmentObject var navigation: NavigationManager
+    @StateObject var viewModel = DiscoverViewModel()
 
     var body: some View {
         NavigationStack(path: $navigation.discoverStack) {
-            Text("Discover")
-                .navigationTitle("Discover")
-                .toolbar {
-                    ProfileToolbar()
+            ScrollView {
+                VStack {
+                    DiscoverFiltersControls()
                 }
+                .padding(.vertical)
+            }
+            .scrollIndicators(.hidden)
+            .navigationTitle("Discover")
+            .toolbar { ProfileToolbar() }
+            .environmentObject(DiscoverViewModel())
         }
     }
 }
 
 #Preview {
     DiscoverView()
-        .environmentObject(Navigation())
+        .environmentObject(NavigationManager())
 }

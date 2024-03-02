@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileToolbar: View {
-    @EnvironmentObject var navigation: Navigation
+    @EnvironmentObject var navigation: NavigationManager
 
     var body: some View {
         Button("Profile", systemImage: "person.crop.circle") {

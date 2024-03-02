@@ -23,7 +23,7 @@ struct OnBoardingView: View {
                 VStack(spacing: 16) {
                     AppleSignInButton()
                     Button("Not now") { markUserAsOnboarded() }
-                        .buttonStyle(SecondaryOutlineButton(.large, widthFull: true))
+                        .buttonStyle(StyledButton(.secondaryOutline, .large, widthFull: true))
                 }
             }
             .padding()

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var session: AuthSession
-    @EnvironmentObject var navigation: Navigation
+    @EnvironmentObject var session: SessionManager
+    @EnvironmentObject var navigation: NavigationManager
 
     var body: some View {
         if !session.isAuthenticated {
@@ -34,7 +34,7 @@ struct ProfileView: View {
                     
                     Button("Sign out") {
                         Task {
-                            try? await AuthManager.shared.signOut()
+                            try? await SupabaseManager.shared.signOut()
                         }
                     }
                 }
@@ -53,6 +53,6 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
-        .environmentObject(AuthSession())
-        .environmentObject(Navigation())
+        .environmentObject(SessionManager())
+        .environmentObject(NavigationManager())
 }

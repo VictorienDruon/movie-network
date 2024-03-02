@@ -1,5 +1,5 @@
 //
-//  AuthSession.swift
+//  SessionManager.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 26/02/2024.
@@ -8,12 +8,12 @@
 import Foundation
 
 @MainActor
-final class AuthSession: ObservableObject {
+final class SessionManager: ObservableObject {
     @Published var isAuthenticated = false
 
     init() {
         Task {
-            for await (_, session) in await AuthManager.shared.supabase.auth.authStateChanges {
+            await SupabaseManager.shared.authListener { _, session in
                 isAuthenticated = session != nil
             }
         }

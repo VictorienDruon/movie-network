@@ -21,13 +21,15 @@ struct HeadlessButton: ButtonStyle {
     }
 }
 
-struct PrimaryButton: ButtonStyle {
+struct StyledButton: ButtonStyle {
     @Environment(\.colorScheme) var colorScheme
 
+    var variant: ButtonVariant
     var size: ButtonSize
     var widthFull: Bool
 
-    init(_ size: ButtonSize, widthFull: Bool = false) {
+    init(_ variant: ButtonVariant, _ size: ButtonSize, widthFull: Bool = false) {
+        self.variant = variant
         self.size = size
         self.widthFull = widthFull
     }
@@ -38,13 +40,13 @@ struct PrimaryButton: ButtonStyle {
 
         HeadlessButton(size: size, widthFull: widthFull)
             .makeBody(configuration: configuration)
-            .foregroundStyle(.white)
+            .foregroundStyle(variant.config.textColor)
             .opacity(isPressed ? 0.5 : 1)
             .background(
                 LinearGradient(
                     colors: [
-                        .accent9.opacity(isPressed ? 1 : 0.75),
-                        .accent9.opacity(isPressed ? 0.75 : 1)
+                        variant.config.bgColor.opacity(isPressed ? 1 : 0.75),
+                        variant.config.bgColor.opacity(isPressed ? 0.75 : 1)
                     ],
                     startPoint: isDark ? .bottom : .top,
                     endPoint: isDark ? .top : .bottom
@@ -54,87 +56,25 @@ struct PrimaryButton: ButtonStyle {
             .background(.background)
             .overlay(
                 Capsule()
-                    .stroke(.accent10, lineWidth: 2)
-                    .strokeBorder(.white.opacity(isDark ? 0 : 0.2), lineWidth: 2)
+                    .stroke(variant.config.strokeColor, lineWidth: 2)
+                    .strokeBorder(.white.opacity(isDark ? 0 : variant.config.strokeOpacity), lineWidth: 2)
             )
+            .sensoryFeedback(.impact(flexibility: .soft), trigger: isPressed)
     }
 }
 
-struct SecondaryButton: ButtonStyle {
-    @Environment(\.colorScheme) var colorScheme
+enum ButtonVariant {
+    case primary, secondary, secondaryOutline
 
-    var size: ButtonSize
-    var widthFull: Bool
-
-    init(_ size: ButtonSize, widthFull: Bool = false) {
-        self.size = size
-        self.widthFull = widthFull
-    }
-
-    func makeBody(configuration: Configuration) -> some View {
-        let isDark = colorScheme == .dark
-        let isPressed = configuration.isPressed
-
-        HeadlessButton(size: size, widthFull: widthFull)
-            .makeBody(configuration: configuration)
-            .foregroundStyle(.white)
-            .opacity(isPressed ? 0.5 : 1)
-            .background(
-                LinearGradient(
-                    colors: [
-                        .neutral9.opacity(isPressed ? 1 : 0.75),
-                        .neutral9.opacity(isPressed ? 0.75 : 1)
-                    ],
-                    startPoint: isDark ? .bottom : .top,
-                    endPoint: isDark ? .top : .bottom
-                ),
-                in: Capsule()
-            )
-            .background(.background)
-            .overlay(
-                Capsule()
-                    .stroke(.neutral10, lineWidth: 2)
-                    .strokeBorder(.white.opacity(isDark ? 0 : 0.2), lineWidth: 2)
-            )
-    }
-}
-
-struct SecondaryOutlineButton: ButtonStyle {
-    @Environment(\.colorScheme) var colorScheme
-
-    var size: ButtonSize
-    var widthFull: Bool
-
-    init(_ size: ButtonSize, widthFull: Bool = false) {
-        self.size = size
-        self.widthFull = widthFull
-    }
-
-    func makeBody(configuration: Configuration) -> some View {
-        let isDark = colorScheme == .dark
-        let isPressed = configuration.isPressed
-
-        HeadlessButton(size: size, widthFull: widthFull)
-            .makeBody(configuration: configuration)
-            .foregroundStyle(.neutral9)
-            .opacity(isPressed ? 0.5 : 1)
-            .background(
-                LinearGradient(
-                    colors: [
-                        .neutral2.opacity(isPressed ? 1 : 0.75),
-                        .neutral2.opacity(isPressed ? 0.75 : 1)
-                    ],
-                    startPoint: isDark ? .bottom : .top,
-                    endPoint: isDark ? .top : .bottom
-                ),
-                in: Capsule()
-            )
-            .background(.background)
-            .overlay(
-                Capsule()
-                    .stroke(.neutral4, lineWidth: 2)
-                    .strokeBorder(.white.opacity(isDark ? 0 : 0.6), lineWidth: 2)
-            )
+    var config: ButtonVariantConfig {
+        switch self {
+        case .primary:
+            ButtonVariantConfig(bgColor: .accent9, strokeColor: .accent10, strokeOpacity: 0.2, textColor: .white)
+        case .secondary:
+            ButtonVariantConfig(bgColor: .neutral9, strokeColor: .neutral10, strokeOpacity: 0.2, textColor: .white)
+        case .secondaryOutline:
+            ButtonVariantConfig(bgColor: .neutral2, strokeColor: .neutral4, strokeOpacity: 0.6, textColor: .neutral9)
+        }
     }
 }
 
@@ -144,13 +84,20 @@ enum ButtonSize {
     var config: ButtonSizeConfig {
         switch self {
         case .small:
-            ButtonSizeConfig(height: 32, paddingX: 16, fontSize: 14)
+            ButtonSizeConfig(height: 32, paddingX: 10, fontSize: 14)
         case .medium:
-            ButtonSizeConfig(height: 40, paddingX: 20, fontSize: 18)
+            ButtonSizeConfig(height: 40, paddingX: 12, fontSize: 18)
         case .large:
-            ButtonSizeConfig(height: 48, paddingX: 24, fontSize: 22)
+            ButtonSizeConfig(height: 48, paddingX: 14, fontSize: 22)
         }
     }
+}
+
+struct ButtonVariantConfig {
+    var bgColor: Color
+    var strokeColor: Color
+    var strokeOpacity: CGFloat
+    var textColor: Color
 }
 
 struct ButtonSizeConfig {
@@ -162,13 +109,13 @@ struct ButtonSizeConfig {
 #Preview {
     VStack {
         Button("Hello") {}
-            .buttonStyle(PrimaryButton(.large))
+            .buttonStyle(StyledButton(.primary, .small))
 
         Button("Hello") {}
-            .buttonStyle(SecondaryButton(.large))
+            .buttonStyle(StyledButton(.secondary, .medium))
 
         Button("Hello") {}
-            .buttonStyle(SecondaryOutlineButton(.large))
+            .buttonStyle(StyledButton(.secondaryOutline, .large))
     }
     .padding()
 }

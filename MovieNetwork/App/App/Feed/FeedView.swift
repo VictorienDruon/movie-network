@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct FeedView: View {
-    @EnvironmentObject var session: AuthSession
-    @EnvironmentObject var navigation: Navigation
+    @EnvironmentObject var session: SessionManager
+    @EnvironmentObject var navigation: NavigationManager
 
     var body: some View {
         if !session.isAuthenticated {
@@ -35,6 +35,6 @@ struct FeedView: View {
 
 #Preview {
     FeedView()
-        .environmentObject(AuthSession())
-        .environmentObject(Navigation())
+        .environmentObject(SessionManager())
+        .environmentObject(NavigationManager())
 }
