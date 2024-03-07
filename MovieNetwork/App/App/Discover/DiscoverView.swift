@@ -14,15 +14,27 @@ struct DiscoverView: View {
     var body: some View {
         NavigationStack(path: $navigation.discoverStack) {
             ScrollView {
-                VStack {
+                LazyVStack(spacing: 24) {
                     DiscoverFiltersControls()
+
+                    if !viewModel.filteredTrendingShows.isEmpty {
+                        Section("Trending") {
+                            ShowPostersList(shows: viewModel.filteredTrendingShows)
+                        }
+                    }
+                    
+                    if !viewModel.trendingPeople.isEmpty {
+                        Section("Stars") {
+                            PersonThumbnailsList(people: viewModel.trendingPeople)
+                        }
+                    }
                 }
                 .padding(.vertical)
             }
             .scrollIndicators(.hidden)
             .navigationTitle("Discover")
             .toolbar { ProfileToolbar() }
-            .environmentObject(DiscoverViewModel())
+            .environmentObject(viewModel)
         }
     }
 }

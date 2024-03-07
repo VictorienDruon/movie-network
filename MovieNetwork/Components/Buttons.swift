@@ -26,11 +26,13 @@ struct StyledButton: ButtonStyle {
 
     var variant: ButtonVariant
     var size: ButtonSize
+    var iconOnly: Bool
     var widthFull: Bool
 
-    init(_ variant: ButtonVariant, _ size: ButtonSize, widthFull: Bool = false) {
+    init(_ variant: ButtonVariant, _ size: ButtonSize, iconOnly: Bool = false, widthFull: Bool = false) {
         self.variant = variant
         self.size = size
+        self.iconOnly = iconOnly
         self.widthFull = widthFull
     }
 
@@ -51,15 +53,47 @@ struct StyledButton: ButtonStyle {
                     startPoint: isDark ? .bottom : .top,
                     endPoint: isDark ? .top : .bottom
                 ),
-                in: Capsule()
+                in: iconOnly ? AnyShape(.circle) : AnyShape(.capsule)
             )
             .background(.background)
-            .overlay(
-                Capsule()
-                    .stroke(variant.config.strokeColor, lineWidth: 2)
-                    .strokeBorder(.white.opacity(isDark ? 0 : variant.config.strokeOpacity), lineWidth: 2)
+            .overlay {
+                if iconOnly {
+                    Circle()
+                        .stroke(variant.config.strokeColor, lineWidth: 2)
+                        .strokeBorder(.white.opacity(isDark ? 0 : variant.config.strokeOpacity), lineWidth: 2)
+                } else {
+                    Capsule()
+                        .stroke(variant.config.strokeColor, lineWidth: 2)
+                        .strokeBorder(.white.opacity(isDark ? 0 : variant.config.strokeOpacity), lineWidth: 2)
+                }
+            }
+            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.4), trigger: isPressed)
+    }
+}
+
+struct TransparentButton: ButtonStyle {
+    var size: ButtonSize
+    var iconOnly: Bool
+    var widthFull: Bool
+
+    init(_ size: ButtonSize, iconOnly: Bool = false, widthFull: Bool = false) {
+        self.size = size
+        self.iconOnly = iconOnly
+        self.widthFull = widthFull
+    }
+
+    func makeBody(configuration: Configuration) -> some View {
+        let isPressed = configuration.isPressed
+
+        HeadlessButton(size: size, widthFull: widthFull)
+            .makeBody(configuration: configuration)
+            .foregroundStyle(.white)
+            .opacity(isPressed ? 0.5 : 1)
+            .background(
+                .ultraThinMaterial,
+                in: iconOnly ? AnyShape(.circle) : AnyShape(.capsule)
             )
-            .sensoryFeedback(.impact(flexibility: .soft), trigger: isPressed)
+            .shadowSize(.small)
     }
 }
 
@@ -116,6 +150,9 @@ struct ButtonSizeConfig {
 
         Button("Hello") {}
             .buttonStyle(StyledButton(.secondaryOutline, .large))
+
+        Button("Hello") {}
+            .buttonStyle(TransparentButton(.large))
     }
     .padding()
 }

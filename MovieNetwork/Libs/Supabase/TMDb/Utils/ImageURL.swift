@@ -7,14 +7,14 @@
 
 import Foundation
 
-private let BASE_URL = URL(string: "https://image.tmdb.org/t/p")!
+private let IMAGE_URL = URL(string: "https://image.tmdb.org/t/p")!
 
 func imageUrl(path: URL?, size: ImageSize) -> URL? {
     guard let path else {
         return nil
     }
 
-    return BASE_URL
+    return IMAGE_URL
         .appendingPathComponent(size.rawValue)
         .appendingPathComponent(path.absoluteString)
 }

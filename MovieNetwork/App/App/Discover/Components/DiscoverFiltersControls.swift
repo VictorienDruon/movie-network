@@ -1,5 +1,5 @@
 //
-//  DiscoverFilters.swift
+//  DiscoverFiltersControls.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 29/02/2024.
@@ -18,12 +18,12 @@ struct DiscoverFiltersControls: View {
 
         HStack(spacing: 8) {
             ForEach(ShowType.allCases) { showType in
-                let variant: ButtonVariant = viewModel.showTypeFilters.contains(showType)
+                let variant: ButtonVariant = viewModel.typeFilters.contains(showType)
                     ? .primary
                     : .secondaryOutline
 
                 Button(showType.name) {
-                    viewModel.showTypeFilters.toggle(showType)
+                    viewModel.typeFilters.toggle(showType)
                 }
                 .buttonStyle(StyledButton(variant, .small))
             }
@@ -47,6 +47,9 @@ struct DiscoverFiltersControls: View {
             Spacer()
         }
         .padding(.horizontal)
+        .onChange(of: viewModel.typeFilters) {
+            viewModel.getTrendingShows()
+        }
     }
 }
 
