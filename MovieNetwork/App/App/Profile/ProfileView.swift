@@ -40,6 +40,7 @@ struct ProfileView: View {
                 }
                 .navigationTitle("Profile")
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: Destination.self, destination: navigation.routeTo)
                 .toolbar {
                     Button("Done") {
                         navigation.showingProfile = false

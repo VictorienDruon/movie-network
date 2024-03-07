@@ -12,8 +12,6 @@ struct MovieNetworkApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .fontDesign(.rounded)
-                .foregroundColor(.neutral11)
         }
     }
 }

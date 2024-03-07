@@ -28,13 +28,14 @@ struct ThumbnailWithName: View {
             Thumbnail(url: url, size: size)
 
             Text(name)
-                .font(.system(size: size.config.nameFontSize))
+                .font(.system(size: size.config.nameFontSize, design: .rounded))
+                .foregroundStyle(.neutral11)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
 
             if let description {
                 Text(description)
-                    .font(.system(size: size.config.descriptionFontSize))
+                    .font(.system(size: size.config.descriptionFontSize, design: .rounded))
                     .foregroundStyle(.neutral8)
                     .lineLimit(1)
             }
@@ -43,21 +44,53 @@ struct ThumbnailWithName: View {
     }
 }
 
-struct PersonThumbnailsList: View {
+struct PersonThumbnail: View {
+    var person: Person
+    var variant = ThumbnailVariant.name
+    var size = ThumbnailSize.medium
+    var withNavigation = true
+
+    var body: some View {
+        let thumbnail = switch variant {
+        case .raw:
+            AnyView(Thumbnail(
+                url: person.profileUrl(size.config.imageSize),
+                size: size
+            ))
+        case .name:
+            AnyView(ThumbnailWithName(
+                name: person.name,
+                url: person.profileUrl(size.config.imageSize),
+                size: size
+            ))
+        }
+
+        if withNavigation {
+            NavigationLink(value: Destination.person(person)) {
+                thumbnail
+            }
+        } else {
+            thumbnail
+        }
+    }
+}
+
+struct PersonThumbnails: View {
     var people: [Person]
-    var variant: ThumbnailVariant = .name
-    var size: ThumbnailSize = .medium
+    var variant = ThumbnailVariant.name
+    var size = ThumbnailSize.medium
+    var withNavigation = true
 
     var body: some View {
         ScrollView(.horizontal) {
             HStack(alignment: .top) {
                 ForEach(people) { person in
-                    switch variant {
-                    case .raw:
-                        Thumbnail(url: person.profileUrl(size.config.imageSize), size: size)
-                    case .name:
-                        ThumbnailWithName(name: person.name, url: person.profileUrl(size.config.imageSize), size: size)
-                    }
+                    PersonThumbnail(
+                        person: person,
+                        variant: variant,
+                        size: size,
+                        withNavigation: withNavigation
+                    )
                 }
             }
             .padding(.vertical, 32)

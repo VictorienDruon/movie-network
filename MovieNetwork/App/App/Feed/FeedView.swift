@@ -23,8 +23,9 @@ struct FeedView: View {
 
         } else {
             NavigationStack(path: $navigation.feedStack) {
-                Text("Feed")
+                Title3("Feed")
                     .navigationTitle("Feed")
+                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
                     .toolbar {
                         ProfileToolbar()
                     }

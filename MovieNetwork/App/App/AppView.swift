@@ -13,24 +13,18 @@ struct AppView: View {
 
     var body: some View {
         TabView(selection: $navigation.activeTab) {
-            DiscoverView()
-                .tag(AppTab.discover)
-                .tabItem { Image(systemName: AppTab.discover.icon) }
-
-            WatchlisthView()
-                .tag(AppTab.watchlist)
-                .tabItem { Image(systemName: AppTab.watchlist.icon) }
-
-            FeedView()
-                .tag(AppTab.feed)
-                .tabItem { Image(systemName: AppTab.feed.icon) }
+            ForEach(Tab.allCases) { tab in
+                tab.view
+                    .tag(tab)
+                    .tabItem { Image(systemName: tab.icon) }
+            }
         }
         .fullScreenCover(isPresented: $navigation.showingProfile) {
             ProfileView()
         }
+        .onOpenURL(perform: navigation.routeUrl)
         .environmentObject(session)
         .environmentObject(navigation)
-        .onOpenURL(perform: navigation.handleUrl)
     }
 }
 

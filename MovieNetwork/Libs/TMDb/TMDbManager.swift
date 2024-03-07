@@ -11,6 +11,10 @@ import Foundation
 final class TMDbManager {
     static let shared = TMDbManager()
     private init() {}
+    
+    func movie(_ movie: Movie) {
+        let request = TMDbRequest(path: "/movie/\(movie.id)")
+    }
 
     func trending(_ endpoint: TrendingEndpoint = .all, for timeWindow: TrendingTimeWindow = .day) async throws -> [Media] {
         let request = TMDbRequest(path: "/trending/\(endpoint.rawValue)/\(timeWindow.rawValue)")

@@ -27,7 +27,7 @@ struct PosterWithTopTitle: View {
             Poster(url: url, size: size)
 
             Text(title)
-                .font(.system(size: size.config.titleFontSize, weight: .bold))
+                .font(.system(size: size.config.titleFontSize, weight: .bold, design: .rounded))
                 .foregroundStyle(.white)
                 .lineLimit(1)
                 .padding(.horizontal, size.config.titlePadding)
@@ -50,7 +50,8 @@ struct PosterWithBottomTitle: View {
             Poster(url: url, size: size)
 
             Text(title)
-                .font(.system(size: size.config.titleFontSize))
+                .font(.system(size: size.config.titleFontSize, design: .rounded))
+                .foregroundStyle(.neutral11)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
         }
@@ -82,23 +83,59 @@ struct PosterWithActions: View {
     }
 }
 
-struct ShowPostersList: View {
+struct ShowPoster: View {
+    var show: Show
+    var variant = PosterVariant.topTitle
+    var size = PosterSize.medium
+    var withNavigation = false
+
+    var body: some View {
+        let poster = switch variant {
+        case .raw:
+            AnyView(Poster(
+                url: show.posterUrl(size.config.imageSize),
+                size: size
+            ))
+        case .topTitle:
+            AnyView(PosterWithTopTitle(
+                title: show.title,
+                url: show.posterUrl(size.config.imageSize),
+                size: size
+            ))
+        case .bottomTitle:
+            AnyView(PosterWithBottomTitle(
+                title: show.title,
+                url: show.posterUrl(size.config.imageSize),
+                size: size
+            ))
+        }
+
+        if withNavigation {
+            NavigationLink(value: Destination.show(show)) {
+                poster
+            }
+        } else {
+            poster
+        }
+    }
+}
+
+struct ShowPosters: View {
     var shows: [Show]
-    var variant: PosterVariant = .topTitle
-    var size: PosterSize = .medium
+    var variant = PosterVariant.topTitle
+    var size = PosterSize.medium
+    var withNavigation = true
 
     var body: some View {
         ScrollView(.horizontal) {
             HStack(alignment: .top) {
                 ForEach(shows) { show in
-                    switch variant {
-                    case .raw:
-                        Poster(url: show.posterUrl(size.config.imageSize), size: size)
-                    case .topTitle:
-                        PosterWithTopTitle(title: show.title, url: show.posterUrl(size.config.imageSize), size: size)
-                    case .bottomTitle:
-                        PosterWithBottomTitle(title: show.title, url: show.posterUrl(size.config.imageSize), size: size)
-                    }
+                    ShowPoster(
+                        show: show,
+                        variant: variant,
+                        size: size,
+                        withNavigation: withNavigation
+                    )
                 }
             }
             .padding(.vertical, 32)

@@ -12,8 +12,9 @@ struct WatchlisthView: View {
     
     var body: some View {
         NavigationStack(path: $navigation.watchlistStack) {
-            Text("Watchlist")
+            Title3("Watchlist")
                 .navigationTitle("Watchlist")
+                .navigationDestination(for: Destination.self, destination: navigation.routeTo)
                 .toolbar {
                     ProfileToolbar()
                 }

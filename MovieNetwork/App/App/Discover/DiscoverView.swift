@@ -19,13 +19,13 @@ struct DiscoverView: View {
 
                     if !viewModel.filteredTrendingShows.isEmpty {
                         Section("Trending") {
-                            ShowPostersList(shows: viewModel.filteredTrendingShows)
+                            ShowPosters(shows: viewModel.filteredTrendingShows)
                         }
                     }
-                    
+
                     if !viewModel.trendingPeople.isEmpty {
                         Section("Stars") {
-                            PersonThumbnailsList(people: viewModel.trendingPeople)
+                            PersonThumbnails(people: viewModel.trendingPeople)
                         }
                     }
                 }
@@ -33,6 +33,7 @@ struct DiscoverView: View {
             }
             .scrollIndicators(.hidden)
             .navigationTitle("Discover")
+            .navigationDestination(for: Destination.self, destination: navigation.routeTo)
             .toolbar { ProfileToolbar() }
             .environmentObject(viewModel)
         }

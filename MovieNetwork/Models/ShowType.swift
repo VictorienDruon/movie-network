@@ -8,17 +8,16 @@
 import Foundation
 
 enum ShowType: CaseIterable, Identifiable {
-    case movie
-    case tvSeries
+    case movie, tvSeries
+
+    var id: Self {
+        return self
+    }
 
     var name: String {
         switch self {
         case .movie: "Movie"
         case .tvSeries: "TV Show"
         }
-    }
-
-    var id: Self {
-        return self
     }
 }
