@@ -13,7 +13,9 @@ final class NavigationManager: ObservableObject {
     @Published var activeTab = Tab.discover {
         didSet {
             if activeTab == oldValue {
-                popToRoot(activeTab)
+                withStack(of: activeTab) { stack in
+                    stack.removeAll()
+                }
             }
         }
     }
@@ -25,11 +27,19 @@ final class NavigationManager: ObservableObject {
 
     @Published var showingProfile = false
 
-    func popToRoot(_ tab: Tab) {
+    func withStack(of tab: Tab, task: (inout Stack) -> Void) {
         switch tab {
-        case .discover: discoverStack.removeAll()
-        case .watchlist: watchlistStack.removeAll()
-        case .feed: feedStack.removeAll()
+        case .discover: task(&discoverStack)
+        case .watchlist: task(&watchlistStack)
+        case .feed: task(&feedStack)
+        }
+    }
+
+    func withActiveStack(task: (inout Stack) -> Void) {
+        if showingProfile {
+            task(&profileStack)
+        } else {
+            withStack(of: activeTab, task: task)
         }
     }
 
@@ -44,6 +54,31 @@ final class NavigationManager: ObservableObject {
     }
 
     func routeUrl(url: URL) {
-        print(url)
+        Task {
+            let string = url.absoluteString.replacingOccurrences(of: appScheme, with: "")
+            let paths = string.components(separatedBy: "/")
+
+            guard
+                let destination = paths.first,
+                let parameter = paths.last
+            else { return }
+
+            switch destination {
+            case "movie":
+                guard let id = Int(parameter) else { return }
+                let show = try await TMDbManager.shared.movie(for: id).toShow()
+                withActiveStack { stack in
+                    stack.append(.show(show))
+                }
+            case "tv":
+                guard let id = Int(parameter) else { return }
+                let show = try await TMDbManager.shared.tvSeries(for: id).toShow()
+                withActiveStack { stack in
+                    stack.append(.show(show))
+                }
+            default:
+                return
+            }
+        }
     }
 }

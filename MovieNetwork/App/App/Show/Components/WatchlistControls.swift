@@ -9,10 +9,9 @@ import SwiftUI
 
 struct WatchlistControls: View {
     var body: some View {
-        Button("Add to watchlisth", systemImage: "plus") {}
+        Button("Add to watchlist", systemImage: "plus") {}
             .buttonStyle(StyledButton(.primary, .full))
             .padding(.horizontal)
-
     }
 }
 

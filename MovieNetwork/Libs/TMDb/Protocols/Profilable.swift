@@ -12,7 +12,7 @@ protocol Profilable {
 }
 
 extension Profilable {
-    var profileUrl: (ProfileImageSize) -> URL? {
-        { size in imageUrl(path: self.profilePath, size: .profile(size)) }
-    }
+    var profileUrl: (ProfileImageSize) -> URL? {{ size in
+        imageUrl(path: self.profilePath, size: .profile(size))
+    }}
 }

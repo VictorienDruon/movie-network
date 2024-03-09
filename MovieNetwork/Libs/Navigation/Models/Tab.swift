@@ -15,14 +15,11 @@ enum Tab: CaseIterable, Identifiable {
         return self
     }
 
-    @ViewBuilder var view: some View {
+    var name: String {
         switch self {
-        case .discover:
-            DiscoverView()
-        case .watchlist:
-            WatchlisthView()
-        case .feed:
-            FeedView()
+        case .discover: "Discover"
+        case .watchlist: "Watchlist"
+        case .feed: "Feed"
         }
     }
 
@@ -31,6 +28,17 @@ enum Tab: CaseIterable, Identifiable {
         case .discover: "sparkles"
         case .watchlist: "sparkles.tv.fill"
         case .feed: "bolt.fill"
+        }
+    }
+
+    @ViewBuilder var view: some View {
+        switch self {
+        case .discover:
+            DiscoverView()
+        case .watchlist:
+            WatchlisthView()
+        case .feed:
+            FeedView()
         }
     }
 }

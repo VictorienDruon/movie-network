@@ -20,5 +20,5 @@ struct PersonView: View {
 }
 
 #Preview {
-    PersonView(for: TMDbSampleData.shared.person)
+    PersonView(for: samplePerson)
 }

@@ -33,5 +33,5 @@ struct ShowTrailer: View {
 
 #Preview {
     ShowTrailer()
-        .environmentObject(ShowViewModel(for: TMDbSampleData.shared.movie.toShow()))
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

@@ -30,7 +30,6 @@ struct ShowView: View {
 
                 if let overview = viewModel.show.overview {
                     TextBlock(title: "Overview", content: overview)
-                        .padding(.horizontal)
                 }
 
                 if let recommendations = viewModel.show.recommendations, !recommendations.isEmpty {
@@ -50,12 +49,13 @@ struct ShowView: View {
         .scrollIndicators(.hidden)
         .navigationTitle(viewModel.show.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar { ShowTrigger() }
         .environmentObject(viewModel)
     }
 }
 
 #Preview {
     NavigationStack {
-        ShowView(for: TMDbSampleData.shared.movie.toShow())
+        ShowView(for: sampleMovie.toShow())
     }
 }

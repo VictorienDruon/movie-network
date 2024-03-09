@@ -27,20 +27,22 @@ struct TextBlock: View {
         .padding(.vertical, 20)
         .background(.neutral2)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .padding(.horizontal)
         .onTapGesture { showingSheet = true }
         .sheet(isPresented: $showingSheet) {
-            VStack(alignment: .leading, spacing: 0) {
-                VStack(spacing: 0) {
-                    Headline(title)
-                        .padding()
-                    Divider()
-                        .foregroundStyle(.neutral4)
-                }
-
-                ScrollView {
-                    BodyText(content)
-                        .padding()
-                }
+            NavigationStack {
+                BodyText(content)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .padding()
+                    .navigationTitle(title)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("OK") {
+                                showingSheet = false
+                            }
+                        }
+                    }
             }
         }
     }
@@ -48,5 +50,4 @@ struct TextBlock: View {
 
 #Preview {
     TextBlock(title: "Hello there", content: "I was hoping for Kenobi")
-        .padding(.horizontal)
 }

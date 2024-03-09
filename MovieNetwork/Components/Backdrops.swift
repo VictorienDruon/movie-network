@@ -44,7 +44,7 @@ struct BackdropWithAction: View {
 struct BackdropVideo: View {
     var key: String
     var size: BackdropSize
-    
+
     var body: some View {
         RectVideo(
             key: key,
@@ -98,9 +98,7 @@ struct BackdropConfig {
 }
 
 #Preview {
-    let sampleMovie = TMDbSampleData.shared.movie
-
-    return VStack {
+    VStack {
         Backdrop(url: sampleMovie.backdropUrl(.original), size: .large)
         BackdropWithAction(url: sampleMovie.backdropUrl(.original), size: .large) {}
     }

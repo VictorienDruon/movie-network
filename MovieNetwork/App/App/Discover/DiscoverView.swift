@@ -12,35 +12,43 @@ struct DiscoverView: View {
     @StateObject var viewModel = DiscoverViewModel()
 
     var body: some View {
-        NavigationStack(path: $navigation.discoverStack) {
-            ScrollView {
-                LazyVStack(spacing: 24) {
-                    DiscoverFiltersControls()
+        ScrollView {
+            LazyVStack(spacing: 24) {
+                DiscoverFiltersControls()
 
-                    if !viewModel.filteredTrendingShows.isEmpty {
-                        Section("Trending") {
-                            ShowPosters(shows: viewModel.filteredTrendingShows)
-                        }
-                    }
-
-                    if !viewModel.trendingPeople.isEmpty {
-                        Section("Stars") {
-                            PersonThumbnails(people: viewModel.trendingPeople)
-                        }
+                if !viewModel.filteredTrendingShows.isEmpty {
+                    Section("Trending") {
+                        ShowPosters(shows: viewModel.filteredTrendingShows)
                     }
                 }
-                .padding(.vertical)
+
+                if !viewModel.trendingPeople.isEmpty {
+                    Section("Stars") {
+                        PersonThumbnails(people: viewModel.trendingPeople)
+                    }
+                }
             }
-            .scrollIndicators(.hidden)
-            .navigationTitle("Discover")
-            .navigationDestination(for: Destination.self, destination: navigation.routeTo)
-            .toolbar { ProfileToolbar() }
-            .environmentObject(viewModel)
+            .padding(.vertical)
         }
+        .scrollIndicators(.hidden)
+        .environmentObject(viewModel)
     }
 }
 
 #Preview {
-    DiscoverView()
-        .environmentObject(NavigationManager())
+    @StateObject var navigation = NavigationManager()
+
+    return
+        TabView {
+            NavigationStack(path: $navigation.discoverStack) {
+                Tab.discover.view
+                    .navigationTitle(Tab.discover.name)
+                    .navigationBarTitleDisplayMode(.large)
+                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+                    .toolbar { ProfileTrigger() }
+            }
+            .tag(Tab.discover)
+            .tabItem { Image(systemName: Tab.discover.icon) }
+        }
+        .environmentObject(navigation)
 }

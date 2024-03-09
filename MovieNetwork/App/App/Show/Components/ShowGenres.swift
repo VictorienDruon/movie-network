@@ -15,8 +15,7 @@ struct ShowGenres: View {
             ScrollView(.horizontal) {
                 LazyHStack {
                     ForEach(genres) { genre in
-                        Button(genre.name) {}
-                            .buttonStyle(Tag(.small))
+                        Tag(genre.name, size: .small)
                     }
                 }
             }
@@ -27,5 +26,5 @@ struct ShowGenres: View {
 
 #Preview {
     ShowGenres()
-        .environmentObject(ShowViewModel(for: TMDbSampleData.shared.movie.toShow()))
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

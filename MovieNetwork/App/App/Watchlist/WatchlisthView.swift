@@ -9,20 +9,26 @@ import SwiftUI
 
 struct WatchlisthView: View {
     @EnvironmentObject var navigation: NavigationManager
-    
+
     var body: some View {
-        NavigationStack(path: $navigation.watchlistStack) {
-            Title3("Watchlist")
-                .navigationTitle("Watchlist")
-                .navigationDestination(for: Destination.self, destination: navigation.routeTo)
-                .toolbar {
-                    ProfileToolbar()
-                }
-        }
+        Title3("Watchlist")
     }
 }
 
 #Preview {
-    WatchlisthView()
-        .environmentObject(NavigationManager())
+    @StateObject var navigation = NavigationManager()
+
+    return
+        TabView {
+            NavigationStack(path: $navigation.watchlistStack) {
+                Tab.watchlist.view
+                    .navigationTitle(Tab.watchlist.name)
+                    .navigationBarTitleDisplayMode(.large)
+                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+                    .toolbar { ProfileTrigger() }
+            }
+            .tag(Tab.watchlist)
+            .tabItem { Image(systemName: Tab.watchlist.icon) }
+        }
+        .environmentObject(navigation)
 }

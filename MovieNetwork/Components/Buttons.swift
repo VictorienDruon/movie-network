@@ -64,7 +64,6 @@ struct StyledButton: ButtonStyle {
                         .strokeBorder(.white.opacity(isDark ? 0 : variant.config.strokeOpacity), lineWidth: 2)
                 }
             }
-            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.4), trigger: isPressed)
     }
 }
 
@@ -94,28 +93,6 @@ struct TransparentButton: ButtonStyle {
     }
 }
 
-struct Tag: ButtonStyle {
-    var size: ButtonSize
-    var iconOnly: Bool
-
-    init(_ size: ButtonSize, iconOnly: Bool = false) {
-        self.size = size
-        self.iconOnly = iconOnly
-    }
-
-    func makeBody(configuration: Configuration) -> some View {
-        let isPressed = configuration.isPressed
-
-        HeadlessButton(size: size)
-            .makeBody(configuration: configuration)
-            .foregroundStyle(.neutral9)
-            .opacity(isPressed ? 0.5 : 1)
-            .background(.neutral2)
-            .clipShape(iconOnly ? AnyShape(.circle) : AnyShape(.capsule))
-            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.4), trigger: isPressed)
-    }
-}
-
 struct Pressable: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         let isPressed = configuration.isPressed
@@ -124,7 +101,6 @@ struct Pressable: ButtonStyle {
             .label
             .scaleEffect(isPressed ? 0.975 : 1)
             .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
-            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.4), trigger: isPressed)
     }
 }
 

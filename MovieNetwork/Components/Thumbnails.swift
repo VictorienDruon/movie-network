@@ -205,13 +205,10 @@ struct ThumbnailConfig {
 }
 
 #Preview {
-    let samplePerson = TMDbSampleData.shared.castMember
-
-    return
-        ThumbnailWithName(
-            name: samplePerson.name,
-            description: samplePerson.character,
-            url: samplePerson.profileUrl(.h632),
-            size: .medium
-        )
+    ThumbnailWithName(
+        name: sampleCastMember.name,
+        description: sampleCastMember.character,
+        url: sampleCastMember.profileUrl(.h632),
+        size: .medium
+    )
 }

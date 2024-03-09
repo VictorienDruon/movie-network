@@ -13,29 +13,31 @@ struct FeedView: View {
 
     var body: some View {
         if !session.isAuthenticated {
-            NavigationStack {
-                AuthRequiredView(message: "You need to sign up to access the Feed.")
-                    .navigationTitle("Feed")
-                    .toolbar {
-                        ProfileToolbar()
-                    }
-            }
+            AuthRequiredView(message: "You need to sign up to access the Feed.")
+        }
 
-        } else {
-            NavigationStack(path: $navigation.feedStack) {
-                Title3("Feed")
-                    .navigationTitle("Feed")
-                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
-                    .toolbar {
-                        ProfileToolbar()
-                    }
-            }
+        else {
+            Title3("Feed")
         }
     }
 }
 
 #Preview {
-    FeedView()
-        .environmentObject(SessionManager())
-        .environmentObject(NavigationManager())
+    @StateObject var session = SessionManager()
+    @StateObject var navigation = NavigationManager()
+
+    return
+        TabView {
+            NavigationStack(path: $navigation.feedStack) {
+                Tab.feed.view
+                    .navigationTitle(Tab.feed.name)
+                    .navigationBarTitleDisplayMode(.large)
+                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+                    .toolbar { ProfileTrigger() }
+            }
+            .tag(Tab.feed)
+            .tabItem { Image(systemName: Tab.feed.icon) }
+        }
+        .environmentObject(session)
+        .environmentObject(navigation)
 }

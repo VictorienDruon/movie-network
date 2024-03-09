@@ -13,39 +13,19 @@ struct ProfileView: View {
 
     var body: some View {
         if !session.isAuthenticated {
-            NavigationStack {
-                AuthRequiredView(message: "You need to sign up to have a profile.")
-                    .navigationTitle("Profile")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        Button("Done") {
-                            navigation.showingProfile = false
-                        }
-                        .foregroundStyle(.accent9)
-                    }
-            }
+            AuthRequiredView(message: "You need to sign up to have a profile.")
+        }
 
-        } else {
-            NavigationStack(path: $navigation.profileStack) {
-                List {
-                    Button("Dis-onboard") {
-                        UserDefaults.standard.set(false, forKey: "isOnBoarded")
-                    }
-                    
-                    Button("Sign out") {
-                        Task {
-                            try? await SupabaseManager.shared.signOut()
-                        }
-                    }
+        else {
+            List {
+                Button("Dis-onboard") {
+                    UserDefaults.standard.set(false, forKey: "isOnBoarded")
                 }
-                .navigationTitle("Profile")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationDestination(for: Destination.self, destination: navigation.routeTo)
-                .toolbar {
-                    Button("Done") {
-                        navigation.showingProfile = false
+
+                Button("Sign out") {
+                    Task {
+                        try? await SupabaseManager.shared.signOut()
                     }
-                    .foregroundStyle(.accent9)
                 }
             }
         }
@@ -53,7 +33,20 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
-        .environmentObject(SessionManager())
-        .environmentObject(NavigationManager())
+    @StateObject var session = SessionManager()
+    @StateObject var navigation = NavigationManager()
+
+    return
+        NavigationStack(path: $navigation.profileStack) {
+            ProfileView()
+                .navigationTitle("Profile")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(
+                    for: Destination.self,
+                    destination: navigation.routeTo
+                )
+                .toolbar { ProfileToolbar() }
+        }
+        .environmentObject(session)
+        .environmentObject(navigation)
 }

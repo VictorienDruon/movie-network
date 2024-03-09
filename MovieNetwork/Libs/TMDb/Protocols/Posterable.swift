@@ -12,7 +12,7 @@ protocol Posterable {
 }
 
 extension Posterable {
-    var posterUrl: (PosterImageSize) -> URL? {
-        { size in imageUrl(path: self.posterPath, size: .poster(size)) }
-    }
+    var posterUrl: (PosterImageSize) -> URL? {{ size in
+        imageUrl(path: self.posterPath, size: .poster(size))
+    }}
 }

@@ -65,5 +65,5 @@ struct ShowHeader: View {
 
 #Preview {
     ShowHeader()
-        .environmentObject(ShowViewModel(for: TMDbSampleData.shared.movie.toShow()))
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

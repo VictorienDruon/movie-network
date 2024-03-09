@@ -12,7 +12,7 @@ protocol Backdropable {
 }
 
 extension Backdropable {
-    var backdropUrl: (BackdropImageSize) -> URL? {
-        { size in imageUrl(path: self.backdropPath, size: .backdrop(size)) }
-    }
+    var backdropUrl: (BackdropImageSize) -> URL? {{ size in
+        imageUrl(path: self.backdropPath, size: .backdrop(size))
+    }}
 }

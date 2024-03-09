@@ -209,9 +209,7 @@ struct PosterConfig {
 }
 
 #Preview {
-    let sampleMovie = TMDbSampleData.shared.movie
-
-    return VStack {
+    VStack {
         PosterWithTopTitle(title: sampleMovie.title, url: sampleMovie.posterUrl(.w780), size: .small)
         PosterWithBottomTitle(title: sampleMovie.title, url: sampleMovie.posterUrl(.w780), size: .small)
         PosterWithActions(url: sampleMovie.posterUrl(.w780), size: .small, onPlay: {}, onShare: {})
