@@ -1,85 +1,23 @@
 //
 //  CastMember.swift
-//  TMDb
+//  MovieNetwork
 //
-//  Copyright © 2024 Adam Young.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an AS IS BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
+//  Created by Victorien Druon on 04/03/2024.
 //
 
 import Foundation
 
-///
-/// A model representing a cast member.
-///
- struct CastMember: Identifiable, Codable, Equatable, Hashable {
+struct CastMember: Identifiable, Codable, Equatable, Hashable, Profilable {
+    let id: Int
+    let castID: Int?
+    let creditID: String
+    let name: String
+    let character: String
+    let gender: Gender?
+    let profilePath: URL?
+    let order: Int
 
-    ///
-    /// Cast member's identifier.
-    ///
-     let id: Int
-
-    ///
-    /// Cast member's identifier for the particular movie or TV series.
-    ///
-     let castID: Int?
-
-    ///
-    /// Credit identifier for that particular movie or TV series.
-    ///
-     let creditID: String
-
-    ///
-    /// Cast member's real name.
-    ///
-     let name: String
-
-    ///
-    /// Cast member's character name.
-    ///
-     let character: String
-
-    ///
-    /// Cast member's gender.
-    ///
-     let gender: Gender?
-
-    ///
-    /// Cast member's profile image.
-    ///
-    /// To generate a full URL see <doc:/TMDb/GeneratingImageURLs>.
-    ///
-     let profilePath: URL?
-
-    ///
-    /// Order number in the cast list.
-    ///
-     let order: Int
-
-    ///
-    /// Creates a cast member object.
-    ///
-    /// - Parameters:
-    ///    - id: Cast member's identifier.
-    ///    - castID: Cast member's identifier for the particular movie or TV series.
-    ///    - creditID: Credit identifier for that particular movie or TV series.
-    ///    - name: Cast member's name.
-    ///    - character: Cast member's character name.
-    ///    - gender: Cast member's gender.
-    ///    - profilePath: Cast member's profile image.
-    ///    - order: Order number in the cast list.
-    ///
-     init(
+    init(
         id: Int,
         castID: Int? = nil,
         creditID: String,
@@ -98,11 +36,20 @@ import Foundation
         self.profilePath = profilePath
         self.order = order
     }
-
 }
 
 extension CastMember {
+    func toPerson() -> Person {
+        return Person(
+            id: self.id,
+            name: self.name,
+            gender: self.gender ?? .unknown,
+            profilePath: self.profilePath
+        )
+    }
+}
 
+extension CastMember {
     private enum CodingKeys: String, CodingKey {
         case id
         case castID = "castId"
@@ -113,5 +60,4 @@ extension CastMember {
         case profilePath
         case order
     }
-
 }

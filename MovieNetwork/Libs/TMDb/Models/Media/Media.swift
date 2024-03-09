@@ -30,7 +30,7 @@ extension Media {
     func toShow() -> Show? {
         switch self {
         case let .movie(movie): return .movie(movie)
-        case let .tvSeries(tVSeries): return .tvSeries(tVSeries)
+        case let .tvSeries(tvSeries): return .tvSeries(tvSeries)
         default: return nil
         }
     }

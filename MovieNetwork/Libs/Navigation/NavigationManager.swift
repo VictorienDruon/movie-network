@@ -37,9 +37,9 @@ final class NavigationManager: ObservableObject {
     func routeTo(destination: Destination) -> some View {
         switch destination {
         case let .show(show):
-            ShowView(show: show)
+            ShowView(for: show)
         case let .person(person):
-            PersonView(person: person)
+            PersonView(for: person)
         }
     }
 

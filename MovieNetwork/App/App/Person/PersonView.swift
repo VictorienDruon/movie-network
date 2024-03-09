@@ -10,8 +10,8 @@ import SwiftUI
 struct PersonView: View {
     @StateObject private var viewModel: PersonViewModel
 
-    init(person: Person) {
-        _viewModel = StateObject(wrappedValue: PersonViewModel(person: person))
+    init(for person: Person) {
+        _viewModel = StateObject(wrappedValue: PersonViewModel(for: person))
     }
     
     var body: some View {
@@ -20,12 +20,5 @@ struct PersonView: View {
 }
 
 #Preview {
-    let test = Person(
-        id: 115440,
-        name: "Sydney Sweeney",
-        gender: .female,
-        profilePath: URL(string: "/qYiaSl0Eb7G3VaxOg8PxExCFwon.jpg")!
-    )
-    
-    return PersonView(person: test)
+    PersonView(for: TMDbSampleData.shared.person)
 }

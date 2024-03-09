@@ -1,4 +1,5 @@
 {
+  "originHash" : "7091d934069dbfc9b29d4affe8bc7bfd473091d01c8f22de592ad65943c721e9",
   "pins" : [
     {
       "identity" : "keychainaccess",
@@ -14,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/supabase-community/supabase-swift.git",
       "state" : {
-        "revision" : "fd4984cfd54eb148ff43586cc5a93cc8406e5aae",
-        "version" : "2.3.1"
+        "revision" : "08eefdcfc75a8052c1fc0577418cff67d47b6332",
+        "version" : "2.4.0"
       }
     },
     {
@@ -32,10 +33,19 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "60f13f60c4d093691934dc6cfdf5f508ada1f894",
-        "version" : "2.6.0"
+        "revision" : "cc76b894169a3c86b71bac10c78a4db6beb7a9ad",
+        "version" : "3.2.0"
+      }
+    },
+    {
+      "identity" : "youtubeplayerkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SvenTiigi/YouTubePlayerKit.git",
+      "state" : {
+        "revision" : "ca8f0cd89d63d6f5e5cb556b0dd30cd65632bc3a",
+        "version" : "1.7.0"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -21,11 +21,11 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
     var title: String {
         switch self {
         case let .movie(movie): movie.title
-        case let .tvSeries(tVSeries): tVSeries.name
+        case let .tvSeries(tvSeries): tvSeries.name
         }
     }
 
-    var date: Date? {
+    var releaseDate: Date? {
         switch self {
         case let .movie(movie): movie.releaseDate
         case let .tvSeries(tvSeries): tvSeries.firstAirDate
@@ -35,28 +35,57 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
     var overview: String? {
         switch self {
         case let .movie(movie): movie.overview
-        case let .tvSeries(tVSeries): tVSeries.overview
-        }
-    }
-
-    var popularity: Double? {
-        switch self {
-        case let .movie(movie): movie.popularity
-        case let .tvSeries(tvSeries): tvSeries.popularity
+        case let .tvSeries(tvSeries): tvSeries.overview
         }
     }
 
     var posterPath: URL? {
         switch self {
         case let .movie(movie): movie.posterPath
-        case let .tvSeries(tVSeries): tVSeries.posterPath
+        case let .tvSeries(tvSeries): tvSeries.posterPath
         }
     }
 
     var backdropPath: URL? {
         switch self {
         case let .movie(movie): movie.backdropPath
-        case let .tvSeries(tVSeries): tVSeries.backdropPath
+        case let .tvSeries(tvSeries): tvSeries.backdropPath
+        }
+    }
+    
+    var voteAverage: Double? {
+        switch self {
+        case let .movie(movie): movie.voteAverage
+        case let .tvSeries(tvSeries): tvSeries.voteAverage
+        }
+    }
+    
+    
+    var genres: [Genre]? {
+        switch self {
+        case let .movie(movie): movie.genres
+        case let .tvSeries(tvSeries): tvSeries.genres
+        }
+    }
+    
+    var credits: Credits? {
+        switch self {
+        case let .movie(movie): movie.credits
+        case let .tvSeries(tvSeries): tvSeries.credits
+        }
+    }
+    
+    var recommendations: [Show]? {
+        switch self {
+        case let .movie(movie): movie.recommendations?.results.toShows()
+        case let .tvSeries(tvSeries): tvSeries.recommendations?.results.toShows()
+        }
+    }
+
+    var videos: VideoCollection? {
+        switch self {
+        case let .movie(movie): movie.videos
+        case let .tvSeries(tvSeries): tvSeries.videos
         }
     }
 }

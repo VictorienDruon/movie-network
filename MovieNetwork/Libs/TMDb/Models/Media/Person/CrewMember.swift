@@ -1,79 +1,22 @@
 //
 //  CrewMember.swift
-//  TMDb
+//  MovieNetwork
 //
-//  Copyright © 2024 Adam Young.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an AS IS BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
+//  Created by Victorien Druon on 04/03/2024.
 //
 
 import Foundation
 
-///
-/// A model representing a crew member..
-///
- struct CrewMember: Identifiable, Codable, Equatable, Hashable {
+struct CrewMember: Identifiable, Codable, Equatable, Hashable, Profilable {
+    let id: Int
+    let creditID: String
+    let name: String
+    let job: String
+    let department: String
+    let gender: Gender?
+    let profilePath: URL?
 
-    ///
-    /// Crew member's identifier.
-    ///
-     let id: Int
-
-    ///
-    /// Crew member's identifier for the particular movie or TV series.
-    ///
-     let creditID: String
-
-    ///
-    /// Crew member's name.
-    ///
-     let name: String
-
-    ///
-    /// Crew member's job.
-    ///
-     let job: String
-
-    ///
-    /// Crew member's department.
-    ///
-     let department: String
-
-    ///
-    /// Crew member's gender.
-    ///
-     let gender: Gender?
-
-    ///
-    /// Crew member's profile image.
-    ///
-    /// To generate a full URL see <doc:/TMDb/GeneratingImageURLs>.
-    ///
-     let profilePath: URL?
-
-    ///
-    /// Creates a crew member object.
-    ///
-    /// - Parameters:
-    ///    - id: Crew member's identifier.
-    ///    - creditID: Crew member's identifier for the particular movie or TV series.
-    ///    - name: Crew member's name.
-    ///    - job: Crew member's job.
-    ///    - department: Crew member's department.
-    ///    - gender: Crew member's gender.
-    ///    - profilePath: Crew member's profile image.
-    ///
-     init(
+    init(
         id: Int,
         creditID: String,
         name: String,
@@ -90,11 +33,9 @@ import Foundation
         self.gender = gender
         self.profilePath = profilePath
     }
-
 }
 
 extension CrewMember {
-
     private enum CodingKeys: String, CodingKey {
         case id
         case creditID = "creditId"
@@ -104,5 +45,4 @@ extension CrewMember {
         case gender
         case profilePath
     }
-
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LargeTitle: View {
+struct BodyText: View {
     var content: String
 
     init(_ content: String) {
@@ -16,10 +16,22 @@ struct LargeTitle: View {
 
     var body: some View {
         Text(content)
-            .font(.largeTitle)
-            .fontWeight(.bold)
             .fontDesign(.rounded)
             .foregroundStyle(.neutral11)
+    }
+}
+
+struct LargeTitle: View {
+    var content: String
+
+    init(_ content: String) {
+        self.content = content
+    }
+
+    var body: some View {
+        BodyText(content)
+            .font(.largeTitle)
+            .fontWeight(.bold)
     }
 }
 
@@ -31,11 +43,9 @@ struct Title: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.title)
             .fontWeight(.bold)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
     }
 }
 
@@ -47,11 +57,9 @@ struct Title2: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.title2)
             .fontWeight(.semibold)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
     }
 }
 
@@ -63,11 +71,9 @@ struct Title3: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.title3)
             .fontWeight(.semibold)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
     }
 }
 
@@ -79,11 +85,9 @@ struct Headline: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.headline)
             .fontWeight(.medium)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
     }
 }
 
@@ -95,10 +99,8 @@ struct Callout: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.callout)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
     }
 }
 
@@ -110,11 +112,9 @@ struct Footnote: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.footnote)
             .fontWeight(.light)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
     }
 }
 
@@ -126,18 +126,8 @@ struct Caption: View {
     }
 
     var body: some View {
-        Text(content)
+        BodyText(content)
             .font(.caption)
             .fontWeight(.thin)
-            .fontDesign(.rounded)
-            .foregroundStyle(.neutral11)
-    }
-}
-
-
-struct BulletPoint: View {
-    var body: some View {
-        Headline("•")
-            .foregroundStyle(.neutral4)
     }
 }

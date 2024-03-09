@@ -11,10 +11,6 @@ import Foundation
 final class TMDbManager {
     static let shared = TMDbManager()
     private init() {}
-    
-    func movie(_ movie: Movie) {
-        let request = TMDbRequest(path: "/movie/\(movie.id)")
-    }
 
     func trending(_ endpoint: TrendingEndpoint = .all, for timeWindow: TrendingTimeWindow = .day) async throws -> [Media] {
         let request = TMDbRequest(path: "/trending/\(endpoint.rawValue)/\(timeWindow.rawValue)")
@@ -24,5 +20,23 @@ final class TMDbManager {
         case .tvSeries: return try await request.fetch(TVSeriesPageableList.self).results.map { Media.tvSeries($0) }
         case .people: return try await request.fetch(PersonPageableList.self).results.map { Media.person($0) }
         }
+    }
+
+    func movie(for id: Int) async throws -> Movie {
+        let appendToResponse = URLQueryItem(
+            name: "append_to_response",
+            value: "credits,recommendations,videos"
+        )
+        let request = TMDbRequest(path: "/movie/\(id)", queryItems: [appendToResponse])
+        return try await request.fetch(Movie.self)
+    }
+    
+    func tvSeries(for id: Int) async throws -> TVSeries {
+        let appendToResponse = URLQueryItem(
+            name: "append_to_response",
+            value: "credits,recommendations,videos"
+        )
+        let request = TMDbRequest(path: "/tv/\(id)", queryItems: [appendToResponse])
+        return try await request.fetch(TVSeries.self)
     }
 }

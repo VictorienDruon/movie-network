@@ -11,7 +11,7 @@ import Foundation
 final class PersonViewModel: ObservableObject {
     @Published var person: Person
 
-    init(person: Person) {
+    init(for person: Person) {
         self.person = person
     }
 }

@@ -12,8 +12,13 @@ struct Poster: View {
     var size: PosterSize
 
     var body: some View {
-        RectImage(url: url, aspectRatio: .poster, width: size.config.width, radius: size.config.radius)
-            .shadowSize(size.config.shadowSize)
+        RectImage(
+            url: url,
+            aspectRatio: .poster,
+            width: size.config.width,
+            radius: size.config.radius
+        )
+        .shadowSize(size.config.shadowSize)
     }
 }
 
@@ -114,6 +119,7 @@ struct ShowPoster: View {
             NavigationLink(value: Destination.show(show)) {
                 poster
             }
+            .buttonStyle(Pressable())
         } else {
             poster
         }
@@ -128,7 +134,7 @@ struct ShowPosters: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 12) {
                 ForEach(shows) { show in
                     ShowPoster(
                         show: show,
@@ -203,15 +209,11 @@ struct PosterConfig {
 }
 
 #Preview {
-    let test = Movie(
-        id: 792307,
-        title: "Poor Things",
-        posterPath: URL(string: "/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg")
-    )
+    let sampleMovie = TMDbSampleData.shared.movie
 
     return VStack {
-        PosterWithTopTitle(title: test.title, url: test.posterUrl(.w780), size: .small)
-        PosterWithBottomTitle(title: test.title, url: test.posterUrl(.w780), size: .small)
-        PosterWithActions(url: test.posterUrl(.w780), size: .small, onPlay: {}, onShare: {})
+        PosterWithTopTitle(title: sampleMovie.title, url: sampleMovie.posterUrl(.w780), size: .small)
+        PosterWithBottomTitle(title: sampleMovie.title, url: sampleMovie.posterUrl(.w780), size: .small)
+        PosterWithActions(url: sampleMovie.posterUrl(.w780), size: .small, onPlay: {}, onShare: {})
     }
 }

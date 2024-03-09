@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HeadlessButton: ButtonStyle {
     var size: ButtonSize
-    var widthFull: Bool = false
 
     func makeBody(configuration: Configuration) -> some View {
         configuration
@@ -17,7 +16,7 @@ struct HeadlessButton: ButtonStyle {
             .font(.system(size: size.config.fontSize, weight: .semibold, design: .rounded))
             .padding(.horizontal, size.config.paddingX)
             .frame(height: size.config.height)
-            .frame(maxWidth: widthFull ? .infinity : nil)
+            .frame(maxWidth: size == .full ? .infinity : nil)
     }
 }
 
@@ -27,20 +26,18 @@ struct StyledButton: ButtonStyle {
     var variant: ButtonVariant
     var size: ButtonSize
     var iconOnly: Bool
-    var widthFull: Bool
 
-    init(_ variant: ButtonVariant, _ size: ButtonSize, iconOnly: Bool = false, widthFull: Bool = false) {
+    init(_ variant: ButtonVariant, _ size: ButtonSize, iconOnly: Bool = false) {
         self.variant = variant
         self.size = size
         self.iconOnly = iconOnly
-        self.widthFull = widthFull
     }
 
     func makeBody(configuration: Configuration) -> some View {
         let isDark = colorScheme == .dark
         let isPressed = configuration.isPressed
 
-        HeadlessButton(size: size, widthFull: widthFull)
+        HeadlessButton(size: size)
             .makeBody(configuration: configuration)
             .foregroundStyle(variant.config.textColor)
             .opacity(isPressed ? 0.5 : 1)
@@ -85,7 +82,7 @@ struct TransparentButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         let isPressed = configuration.isPressed
 
-        HeadlessButton(size: size, widthFull: widthFull)
+        HeadlessButton(size: size)
             .makeBody(configuration: configuration)
             .foregroundStyle(.white)
             .opacity(isPressed ? 0.5 : 1)
@@ -94,6 +91,40 @@ struct TransparentButton: ButtonStyle {
                 in: iconOnly ? AnyShape(.circle) : AnyShape(.capsule)
             )
             .shadowSize(.small)
+    }
+}
+
+struct Tag: ButtonStyle {
+    var size: ButtonSize
+    var iconOnly: Bool
+
+    init(_ size: ButtonSize, iconOnly: Bool = false) {
+        self.size = size
+        self.iconOnly = iconOnly
+    }
+
+    func makeBody(configuration: Configuration) -> some View {
+        let isPressed = configuration.isPressed
+
+        HeadlessButton(size: size)
+            .makeBody(configuration: configuration)
+            .foregroundStyle(.neutral9)
+            .opacity(isPressed ? 0.5 : 1)
+            .background(.neutral2)
+            .clipShape(iconOnly ? AnyShape(.circle) : AnyShape(.capsule))
+            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.4), trigger: isPressed)
+    }
+}
+
+struct Pressable: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        let isPressed = configuration.isPressed
+
+        configuration
+            .label
+            .scaleEffect(isPressed ? 0.975 : 1)
+            .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
+            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.4), trigger: isPressed)
     }
 }
 
@@ -112,8 +143,15 @@ enum ButtonVariant {
     }
 }
 
+struct ButtonVariantConfig {
+    var bgColor: Color
+    var strokeColor: Color
+    var strokeOpacity: CGFloat
+    var textColor: Color
+}
+
 enum ButtonSize {
-    case small, medium, large
+    case small, medium, large, full
 
     var config: ButtonSizeConfig {
         switch self {
@@ -123,15 +161,10 @@ enum ButtonSize {
             ButtonSizeConfig(height: 40, paddingX: 12, fontSize: 18)
         case .large:
             ButtonSizeConfig(height: 48, paddingX: 14, fontSize: 22)
+        case .full:
+            ButtonSize.large.config
         }
     }
-}
-
-struct ButtonVariantConfig {
-    var bgColor: Color
-    var strokeColor: Color
-    var strokeOpacity: CGFloat
-    var textColor: Color
 }
 
 struct ButtonSizeConfig {

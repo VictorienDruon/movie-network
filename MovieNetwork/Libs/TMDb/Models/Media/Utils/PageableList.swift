@@ -8,6 +8,7 @@
 import Foundation
 
 typealias MediaPageableList = PageableListResult<Media>
+typealias ShowPageableList = PageableListResult<Show>
 typealias MoviePageableList = PageableListResult<Movie>
 typealias TVSeriesPageableList = PageableListResult<TVSeries>
 typealias PersonPageableList = PageableListResult<Person>

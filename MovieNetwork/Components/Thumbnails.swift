@@ -69,6 +69,7 @@ struct PersonThumbnail: View {
             NavigationLink(value: Destination.person(person)) {
                 thumbnail
             }
+            .buttonStyle(Pressable())
         } else {
             thumbnail
         }
@@ -83,10 +84,68 @@ struct PersonThumbnails: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 12) {
                 ForEach(people) { person in
                     PersonThumbnail(
                         person: person,
+                        variant: variant,
+                        size: size,
+                        withNavigation: withNavigation
+                    )
+                }
+            }
+            .padding(.vertical, 32)
+        }
+        .padding(.vertical, -32)
+        .contentMargins(.horizontal, 16)
+    }
+}
+
+struct CastThumbnail: View {
+    var member: CastMember
+    var variant = ThumbnailVariant.name
+    var size = ThumbnailSize.medium
+    var withNavigation = true
+
+    var body: some View {
+        let thumbnail = switch variant {
+        case .raw:
+            AnyView(Thumbnail(
+                url: member.profileUrl(size.config.imageSize),
+                size: size
+            ))
+        case .name:
+            AnyView(ThumbnailWithName(
+                name: member.name,
+                description: member.character,
+                url: member.profileUrl(size.config.imageSize),
+                size: size
+            ))
+        }
+
+        if withNavigation {
+            NavigationLink(value: Destination.person(member.toPerson())) {
+                thumbnail
+            }
+            .buttonStyle(Pressable())
+        } else {
+            thumbnail
+        }
+    }
+}
+
+struct CastThumbnails: View {
+    var cast: [CastMember]
+    var variant = ThumbnailVariant.name
+    var size = ThumbnailSize.medium
+    var withNavigation = true
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(alignment: .top, spacing: 12) {
+                ForEach(cast) { member in
+                    CastThumbnail(
+                        member: member,
                         variant: variant,
                         size: size,
                         withNavigation: withNavigation
@@ -146,18 +205,13 @@ struct ThumbnailConfig {
 }
 
 #Preview {
-    let test = Person(
-        id: 115440,
-        name: "Sydney Sweeney",
-        gender: .female,
-        profilePath: URL(string: "/qYiaSl0Eb7G3VaxOg8PxExCFwon.jpg")!
-    )
+    let samplePerson = TMDbSampleData.shared.castMember
 
     return
         ThumbnailWithName(
-            name: test.name,
-            description: "Snake",
-            url: test.profileUrl(.h632),
+            name: samplePerson.name,
+            description: samplePerson.character,
+            url: samplePerson.profileUrl(.h632),
             size: .medium
         )
 }

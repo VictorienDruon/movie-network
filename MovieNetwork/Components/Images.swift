@@ -13,7 +13,7 @@ struct RawImage: View {
     var body: some View {
         AsyncImage(url: url, transaction: Transaction(animation: .easeOut)) { phase in
             switch phase {
-            case .success(let image):
+            case let .success(image):
                 image
                     .resizable()
                     .scaledToFill()
@@ -36,7 +36,7 @@ struct RectImage: View {
 
     var body: some View {
         RawImage(url: url)
-            .aspectRatio(aspectRatio.value, contentMode: .fill)
+            .aspectRatio(aspectRatio.value, contentMode: .fit)
             .frame(width: width, height: height)
             .clipShape(RoundedRectangle(cornerRadius: radius))
     }
@@ -48,6 +48,7 @@ struct CircleImage: View {
 
     var body: some View {
         RawImage(url: url)
+            .aspectRatio(contentMode: .fill)
             .frame(width: size, height: size)
             .clipShape(Circle())
     }

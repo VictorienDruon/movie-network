@@ -10,23 +10,52 @@ import SwiftUI
 struct ShowView: View {
     @StateObject private var viewModel: ShowViewModel
 
-    init(show: Show) {
-        _viewModel = StateObject(wrappedValue: ShowViewModel(show: show))
+    init(for show: Show) {
+        _viewModel = StateObject(wrappedValue: ShowViewModel(for: show))
     }
 
     var body: some View {
-        Title3(viewModel.show.title)
+        ScrollView {
+            LazyVStack(spacing: 32) {
+                LazyVStack(alignment: .leading, spacing: 16) {
+                    ShowTrailer()
+                    ShowHeader()
+                    ShowGenres()
+                    WatchlistControls()
+                }
+
+                Divider()
+                    .foregroundStyle(.neutral4)
+                    .padding(.horizontal)
+
+                if let overview = viewModel.show.overview {
+                    TextBlock(title: "Overview", content: overview)
+                        .padding(.horizontal)
+                }
+
+                if let recommendations = viewModel.show.recommendations, !recommendations.isEmpty {
+                    Section("Recommendations") {
+                        ShowPosters(shows: recommendations, variant: .bottomTitle, size: .small)
+                    }
+                }
+
+                if let cast = viewModel.show.credits?.cast, !cast.isEmpty {
+                    Section("Stars") {
+                        CastThumbnails(cast: cast)
+                    }
+                }
+            }
+            .padding(.vertical)
+        }
+        .scrollIndicators(.hidden)
+        .navigationTitle(viewModel.show.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .environmentObject(viewModel)
     }
 }
 
 #Preview {
-    let test = Show.movie(
-        Movie(
-            id: 792307,
-            title: "Poor Things",
-            posterPath: URL(string: "/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg")
-        )
-    )
-
-    return ShowView(show: test)
+    NavigationStack {
+        ShowView(for: TMDbSampleData.shared.movie.toShow())
+    }
 }
