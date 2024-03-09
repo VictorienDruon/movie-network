@@ -9,18 +9,20 @@ import Foundation
 
 struct CrewMember: Identifiable, Codable, Equatable, Hashable, Profilable {
     let id: Int
-    let creditID: String
+    let creditID: String?
     let name: String
-    let job: String
+    let job: String?
+    let jobs: [Job]?
     let department: String
     let gender: Gender?
     let profilePath: URL?
 
     init(
         id: Int,
-        creditID: String,
+        creditID: String? = nil,
         name: String,
-        job: String,
+        job: String? = nil,
+        jobs: [Job]? = nil,
         department: String,
         gender: Gender? = nil,
         profilePath: URL? = nil
@@ -29,6 +31,7 @@ struct CrewMember: Identifiable, Codable, Equatable, Hashable, Profilable {
         self.creditID = creditID
         self.name = name
         self.job = job
+        self.jobs = jobs
         self.department = department
         self.gender = gender
         self.profilePath = profilePath
@@ -41,6 +44,7 @@ extension CrewMember {
         case creditID = "creditId"
         case name
         case job
+        case jobs
         case department
         case gender
         case profilePath

@@ -33,7 +33,7 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
     let voteCount: Int?
     let hasVideo: Bool?
     let isAdultOnly: Bool?
-    let credits: Credits?
+    let credits: ShowCredits?
     let recommendations: MoviePageableList?
     let videos: VideoCollection?
 
@@ -63,7 +63,7 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
         voteCount: Int? = nil,
         hasVideo: Bool? = nil,
         isAdultOnly: Bool? = nil,
-        credits: Credits? = nil,
+        credits: ShowCredits? = nil,
         recommendations: MoviePageableList? = nil,
         videos: VideoCollection? = nil
     ) {
@@ -191,7 +191,7 @@ extension Movie {
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.hasVideo = try container.decodeIfPresent(Bool.self, forKey: .hasVideo)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
-        self.credits = try container.decodeIfPresent(Credits.self, forKey: .credits)
+        self.credits = try container.decodeIfPresent(ShowCredits.self, forKey: .credits)
         self.recommendations = try container.decodeIfPresent(MoviePageableList.self, forKey: .recommendations)
         self.videos = try container.decodeIfPresent(VideoCollection.self, forKey: .videos)
     }

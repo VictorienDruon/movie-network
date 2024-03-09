@@ -11,7 +11,22 @@ import Foundation
 final class PersonViewModel: ObservableObject {
     @Published var person: Person
 
+    var movies: [Show]? {
+        person.credits?.cast.filterMovies().sortByMostRecentRelease()
+    }
+
+    var tvSeries: [Show]? {
+        person.credits?.cast.filterTvSeries().uniqued().sortByMostRecentRelease()
+    }
+
     init(for person: Person) {
         self.person = person
+        getPerson()
+    }
+
+    func getPerson() {
+        Task {
+            person = try await TMDbManager.shared.person(for: person.id)
+        }
     }
 }

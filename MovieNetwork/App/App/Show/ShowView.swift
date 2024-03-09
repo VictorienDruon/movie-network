@@ -28,7 +28,7 @@ struct ShowView: View {
                     .foregroundStyle(.neutral4)
                     .padding(.horizontal)
 
-                if let overview = viewModel.show.overview {
+                if let overview = viewModel.show.overview, !overview.isEmpty {
                     TextBlock(title: "Overview", content: overview)
                 }
 
@@ -39,7 +39,7 @@ struct ShowView: View {
                 }
 
                 if let cast = viewModel.show.credits?.cast, !cast.isEmpty {
-                    Section("Stars") {
+                    Section("Cast") {
                         CastThumbnails(cast: cast)
                     }
                 }
@@ -49,7 +49,7 @@ struct ShowView: View {
         .scrollIndicators(.hidden)
         .navigationTitle(viewModel.show.title)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar { ShowTrigger() }
+        .toolbar { ShowToolbar() }
         .environmentObject(viewModel)
     }
 }

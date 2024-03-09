@@ -1,5 +1,5 @@
 //
-//  Credits.swift
+//  ShowCredits.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 08/03/2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Credits: Codable, Equatable, Hashable {
+struct ShowCredits: Codable, Equatable, Hashable {
     let cast: [CastMember]
     let crew: [CrewMember]
 

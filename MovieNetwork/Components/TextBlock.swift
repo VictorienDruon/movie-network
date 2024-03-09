@@ -31,18 +31,20 @@ struct TextBlock: View {
         .onTapGesture { showingSheet = true }
         .sheet(isPresented: $showingSheet) {
             NavigationStack {
-                BodyText(content)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .padding()
-                    .navigationTitle(title)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("OK") {
-                                showingSheet = false
+                ScrollView {
+                    BodyText(content)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                        .navigationTitle(title)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("OK") {
+                                    showingSheet = false
+                                }
                             }
                         }
-                    }
+                }
             }
         }
     }

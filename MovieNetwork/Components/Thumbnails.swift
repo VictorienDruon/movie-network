@@ -117,7 +117,7 @@ struct CastThumbnail: View {
         case .name:
             AnyView(ThumbnailWithName(
                 name: member.name,
-                description: member.character,
+                description: member.character ?? member.roles?.first?.character,
                 url: member.profileUrl(size.config.imageSize),
                 size: size
             ))

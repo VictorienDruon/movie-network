@@ -19,16 +19,16 @@ struct ShowHeader: View {
 
         switch viewModel.show {
         case let .movie(movie):
-            if let runtime = movie.runtime {
+            if let runtime = movie.runtime, runtime != 0 {
                 metadataArray.append(formatDuration(runtime))
             }
         case let .tvSeries(tvSeries):
-            if let numberOfSeasons = tvSeries.numberOfSeasons {
+            if let numberOfSeasons = tvSeries.numberOfSeasons, numberOfSeasons != 0 {
                 metadataArray.append("\(numberOfSeasons) \(pluralize("season", from: numberOfSeasons))")
             }
         }
 
-        if let voteAverage = viewModel.show.voteAverage {
+        if let voteAverage = viewModel.show.voteAverage, voteAverage != 0 {
             metadataArray.append(String(format: "%.1f", voteAverage))
         }
 

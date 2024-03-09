@@ -10,9 +10,10 @@ import Foundation
 struct CastMember: Identifiable, Codable, Equatable, Hashable, Profilable {
     let id: Int
     let castID: Int?
-    let creditID: String
+    let creditID: String?
     let name: String
-    let character: String
+    let character: String?
+    let roles: [Role]?
     let gender: Gender?
     let profilePath: URL?
     let order: Int
@@ -20,9 +21,10 @@ struct CastMember: Identifiable, Codable, Equatable, Hashable, Profilable {
     init(
         id: Int,
         castID: Int? = nil,
-        creditID: String,
+        creditID: String? = nil,
         name: String,
-        character: String,
+        character: String? = nil,
+        roles: [Role]? = nil,
         gender: Gender? = nil,
         profilePath: URL? = nil,
         order: Int
@@ -32,6 +34,7 @@ struct CastMember: Identifiable, Codable, Equatable, Hashable, Profilable {
         self.creditID = creditID
         self.name = name
         self.character = character
+        self.roles = roles
         self.gender = gender
         self.profilePath = profilePath
         self.order = order
@@ -56,6 +59,7 @@ extension CastMember {
         case creditID = "creditId"
         case name
         case character
+        case roles
         case gender
         case profilePath
         case order

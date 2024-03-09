@@ -13,12 +13,38 @@ struct PersonView: View {
     init(for person: Person) {
         _viewModel = StateObject(wrappedValue: PersonViewModel(for: person))
     }
-    
+
     var body: some View {
-        Title3(viewModel.person.name)
+        ScrollView {
+            LazyVStack(spacing: 32) {
+                if let biography = viewModel.person.biography, !biography.isEmpty {
+                    TextBlock(title: "Biography", content: biography)
+                }
+
+                if let movies = viewModel.movies, !movies.isEmpty {
+                    Section("Movies") {
+                        ShowPosters(shows: movies, variant: .bottomTitle, size: .small)
+                    }
+                }
+
+                if let tvSeries = viewModel.tvSeries, !tvSeries.isEmpty {
+                    Section("TV Shows") {
+                        ShowPosters(shows: tvSeries, variant: .bottomTitle, size: .small)
+                    }
+                }
+            }
+            .padding(.vertical)
+        }
+        .scrollIndicators(.hidden)
+        .navigationTitle(viewModel.person.name)
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar { PersonToolbar() }
+        .environmentObject(viewModel)
     }
 }
 
 #Preview {
-    PersonView(for: samplePerson)
+    NavigationStack {
+        PersonView(for: samplePerson)
+    }
 }

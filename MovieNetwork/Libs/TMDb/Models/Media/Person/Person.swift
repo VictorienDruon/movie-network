@@ -21,8 +21,7 @@ struct Person: Identifiable, Codable, Equatable, Hashable, Profilable {
     let popularity: Double?
     let imdbID: String?
     let homepageURL: URL?
-    
-
+    let credits: PersonCredits?
 
     init(
         id: Int,
@@ -37,7 +36,8 @@ struct Person: Identifiable, Codable, Equatable, Hashable, Profilable {
         profilePath: URL? = nil,
         popularity: Double? = nil,
         imdbID: String? = nil,
-        homepageURL: URL? = nil
+        homepageURL: URL? = nil,
+        credits: PersonCredits? = nil
     ) {
         self.id = id
         self.name = name
@@ -52,6 +52,13 @@ struct Person: Identifiable, Codable, Equatable, Hashable, Profilable {
         self.popularity = popularity
         self.imdbID = imdbID
         self.homepageURL = homepageURL
+        self.credits = credits
+    }
+}
+
+extension Person {
+    var link: URL {
+        URL(string: "\(appScheme)person/\(self.id)")!
     }
 }
 
@@ -70,6 +77,7 @@ extension Person {
         case popularity
         case imdbID = "imdbId"
         case homepageURL = "homepage"
+        case credits = "combinedCredits"
     }
 
     init(from decoder: Decoder) throws {
@@ -98,5 +106,6 @@ extension Person {
 
             return try container2.decodeIfPresent(URL.self, forKey: .homepageURL)
         }()
+        self.credits = try container.decodeIfPresent(PersonCredits.self, forKey: .credits)
     }
 }

@@ -34,9 +34,18 @@ final class TMDbManager {
     func tvSeries(for id: Int) async throws -> TVSeries {
         let appendToResponse = URLQueryItem(
             name: "append_to_response",
-            value: "credits,recommendations,videos"
+            value: "aggregate_credits,recommendations,videos"
         )
         let request = TMDbRequest(path: "/tv/\(id)", queryItems: [appendToResponse])
         return try await request.fetch(TVSeries.self)
+    }
+    
+    func person(for id: Int) async throws -> Person {
+        let appendToResponse = URLQueryItem(
+            name: "append_to_response",
+            value: "combined_credits"
+        )
+        let request = TMDbRequest(path: "/person/\(id)", queryItems: [appendToResponse])
+        return try await request.fetch(Person.self)
     }
 }

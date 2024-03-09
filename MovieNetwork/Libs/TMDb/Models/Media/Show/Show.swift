@@ -38,7 +38,7 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         case let .tvSeries(tvSeries): tvSeries.overview
         }
     }
-    
+
     var tagline: String? {
         switch self {
         case let .movie(movie): movie.tagline
@@ -59,29 +59,28 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         case let .tvSeries(tvSeries): tvSeries.backdropPath
         }
     }
-    
+
     var voteAverage: Double? {
         switch self {
         case let .movie(movie): movie.voteAverage
         case let .tvSeries(tvSeries): tvSeries.voteAverage
         }
     }
-    
-    
+
     var genres: [Genre]? {
         switch self {
         case let .movie(movie): movie.genres
         case let .tvSeries(tvSeries): tvSeries.genres
         }
     }
-    
-    var credits: Credits? {
+
+    var credits: ShowCredits? {
         switch self {
         case let .movie(movie): movie.credits
         case let .tvSeries(tvSeries): tvSeries.credits
         }
     }
-    
+
     var recommendations: [Show]? {
         switch self {
         case let .movie(movie): movie.recommendations?.results.toShows()
@@ -95,7 +94,7 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         case let .tvSeries(tvSeries): tvSeries.videos
         }
     }
-    
+
     var link: URL {
         switch self {
         case let .movie(movie): URL(string: "\(appScheme)movie/\(movie.id)")!
@@ -105,6 +104,20 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
 }
 
 extension Show {
+    func isMovie() -> Bool {
+        switch self {
+        case .movie: return true
+        default: return false
+        }
+    }
+
+    func isTvSeries() -> Bool {
+        switch self {
+        case .tvSeries: return true
+        default: return false
+        }
+    }
+
     func belongsToGenre(_ genre: GenreInfo) -> Bool {
         switch self {
         case let .movie(movie):
@@ -123,12 +136,29 @@ extension Show {
 }
 
 extension [Show] {
+    func filterMovies() -> [Show] {
+        self.filter { $0.isMovie() }
+    }
+
+    func filterTvSeries() -> [Show] {
+        self.filter { $0.isTvSeries() }
+    }
+
     func filterByGenre(_ genre: GenreInfo?) -> [Show] {
         guard let genre else {
             return self
         }
 
         return self.filter { $0.belongsToGenre(genre) }
+    }
+
+    func sortByMostRecentRelease() -> [Show] {
+        return self.sorted { show1, show2 -> Bool in
+            guard let date1 = show1.releaseDate, let date2 = show2.releaseDate else {
+                return show1.releaseDate != nil
+            }
+            return date1 > date2
+        }
     }
 }
 

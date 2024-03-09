@@ -36,7 +36,7 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
     let voteAverage: Double?
     let voteCount: Int?
     let isAdultOnly: Bool?
-    let credits: Credits?
+    let credits: ShowCredits?
     let recommendations: TVSeriesPageableList?
     let videos: VideoCollection?
 
@@ -69,7 +69,7 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
         voteAverage: Double? = nil,
         voteCount: Int? = nil,
         isAdultOnly: Bool? = nil,
-        credits: Credits? = nil,
+        credits: ShowCredits? = nil,
         recommendations: TVSeriesPageableList? = nil,
         videos: VideoCollection? = nil
     ) {
@@ -149,7 +149,7 @@ extension TVSeries {
         case firstAirDate
         case homepageURL = "homepage"
         case isAdultOnly = "adult"
-        case credits
+        case credits = "aggregateCredits"
         case recommendations
         case videos
     }
@@ -206,7 +206,7 @@ extension TVSeries {
         self.voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage)
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
-        self.credits = try container.decodeIfPresent(Credits.self, forKey: .credits)
+        self.credits = try container.decodeIfPresent(ShowCredits.self, forKey: .credits)
         self.recommendations = try container.decodeIfPresent(TVSeriesPageableList.self, forKey: .recommendations)
         self.videos = try container.decodeIfPresent(VideoCollection.self, forKey: .videos)
     }

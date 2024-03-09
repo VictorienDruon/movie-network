@@ -1,19 +1,20 @@
 //
-//  ShowTrigger.swift
+//  PersonToolbar.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 09/03/2024.
 //
 
+import Foundation
 import SwiftUI
 
-struct ShowTrigger: ToolbarContent {
-    @EnvironmentObject var viewModel: ShowViewModel
+struct PersonToolbar: ToolbarContent {
+    @EnvironmentObject var viewModel: PersonViewModel
 
     var body: some ToolbarContent {
         ToolbarItem {
             Menu("More", systemImage: "ellipsis.circle") {
-                ShareLink(item: viewModel.show.link)
+                ShareLink(item: viewModel.person.link)
             }
         }
     }
@@ -24,7 +25,7 @@ struct ShowTrigger: ToolbarContent {
         ScrollView {}
             .navigationTitle("Test")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { ShowTrigger() }
-            .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
+            .toolbar { PersonToolbar() }
+            .environmentObject(PersonViewModel(for: samplePerson))
     }
 }

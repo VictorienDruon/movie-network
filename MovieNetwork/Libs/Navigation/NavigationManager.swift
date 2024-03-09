@@ -76,6 +76,12 @@ final class NavigationManager: ObservableObject {
                 withActiveStack { stack in
                     stack.append(.show(show))
                 }
+            case "person":
+                guard let id = Int(parameter) else { return }
+                let person = try await TMDbManager.shared.person(for: id)
+                withActiveStack { stack in
+                    stack.append(.person(person))
+                }
             default:
                 return
             }
