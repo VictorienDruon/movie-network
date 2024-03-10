@@ -74,6 +74,20 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         }
     }
 
+    var character: String? {
+        switch self {
+        case let .movie(movie): movie.character
+        case let .tvSeries(tvSeries): tvSeries.character
+        }
+    }
+
+    var job: String? {
+        switch self {
+        case let .movie(movie): movie.job
+        case let .tvSeries(tvSeries): tvSeries.job
+        }
+    }
+
     var credits: ShowCredits? {
         switch self {
         case let .movie(movie): movie.credits
@@ -118,6 +132,10 @@ extension Show {
         }
     }
 
+    func didWorkAs(_ job: String) -> Bool {
+        return self.job == job
+    }
+
     func belongsToGenre(_ genre: GenreInfo) -> Bool {
         switch self {
         case let .movie(movie):
@@ -148,8 +166,11 @@ extension [Show] {
         guard let genre else {
             return self
         }
-
         return self.filter { $0.belongsToGenre(genre) }
+    }
+
+    func filterByJob(_ job: String) -> [Show] {
+        return self.filter { $0.didWorkAs(job) }
     }
 
     func sortByMostRecentRelease() -> [Show] {

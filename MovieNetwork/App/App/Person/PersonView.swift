@@ -21,15 +21,11 @@ struct PersonView: View {
                     TextBlock(title: "Biography", content: biography)
                 }
 
-                if let movies = viewModel.movies, !movies.isEmpty {
-                    Section("Movies") {
-                        ShowPosters(shows: movies, variant: .bottomTitle, size: .small)
-                    }
-                }
-
-                if let tvSeries = viewModel.tvSeries, !tvSeries.isEmpty {
-                    Section("TV Shows") {
-                        ShowPosters(shows: tvSeries, variant: .bottomTitle, size: .small)
+                ForEach(viewModel.filmography) { section in
+                    if let shows = section.shows, !shows.isEmpty {
+                        Section(section.name) {
+                            ShowPosters(shows: shows, variant: .bottomTitle, size: .small)
+                        }
                     }
                 }
             }

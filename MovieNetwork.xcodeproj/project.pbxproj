@@ -107,6 +107,7 @@
 		AC9ED4942B8CC3F3001183F3 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = AC9ED4932B8CC3F3001183F3 /* Realtime */; };
 		AC9ED4962B8CC3F3001183F3 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = AC9ED4952B8CC3F3001183F3 /* Storage */; };
 		AC9ED4992B8CC5AB001183F3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = AC9ED4982B8CC5AB001183F3 /* Supabase */; };
+		ACFC6BB62B9DDBC800F7010C /* FilmographySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC6BB52B9DDBC800F7010C /* FilmographySection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -191,7 +192,6 @@
 		AC5DDBA02B9A5956003F466B /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		AC5DDBA42B9A59AB003F466B /* Trending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trending.swift; sourceTree = "<group>"; };
 		AC5DDBA62B9A59E8003F466B /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
-		AC69740B2B9C924A00F9D7DD /* MovieNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MovieNetwork.app; path = "/Users/victoriendruon/dev/MovieNetwork/build/Debug-iphoneos/MovieNetwork.app"; sourceTree = "<absolute>"; };
 		AC69740E2B9C93A600F9D7DD /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		AC6974112B9C9E1000F9D7DD /* ShowToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowToolbar.swift; sourceTree = "<group>"; };
 		AC6974132B9CBD9800F9D7DD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -200,6 +200,8 @@
 		AC69741A2B9D190000F9D7DD /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		AC69741C2B9D19A500F9D7DD /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
 		AC69741F2B9D1E2E00F9D7DD /* PersonToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonToolbar.swift; sourceTree = "<group>"; };
+		ACFC6BB42B9DC39400F7010C /* MovieNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACFC6BB52B9DDBC800F7010C /* FilmographySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmographySection.swift; sourceTree = "<group>"; };
 		ACFDBCB02B8D018A00D8AA95 /* MovieNetwork.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MovieNetwork.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				AC3F3C7B2B80CC8700D306C0 /* MovieNetwork */,
+				ACFC6BB42B9DC39400F7010C /* MovieNetwork.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -465,6 +468,7 @@
 				AC6974182B9D0D7A00F9D7DD /* PersonCredits.swift */,
 				AC69741C2B9D19A500F9D7DD /* Role.swift */,
 				AC69741A2B9D190000F9D7DD /* Job.swift */,
+				ACFC6BB52B9DDBC800F7010C /* FilmographySection.swift */,
 			);
 			path = Attributes;
 			sourceTree = "<group>";
@@ -649,7 +653,7 @@
 				AC5960AB2B9B8B5E00857FB2 /* YouTubePlayerKit */,
 			);
 			productName = MovieNetwork;
-			productReference = AC69740B2B9C924A00F9D7DD /* MovieNetwork.app */;
+			productReference = ACFC6BB42B9DC39400F7010C /* MovieNetwork.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -712,6 +716,7 @@
 				AC5DDB062B9A534F003F466B /* ShowType.swift in Sources */,
 				AC5960B52B9BD94900857FB2 /* ShowHeader.swift in Sources */,
 				AC6974142B9CBD9800F9D7DD /* Config.swift in Sources */,
+				ACFC6BB62B9DDBC800F7010C /* FilmographySection.swift in Sources */,
 				AC5960AE2B9B8B6700857FB2 /* Videos.swift in Sources */,
 				AC5DDB952B9A5923003F466B /* SupabaseManager.swift in Sources */,
 				AC5DDB772B9A5840003F466B /* Media.swift in Sources */,

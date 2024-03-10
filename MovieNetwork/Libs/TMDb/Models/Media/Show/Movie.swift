@@ -33,6 +33,8 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
     let voteCount: Int?
     let hasVideo: Bool?
     let isAdultOnly: Bool?
+    let character: String?
+    let job: String?
     let credits: ShowCredits?
     let recommendations: MoviePageableList?
     let videos: VideoCollection?
@@ -63,6 +65,8 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
         voteCount: Int? = nil,
         hasVideo: Bool? = nil,
         isAdultOnly: Bool? = nil,
+        character: String? = nil,
+        job: String? = nil,
         credits: ShowCredits? = nil,
         recommendations: MoviePageableList? = nil,
         videos: VideoCollection? = nil
@@ -92,6 +96,8 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
         self.voteCount = voteCount
         self.hasVideo = hasVideo
         self.isAdultOnly = isAdultOnly
+        self.character = character
+        self.job = job
         self.credits = credits
         self.recommendations = recommendations
         self.videos = videos
@@ -137,6 +143,8 @@ extension Movie {
         case voteCount
         case hasVideo = "video"
         case isAdultOnly = "adult"
+        case character
+        case job
         case credits
         case recommendations
         case videos
@@ -191,6 +199,8 @@ extension Movie {
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.hasVideo = try container.decodeIfPresent(Bool.self, forKey: .hasVideo)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
+        self.character = try container.decodeIfPresent(String.self, forKey: .character)
+        self.job = try container.decodeIfPresent(String.self, forKey: .job)
         self.credits = try container.decodeIfPresent(ShowCredits.self, forKey: .credits)
         self.recommendations = try container.decodeIfPresent(MoviePageableList.self, forKey: .recommendations)
         self.videos = try container.decodeIfPresent(VideoCollection.self, forKey: .videos)

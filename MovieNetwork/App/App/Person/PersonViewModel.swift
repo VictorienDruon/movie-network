@@ -12,11 +12,34 @@ final class PersonViewModel: ObservableObject {
     @Published var person: Person
 
     var movies: [Show]? {
-        person.credits?.cast.filterMovies().sortByMostRecentRelease()
+        person.credits?.cast.filterMovies().uniqued().sortByMostRecentRelease()
     }
 
     var tvSeries: [Show]? {
         person.credits?.cast.filterTvSeries().uniqued().sortByMostRecentRelease()
+    }
+
+    var directedShows: [Show]? {
+        person.credits?.crew.filterByJob("Director").uniqued().sortByMostRecentRelease()
+    }
+
+    var writtenShows: [Show]? {
+        person.credits?.crew.filterByJob("Screenplay").uniqued().sortByMostRecentRelease()
+    }
+
+    var composedShows: [Show]? {
+        person.credits?.crew.filterByJob("Original Music Composer").uniqued().sortByMostRecentRelease()
+    }
+
+    var filmography: Filmography {
+        [
+            FilmographySection(name: "Movies", shows: movies),
+            FilmographySection(name: "TV Shows", shows: tvSeries),
+            FilmographySection(name: "Director", shows: directedShows),
+            FilmographySection(name: "Writer", shows: writtenShows),
+            FilmographySection(name: "Composer", shows: composedShows)
+        ]
+        .sortByShowCount()
     }
 
     init(for person: Person) {

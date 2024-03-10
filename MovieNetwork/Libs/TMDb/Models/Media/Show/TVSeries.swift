@@ -36,6 +36,8 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
     let voteAverage: Double?
     let voteCount: Int?
     let isAdultOnly: Bool?
+    let character: String?
+    let job: String?
     let credits: ShowCredits?
     let recommendations: TVSeriesPageableList?
     let videos: VideoCollection?
@@ -69,6 +71,8 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
         voteAverage: Double? = nil,
         voteCount: Int? = nil,
         isAdultOnly: Bool? = nil,
+        character: String? = nil,
+        job: String? = nil,
         credits: ShowCredits? = nil,
         recommendations: TVSeriesPageableList? = nil,
         videos: VideoCollection? = nil
@@ -101,6 +105,8 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
         self.voteAverage = voteAverage
         self.voteCount = voteCount
         self.isAdultOnly = isAdultOnly
+        self.character = character
+        self.job = job
         self.credits = credits
         self.recommendations = recommendations
         self.videos = videos
@@ -149,6 +155,8 @@ extension TVSeries {
         case firstAirDate
         case homepageURL = "homepage"
         case isAdultOnly = "adult"
+        case character
+        case job
         case credits = "aggregateCredits"
         case recommendations
         case videos
@@ -206,6 +214,8 @@ extension TVSeries {
         self.voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage)
         self.voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         self.isAdultOnly = try container.decodeIfPresent(Bool.self, forKey: .isAdultOnly)
+        self.character = try container.decodeIfPresent(String.self, forKey: .character)
+        self.job = try container.decodeIfPresent(String.self, forKey: .job)
         self.credits = try container.decodeIfPresent(ShowCredits.self, forKey: .credits)
         self.recommendations = try container.decodeIfPresent(TVSeriesPageableList.self, forKey: .recommendations)
         self.videos = try container.decodeIfPresent(VideoCollection.self, forKey: .videos)
