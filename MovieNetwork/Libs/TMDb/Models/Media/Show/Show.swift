@@ -132,8 +132,12 @@ extension Show {
         }
     }
 
-    func didWorkAs(_ job: String) -> Bool {
-        return self.job == job
+    func didWorkAs(_ jobs: [String]) -> Bool {
+        if let job = self.job {
+            return jobs.contains(job)
+        } else {
+            return false
+        }
     }
 
     func belongsToGenre(_ genre: GenreInfo) -> Bool {
@@ -169,8 +173,8 @@ extension [Show] {
         return self.filter { $0.belongsToGenre(genre) }
     }
 
-    func filterByJob(_ job: String) -> [Show] {
-        return self.filter { $0.didWorkAs(job) }
+    func filterByJobs(_ jobs: [String]) -> [Show] {
+        return self.filter { $0.didWorkAs(jobs) }
     }
 
     func sortByMostRecentRelease() -> [Show] {

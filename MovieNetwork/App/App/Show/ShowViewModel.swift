@@ -12,6 +12,14 @@ final class ShowViewModel: ObservableObject {
     @Published var show: Show
     @Published var showingTrailer = false
 
+    var cast: [CastMember]? {
+        show.credits?.cast.uniqued()
+    }
+
+    var crew: [CrewMember]? {
+        show.credits?.crew.uniqued().filterRelevantJobs()
+    }
+
     init(for show: Show) {
         self.show = show
         getShow()
@@ -28,4 +36,3 @@ final class ShowViewModel: ObservableObject {
         }
     }
 }
-

@@ -39,6 +39,32 @@ struct CrewMember: Identifiable, Codable, Equatable, Hashable, Profilable {
 }
 
 extension CrewMember {
+    func toPerson() -> Person {
+        return Person(
+            id: self.id,
+            name: self.name,
+            gender: self.gender ?? .unknown,
+            profilePath: self.profilePath
+        )
+    }
+
+    func isJobRelevant() -> Bool {
+        let relevantJobs = ["Director", "Screenplay", "Writer", "Original Music Composer"]
+        if let job = self.job ?? self.jobs?.first?.job {
+            return relevantJobs.contains(job)
+        } else {
+            return false
+        }
+    }
+}
+
+extension [CrewMember] {
+    func filterRelevantJobs() -> [CrewMember] {
+        return self.filter { $0.isJobRelevant() }
+    }
+}
+
+extension CrewMember {
     private enum CodingKeys: String, CodingKey {
         case id
         case creditID = "creditId"

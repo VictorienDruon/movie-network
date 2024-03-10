@@ -38,9 +38,15 @@ struct ShowView: View {
                     }
                 }
 
-                if let cast = viewModel.show.credits?.cast, !cast.isEmpty {
+                if let cast = viewModel.cast, !cast.isEmpty {
                     Section("Cast") {
                         CastThumbnails(cast: cast)
+                    }
+                }
+                
+                if let crew = viewModel.crew, !crew.isEmpty {
+                    Section("Crew") {
+                        CrewThumbnails(crew: crew)
                     }
                 }
             }

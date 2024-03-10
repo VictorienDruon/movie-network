@@ -94,27 +94,30 @@ struct ShowPoster: View {
     var size = PosterSize.medium
     var withNavigation = false
 
-    var body: some View {
-        let poster = switch variant {
+    @ViewBuilder
+    var poster: some View {
+        switch variant {
         case .raw:
-            AnyView(Poster(
+            Poster(
                 url: show.posterUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         case .topTitle:
-            AnyView(PosterWithTopTitle(
+            PosterWithTopTitle(
                 title: show.title,
                 url: show.posterUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         case .bottomTitle:
-            AnyView(PosterWithBottomTitle(
+            PosterWithBottomTitle(
                 title: show.title,
                 url: show.posterUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         }
+    }
 
+    var body: some View {
         if withNavigation {
             NavigationLink(value: Destination.show(show)) {
                 poster

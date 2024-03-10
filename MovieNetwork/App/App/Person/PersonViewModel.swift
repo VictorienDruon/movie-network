@@ -20,15 +20,15 @@ final class PersonViewModel: ObservableObject {
     }
 
     var directedShows: [Show]? {
-        person.credits?.crew.filterByJob("Director").uniqued().sortByMostRecentRelease()
+        person.credits?.crew.filterByJobs(["Director"]).uniqued().sortByMostRecentRelease()
     }
 
     var writtenShows: [Show]? {
-        person.credits?.crew.filterByJob("Screenplay").uniqued().sortByMostRecentRelease()
+        person.credits?.crew.filterByJobs(["Screenplay", "Writer"]).uniqued().sortByMostRecentRelease()
     }
 
     var composedShows: [Show]? {
-        person.credits?.crew.filterByJob("Original Music Composer").uniqued().sortByMostRecentRelease()
+        person.credits?.crew.filterByJobs(["Original Music Composer"]).uniqued().sortByMostRecentRelease()
     }
 
     var filmography: Filmography {

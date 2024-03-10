@@ -31,7 +31,8 @@ enum Tab: CaseIterable, Identifiable {
         }
     }
 
-    @ViewBuilder var view: some View {
+    @ViewBuilder
+    var view: some View {
         switch self {
         case .discover:
             DiscoverView()

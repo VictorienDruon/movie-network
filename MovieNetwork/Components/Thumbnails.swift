@@ -50,21 +50,24 @@ struct PersonThumbnail: View {
     var size = ThumbnailSize.medium
     var withNavigation = true
 
-    var body: some View {
-        let thumbnail = switch variant {
+    @ViewBuilder
+    var thumbnail: some View {
+        switch variant {
         case .raw:
-            AnyView(Thumbnail(
+            Thumbnail(
                 url: person.profileUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         case .name:
-            AnyView(ThumbnailWithName(
+            ThumbnailWithName(
                 name: person.name,
                 url: person.profileUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         }
+    }
 
+    var body: some View {
         if withNavigation {
             NavigationLink(value: Destination.person(person)) {
                 thumbnail
@@ -107,22 +110,25 @@ struct CastThumbnail: View {
     var size = ThumbnailSize.medium
     var withNavigation = true
 
-    var body: some View {
-        let thumbnail = switch variant {
+    @ViewBuilder
+    var thumbnail: some View {
+        switch variant {
         case .raw:
-            AnyView(Thumbnail(
+            Thumbnail(
                 url: member.profileUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         case .name:
-            AnyView(ThumbnailWithName(
+            ThumbnailWithName(
                 name: member.name,
                 description: member.character ?? member.roles?.first?.character,
                 url: member.profileUrl(size.config.imageSize),
                 size: size
-            ))
+            )
         }
+    }
 
+    var body: some View {
         if withNavigation {
             NavigationLink(value: Destination.person(member.toPerson())) {
                 thumbnail
@@ -145,6 +151,67 @@ struct CastThumbnails: View {
             HStack(alignment: .top, spacing: 12) {
                 ForEach(cast) { member in
                     CastThumbnail(
+                        member: member,
+                        variant: variant,
+                        size: size,
+                        withNavigation: withNavigation
+                    )
+                }
+            }
+            .padding(.vertical, 32)
+        }
+        .padding(.vertical, -32)
+        .contentMargins(.horizontal, 16)
+    }
+}
+
+struct CrewThumbnail: View {
+    var member: CrewMember
+    var variant = ThumbnailVariant.name
+    var size = ThumbnailSize.medium
+    var withNavigation = true
+
+    @ViewBuilder
+    var thumbnail: some View {
+        switch variant {
+        case .raw:
+            Thumbnail(
+                url: member.profileUrl(size.config.imageSize),
+                size: size
+            )
+        case .name:
+            ThumbnailWithName(
+                name: member.name,
+                description: member.job ?? member.jobs?.first?.job,
+                url: member.profileUrl(size.config.imageSize),
+                size: size
+            )
+        }
+    }
+
+    var body: some View {
+        if withNavigation {
+            NavigationLink(value: Destination.person(member.toPerson())) {
+                thumbnail
+            }
+            .buttonStyle(Pressable())
+        } else {
+            thumbnail
+        }
+    }
+}
+
+struct CrewThumbnails: View {
+    var crew: [CrewMember]
+    var variant = ThumbnailVariant.name
+    var size = ThumbnailSize.medium
+    var withNavigation = true
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(alignment: .top, spacing: 12) {
+                ForEach(crew) { member in
+                    CrewThumbnail(
                         member: member,
                         variant: variant,
                         size: size,
