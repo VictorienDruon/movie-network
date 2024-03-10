@@ -14,7 +14,13 @@ struct PersonToolbar: ToolbarContent {
     var body: some ToolbarContent {
         ToolbarItem {
             Menu("More", systemImage: "ellipsis.circle") {
-                ShareLink(item: viewModel.person.link)
+                ShareLink(
+                    item: viewModel.person.link,
+                    preview: SharePreview(
+                        viewModel.person.name,
+                        image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage())
+                    )
+                )
             }
         }
     }
