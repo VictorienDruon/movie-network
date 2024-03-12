@@ -137,7 +137,7 @@ struct ShowPosters: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .top, spacing: 12) {
+            LazyHStack(alignment: .top, spacing: 12) {
                 ForEach(shows) { show in
                     ShowPoster(
                         show: show,

@@ -114,12 +114,20 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
 }
 
 extension TVSeries {
+    func toMedia() -> Media {
+        return Media.tvSeries(self)
+    }
+
     func toShow() -> Show {
         return Show.tvSeries(self)
     }
 }
 
 extension [TVSeries] {
+    func toMedias() -> [Media] {
+        return self.map { $0.toMedia() }
+    }
+
     func toShows() -> [Show] {
         return self.map { $0.toShow() }
     }

@@ -29,9 +29,17 @@ final class ShowViewModel: ObservableObject {
         Task {
             switch show {
             case let .movie(movie):
-                show = try await TMDbManager.shared.movie(for: movie.id).toShow()
+                show = try await TMDbManager.shared.movie(
+                    for: movie.id,
+                    appendToResponse: [.credits, .recommendations, .videos]
+                )
+                .toShow()
             case let .tvSeries(tvSeries):
-                show = try await TMDbManager.shared.tvSeries(for: tvSeries.id).toShow()
+                show = try await TMDbManager.shared.tvSeries(
+                    for: tvSeries.id,
+                    appendToResponse: [.aggregateCredits, .recommendations, .videos]
+                )
+                .toShow()
             }
         }
     }

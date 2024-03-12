@@ -12,3 +12,11 @@ func getYear(from date: Date) -> String {
     let year = calendar.component(.year, from: date)
     return String(year)
 }
+
+extension DateFormatter {
+    static var tmdbDateFormat: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }
+}

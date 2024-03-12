@@ -17,16 +17,16 @@ struct PersonView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 32) {
-                if let biography = viewModel.person.biography, !biography.isEmpty {
-                    TextBlock(title: "Biography", content: biography)
-                }
-
                 ForEach(viewModel.filmography) { section in
                     if let shows = section.shows, !shows.isEmpty {
                         Section(section.name) {
                             ShowPosters(shows: shows, variant: .bottomTitle, size: .small)
                         }
                     }
+                }
+
+                if let biography = viewModel.person.biography, !biography.isEmpty {
+                    TextBlock(title: "Biography", content: biography)
                 }
             }
             .padding(.vertical)

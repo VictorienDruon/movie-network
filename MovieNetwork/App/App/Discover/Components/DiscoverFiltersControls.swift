@@ -47,6 +47,8 @@ struct DiscoverFiltersControls: View {
             Spacer()
         }
         .padding(.horizontal)
+        .sensoryFeedback(.selection, trigger: viewModel.typeFilters)
+        .sensoryFeedback(.selection, trigger: viewModel.selectedGenre)
         .onChange(of: viewModel.typeFilters) {
             viewModel.getTrendingShows()
         }

@@ -49,7 +49,10 @@ final class PersonViewModel: ObservableObject {
 
     func getPerson() {
         Task {
-            person = try await TMDbManager.shared.person(for: person.id)
+            person = try await TMDbManager.shared.person(
+                for: person.id,
+                appendToResponse: [.combinedCredits]
+            )
         }
     }
 }

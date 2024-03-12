@@ -87,7 +87,7 @@ struct PersonThumbnails: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .top, spacing: 12) {
+            LazyHStack(alignment: .top, spacing: 12) {
                 ForEach(people) { person in
                     PersonThumbnail(
                         person: person,
@@ -148,7 +148,7 @@ struct CastThumbnails: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .top, spacing: 12) {
+            LazyHStack(alignment: .top, spacing: 12) {
                 ForEach(cast) { member in
                     CastThumbnail(
                         member: member,
@@ -209,7 +209,7 @@ struct CrewThumbnails: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            HStack(alignment: .top, spacing: 12) {
+            LazyHStack(alignment: .top, spacing: 12) {
                 ForEach(crew) { member in
                     CrewThumbnail(
                         member: member,

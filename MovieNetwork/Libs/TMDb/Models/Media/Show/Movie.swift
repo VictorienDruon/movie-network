@@ -105,12 +105,20 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
 }
 
 extension Movie {
+    func toMedia() -> Media {
+        return Media.movie(self)
+    }
+
     func toShow() -> Show {
         return Show.movie(self)
     }
 }
 
 extension [Movie] {
+    func toMedias() -> [Media] {
+        return self.map { $0.toMedia() }
+    }
+
     func toShows() -> [Show] {
         return self.map { $0.toShow() }
     }

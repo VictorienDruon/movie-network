@@ -63,6 +63,18 @@ extension Person {
 }
 
 extension Person {
+    func toMedia() -> Media {
+        return Media.person(self)
+    }
+}
+
+extension [Person] {
+    func toMedias() -> [Media] {
+        return self.map { $0.toMedia() }
+    }
+}
+
+extension Person {
     enum CodingKeys: String, CodingKey {
         case id
         case name

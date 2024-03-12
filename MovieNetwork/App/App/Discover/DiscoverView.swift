@@ -16,15 +16,27 @@ struct DiscoverView: View {
             LazyVStack(spacing: 24) {
                 DiscoverFiltersControls()
 
-                if !viewModel.filteredTrendingShows.isEmpty {
+                if let trendingShows = viewModel.filteredTrendingShows, !trendingShows.isEmpty {
                     Section("Trending") {
-                        ShowPosters(shows: viewModel.filteredTrendingShows)
+                        ShowPosters(shows: trendingShows)
                     }
                 }
 
-                if !viewModel.trendingPeople.isEmpty {
+                if let stars = viewModel.trendingPeople, !stars.isEmpty {
                     Section("Stars") {
-                        PersonThumbnails(people: viewModel.trendingPeople)
+                        PersonThumbnails(people: stars)
+                    }
+                }
+
+                if let nowPlayingShows = viewModel.nowPlayingShows, !nowPlayingShows.isEmpty {
+                    Section("Now Playing") {
+                        ShowPosters(shows: nowPlayingShows)
+                    }
+                }
+
+                if let upcomingShows = viewModel.upcomingShows, !upcomingShows.isEmpty {
+                    Section("Upcoming") {
+                        ShowPosters(shows: upcomingShows)
                     }
                 }
             }

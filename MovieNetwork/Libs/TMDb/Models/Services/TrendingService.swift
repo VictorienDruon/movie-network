@@ -1,5 +1,5 @@
 //
-//  Trending.swift
+//  TrendingService.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 04/03/2024.

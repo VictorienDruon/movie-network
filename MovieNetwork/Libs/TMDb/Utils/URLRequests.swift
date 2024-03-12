@@ -28,12 +28,9 @@ struct TMDbRequest {
     }
 
     func fetch<T: Decodable>(_ type: T.Type) async throws -> T {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        decoder.dateDecodingStrategy = .formatted(.tmdbDateFormat)
 
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
