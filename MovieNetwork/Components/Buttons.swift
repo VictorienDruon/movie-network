@@ -49,10 +49,10 @@ struct StyledButton: ButtonStyle {
                     ],
                     startPoint: isDark ? .bottom : .top,
                     endPoint: isDark ? .top : .bottom
-                ),
-                in: iconOnly ? AnyShape(.circle) : AnyShape(.capsule)
+                )
             )
             .background(.background)
+            .clipShape(iconOnly ? AnyShape(.circle) : AnyShape(.capsule))
             .overlay {
                 if iconOnly {
                     Circle()
@@ -85,10 +85,8 @@ struct TransparentButton: ButtonStyle {
             .makeBody(configuration: configuration)
             .foregroundStyle(.white)
             .opacity(isPressed ? 0.5 : 1)
-            .background(
-                .ultraThinMaterial,
-                in: iconOnly ? AnyShape(.circle) : AnyShape(.capsule)
-            )
+            .background(.ultraThinMaterial)
+            .clipShape(iconOnly ? AnyShape(.circle) : AnyShape(.capsule))
             .shadowSize(.small)
     }
 }

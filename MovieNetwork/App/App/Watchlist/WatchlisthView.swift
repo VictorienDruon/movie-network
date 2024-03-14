@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct WatchlisthView: View {
-    @EnvironmentObject var navigation: NavigationManager
-
     var body: some View {
         Title3("Watchlist")
     }
@@ -30,5 +28,4 @@ struct WatchlisthView: View {
             .tag(Tab.watchlist)
             .tabItem { Image(systemName: Tab.watchlist.icon) }
         }
-        .environmentObject(navigation)
 }

@@ -25,14 +25,14 @@ final class DiscoverViewModel: ObservableObject {
     @Published var nowPlayingMovies: [Show]?
     @Published var nowPlayingTvSeries: [Show]?
     var nowPlayingShows: [Show]? {
-        filteredShowsByType(movies: nowPlayingMovies, tvSeries: nowPlayingTvSeries)?
+        filterByType(movies: nowPlayingMovies, tvSeries: nowPlayingTvSeries)?
             .filterByGenre(selectedGenre)
     }
 
     @Published var upcomingMovies: [Show]?
     @Published var upcomingTvSeries: [Show]?
     var upcomingShows: [Show]? {
-        filteredShowsByType(movies: upcomingMovies, tvSeries: upcomingTvSeries)?
+        filterByType(movies: upcomingMovies, tvSeries: upcomingTvSeries)?
             .filterByGenre(selectedGenre)
     }
 
@@ -130,7 +130,7 @@ final class DiscoverViewModel: ObservableObject {
         }
     }
 
-    private func filteredShowsByType(movies: [Show]?, tvSeries: [Show]?) -> [Show]? {
+    private func filterByType(movies: [Show]?, tvSeries: [Show]?) -> [Show]? {
         guard let movies, let tvSeries else {
             return nil
         }

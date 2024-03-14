@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FeedView: View {
     @EnvironmentObject var session: SessionManager
-    @EnvironmentObject var navigation: NavigationManager
 
     var body: some View {
         if !session.isAuthenticated {
@@ -39,5 +38,4 @@ struct FeedView: View {
             .tabItem { Image(systemName: Tab.feed.icon) }
         }
         .environmentObject(session)
-        .environmentObject(navigation)
 }

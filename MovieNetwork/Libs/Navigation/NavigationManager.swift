@@ -24,8 +24,10 @@ final class NavigationManager: ObservableObject {
     @Published var watchlistStack = Stack()
     @Published var feedStack = Stack()
     @Published var profileStack = Stack()
+    @Published var searchStack = Stack()
 
     @Published var showingProfile = false
+    @Published var showingSearch = false
 
     func withStack(of tab: Tab, task: (inout Stack) -> Void) {
         switch tab {
@@ -38,6 +40,8 @@ final class NavigationManager: ObservableObject {
     func withActiveStack(task: (inout Stack) -> Void) {
         if showingProfile {
             task(&profileStack)
+        } else if showingSearch {
+            task(&searchStack)
         } else {
             withStack(of: activeTab, task: task)
         }

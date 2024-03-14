@@ -30,6 +30,12 @@ final class TMDbManager {
         }
     }
 
+    func search(_ query: String) async throws -> [Media] {
+        let queryItems = [URLQueryItem(name: "query", value: query)]
+        let request = TMDbRequest(path: "/search/multi", queryItems: queryItems)
+        return try await request.fetch(MediaPageableList.self).results
+    }
+
     func movie(for id: Int, appendToResponse endpoints: [MovieEndpoint]? = nil) async throws -> Movie {
         var queryItems = [URLQueryItem]()
         if let appendToResponse = endpoints?.map({ $0.rawValue }).joined(separator: ",") {

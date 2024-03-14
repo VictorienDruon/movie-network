@@ -34,9 +34,38 @@ struct BackdropWithAction: View {
 
             if !disabled {
                 Button("Play", systemImage: "play.fill", action: onPlay)
-                    .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
                     .labelStyle(.iconOnly)
+                    .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
             }
+        }
+    }
+}
+
+struct ShowBackdrop: View {
+    var show: Show
+    var variant = BackdropVariant.raw
+    var size = BackdropSize.medium
+    var withNavigation = false
+
+    @ViewBuilder
+    var backdrop: some View {
+        switch variant {
+        case .raw:
+            Backdrop(
+                url: show.backdropUrl(size.config.imageSize),
+                size: size
+            )
+        }
+    }
+
+    var body: some View {
+        if withNavigation {
+            NavigationLink(value: Destination.show(show)) {
+                backdrop
+            }
+            .buttonStyle(Pressable())
+        } else {
+            backdrop
         }
     }
 }
@@ -56,6 +85,10 @@ struct BackdropVideo: View {
     }
 }
 
+enum BackdropVariant {
+    case raw
+}
+
 enum BackdropSize {
     case small, medium, large, full
 
@@ -66,21 +99,24 @@ enum BackdropSize {
                 width: 120,
                 radius: 14,
                 buttonSize: .small,
-                shadowSize: .small
+                shadowSize: .small,
+                imageSize: .w300
             )
         case .medium:
             return BackdropConfig(
                 width: 150,
                 radius: 16,
                 buttonSize: .medium,
-                shadowSize: .medium
+                shadowSize: .medium,
+                imageSize: .w780
             )
         case .large:
             return BackdropConfig(
                 width: 250,
                 radius: 24,
                 buttonSize: .large,
-                shadowSize: .large
+                shadowSize: .large,
+                imageSize: .w1280
             )
         case .full:
             var largeConfig = BackdropSize.large.config
@@ -95,6 +131,7 @@ struct BackdropConfig {
     var radius: CGFloat
     var buttonSize: ButtonSize
     var shadowSize: ShadowSize
+    var imageSize: BackdropImageSize
 }
 
 #Preview {

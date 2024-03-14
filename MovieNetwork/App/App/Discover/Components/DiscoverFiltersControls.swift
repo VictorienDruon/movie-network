@@ -41,8 +41,8 @@ struct DiscoverFiltersControls: View {
                     }
                 }
             }
-            .buttonStyle(StyledButton(genreMenuVariant, .small))
             .labelStyle(LabelLayout(.right, .small))
+            .buttonStyle(StyledButton(genreMenuVariant, .small))
 
             Spacer()
         }

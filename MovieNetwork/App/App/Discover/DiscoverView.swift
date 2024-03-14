@@ -12,38 +12,47 @@ struct DiscoverView: View {
     @StateObject var viewModel = DiscoverViewModel()
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 24) {
-                DiscoverFiltersControls()
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                LazyVStack(spacing: 24) {
+                    DiscoverFiltersControls()
 
-                if let trendingShows = viewModel.filteredTrendingShows, !trendingShows.isEmpty {
-                    Section("Trending") {
-                        ShowPosters(shows: trendingShows)
+                    if let trendingShows = viewModel.filteredTrendingShows, !trendingShows.isEmpty {
+                        Section("Trending") {
+                            ShowPosters(shows: trendingShows)
+                        }
+                    }
+
+                    if let stars = viewModel.trendingPeople, !stars.isEmpty {
+                        Section("Stars") {
+                            PersonThumbnails(people: stars)
+                        }
+                    }
+
+                    if let nowPlayingShows = viewModel.nowPlayingShows, !nowPlayingShows.isEmpty {
+                        Section("Now Playing") {
+                            ShowPosters(shows: nowPlayingShows)
+                        }
+                    }
+
+                    if let upcomingShows = viewModel.upcomingShows, !upcomingShows.isEmpty {
+                        Section("Upcoming") {
+                            ShowPosters(shows: upcomingShows)
+                        }
                     }
                 }
-
-                if let stars = viewModel.trendingPeople, !stars.isEmpty {
-                    Section("Stars") {
-                        PersonThumbnails(people: stars)
-                    }
-                }
-
-                if let nowPlayingShows = viewModel.nowPlayingShows, !nowPlayingShows.isEmpty {
-                    Section("Now Playing") {
-                        ShowPosters(shows: nowPlayingShows)
-                    }
-                }
-
-                if let upcomingShows = viewModel.upcomingShows, !upcomingShows.isEmpty {
-                    Section("Upcoming") {
-                        ShowPosters(shows: upcomingShows)
-                    }
-                }
+                .padding(.vertical)
             }
-            .padding(.vertical)
+            .scrollIndicators(.hidden)
+            .environmentObject(viewModel)
+
+            Button("Search", systemImage: "magnifyingglass") {
+                navigation.showingSearch = true
+            }
+            .labelStyle(LabelLayout(.left, .medium))
+            .buttonStyle(StyledButton(.secondaryOutline, .medium))
+            .padding()
         }
-        .scrollIndicators(.hidden)
-        .environmentObject(viewModel)
     }
 }
 

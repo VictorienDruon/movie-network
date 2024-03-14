@@ -76,12 +76,12 @@ struct PosterWithActions: View {
 
             HStack(spacing: size.config.titlePadding / 2) {
                 Button("Play", systemImage: "play.fill", action: onPlay)
-                    .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
                     .labelStyle(.iconOnly)
+                    .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
 
                 Button("Share", systemImage: "square.and.arrow.up", action: onShare)
-                    .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
                     .labelStyle(.iconOnly)
+                    .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
             }
             .padding(size.config.titlePadding)
         }

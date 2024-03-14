@@ -46,6 +46,18 @@ struct AppView: View {
                     .toolbar { ProfileToolbar() }
             }
         }
+        .sheet(isPresented: $navigation.showingSearch) {
+            NavigationStack(path: $navigation.searchStack) {
+                SearchView()
+                    .navigationTitle("Search")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationDestination(
+                        for: Destination.self,
+                        destination: navigation.routeTo
+                    )
+            }
+            .presentationBackground(.thinMaterial)
+        }
         .onOpenURL(perform: navigation.routeUrl)
         .environmentObject(session)
         .environmentObject(navigation)

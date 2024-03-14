@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var session: SessionManager
-    @EnvironmentObject var navigation: NavigationManager
 
     var body: some View {
         if !session.isAuthenticated {
@@ -48,5 +47,4 @@ struct ProfileView: View {
                 .toolbar { ProfileToolbar() }
         }
         .environmentObject(session)
-        .environmentObject(navigation)
 }
