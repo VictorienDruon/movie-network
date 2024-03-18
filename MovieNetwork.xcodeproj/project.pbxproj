@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC2798B12BA5DA8600B599D3 /* WatchlistsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2798B02BA5DA8600B599D3 /* WatchlistsRow.swift */; };
+		AC2798B32BA5DC7C00B599D3 /* ShowsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2798B22BA5DC7C00B599D3 /* ShowsRow.swift */; };
 		AC59609F2B9B64B000857FB2 /* VideoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC59609E2B9B64B000857FB2 /* VideoSize.swift */; };
 		AC5960A12B9B64E300857FB2 /* VideoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5960A02B9B64E300857FB2 /* VideoType.swift */; };
 		AC5960A32B9B651600857FB2 /* VideoMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5960A22B9B651600857FB2 /* VideoMetadata.swift */; };
@@ -118,6 +120,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC2798B02BA5DA8600B599D3 /* WatchlistsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistsRow.swift; sourceTree = "<group>"; };
+		AC2798B22BA5DC7C00B599D3 /* ShowsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsRow.swift; sourceTree = "<group>"; };
 		AC431CF52B8CD8F5003AC32E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC59609E2B9B64B000857FB2 /* VideoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSize.swift; sourceTree = "<group>"; };
 		AC5960A02B9B64E300857FB2 /* VideoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoType.swift; sourceTree = "<group>"; };
@@ -242,6 +246,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC2798AF2BA5D5B200B599D3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AC2798B02BA5DA8600B599D3 /* WatchlistsRow.swift */,
+				AC2798B22BA5DC7C00B599D3 /* ShowsRow.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		AC3F3C702B80CC8700D306C0 = {
 			isa = PBXGroup;
 			children = (
@@ -464,6 +477,7 @@
 			children = (
 				AC5DDB942B9A5923003F466B /* SupabaseManager.swift */,
 				AC5DDB8C2B9A58F2003F466B /* SessionManager.swift */,
+				AC2798AF2BA5D5B200B599D3 /* Models */,
 			);
 			path = Supabase;
 			sourceTree = "<group>";
@@ -771,6 +785,7 @@
 				AC5960A92B9B75EC00857FB2 /* Backdrops.swift in Sources */,
 				AC6974202B9D1E2E00F9D7DD /* PersonToolbar.swift in Sources */,
 				AC5960BD2B9BE76F00857FB2 /* TextBlock.swift in Sources */,
+				AC2798B12BA5DA8600B599D3 /* WatchlistsRow.swift in Sources */,
 				AC5DDAF92B9A5338003F466B /* Buttons.swift in Sources */,
 				AC5DDB532B9A562B003F466B /* ShowView.swift in Sources */,
 				ACD8AD482B9FA0D800470DA1 /* MovieService.swift in Sources */,
@@ -792,6 +807,7 @@
 				AC5DDBA72B9A59E8003F466B /* AppView.swift in Sources */,
 				AC5DDB9C2B9A5937003F466B /* TVSeries.swift in Sources */,
 				AC5960BF2B9BEFDC00857FB2 /* WatchlistControls.swift in Sources */,
+				AC2798B32BA5DC7C00B599D3 /* ShowsRow.swift in Sources */,
 				AC5DDB752B9A5832003F466B /* ImageURL.swift in Sources */,
 				AC5DDAFA2B9A5338003F466B /* Images.swift in Sources */,
 				AC7D4EF12BA1B5D500029841 /* SearchView.swift in Sources */,

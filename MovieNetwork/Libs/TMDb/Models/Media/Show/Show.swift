@@ -39,13 +39,6 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         }
     }
 
-    var tagline: String? {
-        switch self {
-        case let .movie(movie): movie.tagline
-        case let .tvSeries(tvSeries): tvSeries.tagline
-        }
-    }
-
     var posterPath: URL? {
         switch self {
         case let .movie(movie): movie.posterPath
@@ -113,6 +106,13 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         switch self {
         case let .movie(movie): URL(string: "\(appScheme)movie/\(movie.id)")!
         case let .tvSeries(tvSeries): URL(string: "\(appScheme)tv/\(tvSeries.id)")!
+        }
+    }
+
+    var databaseId: String {
+        switch self {
+        case .movie: "movie-\(self.id)"
+        case .tvSeries: "tv-\(self.id)"
         }
     }
 }
