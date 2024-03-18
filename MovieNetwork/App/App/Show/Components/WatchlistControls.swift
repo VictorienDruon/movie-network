@@ -5,11 +5,15 @@
 //  Created by Victorien Druon on 09/03/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct WatchlistControls: View {
     @EnvironmentObject var session: SessionManager
     @EnvironmentObject var viewModel: ShowViewModel
+    @Environment(\.modelContext) var modelContext
+    @Query var watchlist: [WatchlistRowLocal]
+    @Query var shows: [ShowsRowLocal]
     @State private var inWatchlist = false
 
     var body: some View {
@@ -33,6 +37,7 @@ struct WatchlistControls: View {
         }
         .padding(.horizontal)
         .animation(.bouncy, value: inWatchlist)
+        .sensoryFeedback(.success, trigger: inWatchlist)
         .task { isInWatchlist() }
     }
 
@@ -41,7 +46,7 @@ struct WatchlistControls: View {
             if let user = session.user {
                 inWatchlist = try await SupabaseManager.shared.isInWatchlist(viewModel.show, for: user)
             } else {
-                print("No user - should use local storage")
+                inWatchlist = watchlist.contains(where: { $0.show?.id == viewModel.show.databaseId })
             }
         }
     }
@@ -50,10 +55,15 @@ struct WatchlistControls: View {
         Task {
             if let user = session.user {
                 try await SupabaseManager.shared.addToWatchlist(viewModel.show, for: user)
-                inWatchlist = true
             } else {
-                print("No user - should use local storage")
+                let watchlistRow = WatchlistRowLocal()
+                let showRow = ShowsRowLocal(
+                    id: viewModel.show.databaseId,
+                    watchlistRow: watchlistRow
+                )
+                modelContext.insert(showRow)
             }
+            inWatchlist = true
         }
     }
 
@@ -61,10 +71,13 @@ struct WatchlistControls: View {
         Task {
             if let user = session.user {
                 try await SupabaseManager.shared.removeFromWatchlist(viewModel.show, for: user)
-                inWatchlist = false
             } else {
-                print("No user - should use local storage")
+                guard
+                    let watchlistRow = watchlist.first(where: { $0.show?.id == viewModel.show.databaseId })
+                else { return }
+                modelContext.delete(watchlistRow)
             }
+            inWatchlist = false
         }
     }
 }

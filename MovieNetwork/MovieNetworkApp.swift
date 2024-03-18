@@ -5,6 +5,7 @@
 //  Created by Victorien Druon on 17/02/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 @main
@@ -13,5 +14,6 @@ struct MovieNetworkApp: App {
         WindowGroup {
             RootView()
         }
+        .modelContainer(for: [WatchlistRowLocal.self, ShowsRowLocal.self])
     }
 }

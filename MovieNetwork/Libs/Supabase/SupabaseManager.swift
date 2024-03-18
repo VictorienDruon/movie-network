@@ -48,7 +48,7 @@ extension SupabaseManager {
     }
 
     func authListener(onChange: (AuthChangeEvent, Session?) -> Void) async {
-        for await (event, session) in await SupabaseManager.shared.supabase.auth.authStateChanges {
+        for await (event, session) in await supabase.auth.authStateChanges {
             onChange(event, session)
         }
     }
@@ -88,13 +88,13 @@ extension SupabaseManager {
             .insert(row)
             .execute()
     }
-    
+
     func removeFromWatchlist(_ show: Show, for user: User) async throws {
         try await supabase.database
-          .from("watchlists")
-          .delete()
-          .eq("show_id", value: show.databaseId)
-          .eq("user_id", value: user.id)
-          .execute()
+            .from("watchlists")
+            .delete()
+            .eq("show_id", value: show.databaseId)
+            .eq("user_id", value: user.id)
+            .execute()
     }
 }

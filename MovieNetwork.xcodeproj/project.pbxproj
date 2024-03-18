@@ -115,6 +115,8 @@
 		ACD8AD4A2B9FA10200470DA1 /* TVSeriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8AD492B9FA10200470DA1 /* TVSeriesService.swift */; };
 		ACD8AD4C2B9FA36A00470DA1 /* PersonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8AD4B2B9FA36A00470DA1 /* PersonService.swift */; };
 		ACD8AD4E2BA109C200470DA1 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD8AD4D2BA109C200470DA1 /* DiscoverView.swift */; };
+		ACE9FE982BA87A8F0024364F /* ShowsRowLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE9FE972BA87A8F0024364F /* ShowsRowLocal.swift */; };
+		ACE9FE9A2BA87AA80024364F /* WatchlistRowLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE9FE992BA87AA80024364F /* WatchlistRowLocal.swift */; };
 		ACFC6BB62B9DDBC800F7010C /* FilmographySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFC6BB52B9DDBC800F7010C /* FilmographySection.swift */; };
 		ACFC6BB82B9DF89300F7010C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACFC6BB72B9DF89300F7010C /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -217,6 +219,8 @@
 		ACD8AD492B9FA10200470DA1 /* TVSeriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVSeriesService.swift; sourceTree = "<group>"; };
 		ACD8AD4B2B9FA36A00470DA1 /* PersonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonService.swift; sourceTree = "<group>"; };
 		ACD8AD4D2BA109C200470DA1 /* DiscoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
+		ACE9FE972BA87A8F0024364F /* ShowsRowLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsRowLocal.swift; sourceTree = "<group>"; };
+		ACE9FE992BA87AA80024364F /* WatchlistRowLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistRowLocal.swift; sourceTree = "<group>"; };
 		ACFC6BB42B9DC39400F7010C /* MovieNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACFC6BB52B9DDBC800F7010C /* FilmographySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmographySection.swift; sourceTree = "<group>"; };
 		ACFC6BB72B9DF89300F7010C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				AC5DDB032B9A534F003F466B /* ShowType.swift */,
+				ACE9FE962BA879840024364F /* LocalStorage */,
 				AC5DDB022B9A534F003F466B /* Utils */,
 			);
 			path = Models;
@@ -673,6 +678,15 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		ACE9FE962BA879840024364F /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				ACE9FE992BA87AA80024364F /* WatchlistRowLocal.swift */,
+				ACE9FE972BA87A8F0024364F /* ShowsRowLocal.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -809,6 +823,7 @@
 				AC5960BF2B9BEFDC00857FB2 /* WatchlistControls.swift in Sources */,
 				AC2798B32BA5DC7C00B599D3 /* ShowsRow.swift in Sources */,
 				AC5DDB752B9A5832003F466B /* ImageURL.swift in Sources */,
+				ACE9FE982BA87A8F0024364F /* ShowsRowLocal.swift in Sources */,
 				AC5DDAFA2B9A5338003F466B /* Images.swift in Sources */,
 				AC7D4EF12BA1B5D500029841 /* SearchView.swift in Sources */,
 				AC5DDB922B9A591C003F466B /* SpokenLanguage.swift in Sources */,
@@ -850,6 +865,7 @@
 				AC5960B12B9B8C6500857FB2 /* ShowTrailer.swift in Sources */,
 				ACD8AD462B9FA00200470DA1 /* DiscoverService.swift in Sources */,
 				AC5DDB832B9A5889003F466B /* Posterable.swift in Sources */,
+				ACE9FE9A2BA87AA80024364F /* WatchlistRowLocal.swift in Sources */,
 				AC5DDB8D2B9A58F2003F466B /* SessionManager.swift in Sources */,
 				AC5DDB932B9A591C003F466B /* Status.swift in Sources */,
 				AC59609F2B9B64B000857FB2 /* VideoSize.swift in Sources */,
