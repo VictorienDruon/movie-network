@@ -45,7 +45,7 @@ struct SearchView: View {
             .padding(.horizontal, 16)
             .frame(height: 55)
             .background(.thickMaterial)
-            .cornerRadius(14)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
             .shadowSize(.large)
             .padding()
         }

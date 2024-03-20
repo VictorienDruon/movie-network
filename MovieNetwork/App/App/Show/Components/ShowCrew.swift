@@ -1,26 +1,21 @@
 //
-//  ShowGenres.swift
+//  ShowCrew.swift
 //  MovieNetwork
 //
-//  Created by Victorien Druon on 09/03/2024.
+//  Created by Victorien Druon on 20/03/2024.
 //
 
 import SwiftData
 import SwiftUI
 
-struct ShowGenres: View {
+struct ShowCrew: View {
     @EnvironmentObject var viewModel: ShowViewModel
 
     var body: some View {
-        if let genres = viewModel.show.genres, !genres.isEmpty {
-            ScrollView(.horizontal) {
-                LazyHStack {
-                    ForEach(genres) { genre in
-                        Tag(genre.name, size: .small)
-                    }
-                }
+        if let crew = viewModel.crew, !crew.isEmpty {
+            Section("Crew") {
+                CrewThumbnails(crew: crew)
             }
-            .contentMargins(.horizontal, 16)
         }
     }
 }
@@ -32,6 +27,6 @@ struct ShowGenres: View {
         configurations: config
     ).mainContext
 
-    return ShowGenres()
+    return ShowCrew()
         .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
 }

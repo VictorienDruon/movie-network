@@ -14,6 +14,6 @@ struct MovieNetworkApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: [WatchlistRowLocal.self, ShowsRowLocal.self])
+        .modelContainer(for: [LocalWatchlistItem.self, LocalReview.self])
     }
 }

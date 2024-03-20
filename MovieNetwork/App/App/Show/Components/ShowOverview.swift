@@ -1,26 +1,19 @@
 //
-//  ShowGenres.swift
+//  ShowOverview.swift
 //  MovieNetwork
 //
-//  Created by Victorien Druon on 09/03/2024.
+//  Created by Victorien Druon on 20/03/2024.
 //
 
 import SwiftData
 import SwiftUI
 
-struct ShowGenres: View {
+struct ShowOverview: View {
     @EnvironmentObject var viewModel: ShowViewModel
 
     var body: some View {
-        if let genres = viewModel.show.genres, !genres.isEmpty {
-            ScrollView(.horizontal) {
-                LazyHStack {
-                    ForEach(genres) { genre in
-                        Tag(genre.name, size: .small)
-                    }
-                }
-            }
-            .contentMargins(.horizontal, 16)
+        if let overview = viewModel.show.overview, !overview.isEmpty {
+            TextBlock(title: "Overview", content: overview)
         }
     }
 }
@@ -32,6 +25,6 @@ struct ShowGenres: View {
         configurations: config
     ).mainContext
 
-    return ShowGenres()
+    return ShowOverview()
         .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
 }

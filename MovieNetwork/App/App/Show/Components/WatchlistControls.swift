@@ -9,81 +9,47 @@ import SwiftData
 import SwiftUI
 
 struct WatchlistControls: View {
-    @EnvironmentObject var session: SessionManager
     @EnvironmentObject var viewModel: ShowViewModel
-    @Environment(\.modelContext) var modelContext
-    @Query var watchlist: [WatchlistRowLocal]
-    @Query var shows: [ShowsRowLocal]
-    @State private var inWatchlist = false
 
     var body: some View {
         HStack {
-            if inWatchlist {
+            if viewModel.inWatchlist {
                 Button("Remove", systemImage: "trash") {
-                    removeFromWatchlist()
+                    viewModel.removeShowFromWatchlist()
                 }
                 .buttonStyle(StyledButton(.secondaryOutline, .full))
                 .transition(.scale)
             }
 
-            Button(inWatchlist ? "Review" : "Add to watchlist", systemImage: inWatchlist ? "star.fill" : "plus") {
-                if inWatchlist {}
-                else {
-                    addToWatchlist()
+            Button(
+                viewModel.inWatchlist ? "Review" : "Add to watchlist",
+                systemImage: viewModel.inWatchlist ? "star.fill" : "plus"
+            ) {
+                if viewModel.inWatchlist {
+                    viewModel.showingReviewForm = true
+                } else {
+                    viewModel.addShowToWatchlist()
                 }
             }
             .buttonStyle(StyledButton(.primary, .full))
             .contentTransition(.numericText())
         }
         .padding(.horizontal)
-        .animation(.bouncy, value: inWatchlist)
-        .sensoryFeedback(.success, trigger: inWatchlist)
-        .task { isInWatchlist() }
-    }
-
-    private func isInWatchlist() {
-        Task {
-            if let user = session.user {
-                inWatchlist = try await SupabaseManager.shared.isInWatchlist(viewModel.show, for: user)
-            } else {
-                inWatchlist = watchlist.contains(where: { $0.show?.id == viewModel.show.databaseId })
-            }
-        }
-    }
-
-    private func addToWatchlist() {
-        Task {
-            if let user = session.user {
-                try await SupabaseManager.shared.addToWatchlist(viewModel.show, for: user)
-            } else {
-                let watchlistRow = WatchlistRowLocal()
-                let showRow = ShowsRowLocal(
-                    id: viewModel.show.databaseId,
-                    watchlistRow: watchlistRow
-                )
-                modelContext.insert(showRow)
-            }
-            inWatchlist = true
-        }
-    }
-
-    private func removeFromWatchlist() {
-        Task {
-            if let user = session.user {
-                try await SupabaseManager.shared.removeFromWatchlist(viewModel.show, for: user)
-            } else {
-                guard
-                    let watchlistRow = watchlist.first(where: { $0.show?.id == viewModel.show.databaseId })
-                else { return }
-                modelContext.delete(watchlistRow)
-            }
-            inWatchlist = false
+        .animation(.bouncy, value: viewModel.inWatchlist)
+        .sensoryFeedback(.success, trigger: viewModel.inWatchlist)
+        .sheet(isPresented: $viewModel.showingReviewForm) {
+            ReviewForm()
         }
     }
 }
 
 #Preview {
-    WatchlistControls()
-        .environmentObject(SessionManager())
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let modelContext = try! ModelContainer(
+        for: LocalWatchlistItem.self, LocalReview.self,
+        configurations: config
+    ).mainContext
+
+    return WatchlistControls()
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
 }

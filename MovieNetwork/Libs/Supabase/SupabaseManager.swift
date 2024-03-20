@@ -34,6 +34,14 @@ extension SupabaseManager {
     func signOut() async throws {
         try await supabase.auth.signOut()
     }
+    
+    func currentSession() async -> Session? {
+        do {
+            return try await supabase.auth.session
+        } catch {
+            return nil
+        }
+    }
 
     func currentUser() async -> User? {
         do {
@@ -95,6 +103,17 @@ extension SupabaseManager {
             .delete()
             .eq("show_id", value: show.databaseId)
             .eq("user_id", value: user.id)
+            .execute()
+    }
+}
+
+// Reviews
+extension SupabaseManager {
+    func createReview(for show: Show, by user: User, rating: Int, comment: String?) async throws {
+        let row = ReviewsRow(userId: user.id, showId: show.databaseId, rating: rating, comment: comment)
+        try await supabase.database
+            .from("reviews")
+            .insert(row)
             .execute()
     }
 }

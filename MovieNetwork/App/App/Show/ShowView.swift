@@ -5,14 +5,13 @@
 //  Created by Victorien Druon on 07/03/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ShowView: View {
-    @StateObject private var viewModel: ShowViewModel
+    @Environment(\.modelContext) var modelContext
 
-    init(for show: Show) {
-        _viewModel = StateObject(wrappedValue: ShowViewModel(for: show))
-    }
+    var show: Show
 
     var body: some View {
         ScrollView {
@@ -23,45 +22,29 @@ struct ShowView: View {
                     ShowGenres()
                     WatchlistControls()
                 }
-
-                Divider()
-                    .foregroundStyle(.neutral4)
-                    .padding(.horizontal)
-
-                if let overview = viewModel.show.overview, !overview.isEmpty {
-                    TextBlock(title: "Overview", content: overview)
-                }
-
-                if let recommendations = viewModel.show.recommendations, !recommendations.isEmpty {
-                    Section("Recommendations") {
-                        ShowPosters(shows: recommendations, variant: .bottomTitle, size: .small)
-                    }
-                }
-
-                if let cast = viewModel.cast, !cast.isEmpty {
-                    Section("Cast") {
-                        CastThumbnails(cast: cast)
-                    }
-                }
-                
-                if let crew = viewModel.crew, !crew.isEmpty {
-                    Section("Crew") {
-                        CrewThumbnails(crew: crew)
-                    }
-                }
+                NeutralDivider()
+                ShowOverview()
+                ShowRecommendations()
+                ShowCast()
+                ShowCrew()
             }
             .padding(.vertical)
         }
         .scrollIndicators(.hidden)
-        .navigationTitle(viewModel.show.title)
+        .navigationTitle(show.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { ShowToolbar() }
-        .environmentObject(viewModel)
+        .environmentObject(ShowViewModel(for: show, with: modelContext))
     }
 }
 
 #Preview {
-    NavigationStack {
-        ShowView(for: sampleMovie.toShow())
-    }
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let modelContainer = try! ModelContainer(
+        for: LocalWatchlistItem.self, LocalReview.self,
+        configurations: config
+    )
+
+    return ShowView(show: sampleMovie.toShow())
+        .modelContainer(modelContainer)
 }

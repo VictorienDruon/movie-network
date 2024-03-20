@@ -1,26 +1,21 @@
 //
-//  ShowGenres.swift
+//  ShowCast.swift
 //  MovieNetwork
 //
-//  Created by Victorien Druon on 09/03/2024.
+//  Created by Victorien Druon on 20/03/2024.
 //
 
 import SwiftData
 import SwiftUI
 
-struct ShowGenres: View {
+struct ShowCast: View {
     @EnvironmentObject var viewModel: ShowViewModel
 
     var body: some View {
-        if let genres = viewModel.show.genres, !genres.isEmpty {
-            ScrollView(.horizontal) {
-                LazyHStack {
-                    ForEach(genres) { genre in
-                        Tag(genre.name, size: .small)
-                    }
-                }
+        if let cast = viewModel.cast, !cast.isEmpty {
+            Section("Cast") {
+                CastThumbnails(cast: cast)
             }
-            .contentMargins(.horizontal, 16)
         }
     }
 }
@@ -32,6 +27,6 @@ struct ShowGenres: View {
         configurations: config
     ).mainContext
 
-    return ShowGenres()
+    return ShowCast()
         .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
 }
