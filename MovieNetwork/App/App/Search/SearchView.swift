@@ -44,7 +44,7 @@ struct SearchView: View {
             .font(.system(size: 22, weight: .medium, design: .rounded))
             .padding(.horizontal, 16)
             .frame(height: 55)
-            .background(.thickMaterial)
+            .background(.regularMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 14))
             .shadowSize(.large)
             .padding()

@@ -49,23 +49,6 @@
             ReferencedContainer = "container:MovieNetwork.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "SUPABASE_URL"
-            value = "https://pizexpnwdllklpqmwsyt.supabase.co"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "SUPABASE_ANON_KEY"
-            value = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpemV4cG53ZGxsa2xwcW13c3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg5NTE2MTIsImV4cCI6MjAyNDUyNzYxMn0.vGgRtqF0tBlTsQElBtfLjOE3hCRtk4C6-8sZ_Igq5XA"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "TMDB_ACCESS_TOKEN"
-            value = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5Nzg4NjdjY2VhOTg1NmU4YWU3ZDViOWVhOTRmYWRlYiIsInN1YiI6IjY1YjI5NWIyZmQxNDBiMDE2NGEwZThjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zXk9uNQU7olkok2NXnW-BentWmOXLrzEXGA-QMz7LMg"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
