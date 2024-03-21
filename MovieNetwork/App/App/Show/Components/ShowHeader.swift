@@ -5,7 +5,6 @@
 //  Created by Victorien Druon on 09/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ShowHeader: View {
@@ -65,12 +64,6 @@ struct ShowHeader: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContext = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    ).mainContext
-
-    return ShowHeader()
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
+    ShowHeader()
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

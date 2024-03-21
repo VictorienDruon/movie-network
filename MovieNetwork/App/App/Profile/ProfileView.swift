@@ -23,7 +23,7 @@ struct ProfileView: View {
 
                 Button("Sign out") {
                     Task {
-                        try? await SupabaseManager.shared.signOut()
+                        try? await RemoteDbManager.shared.signOut()
                     }
                 }
             }

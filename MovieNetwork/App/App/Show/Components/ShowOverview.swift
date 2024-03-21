@@ -5,7 +5,6 @@
 //  Created by Victorien Druon on 20/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ShowOverview: View {
@@ -19,12 +18,6 @@ struct ShowOverview: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContext = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    ).mainContext
-
-    return ShowOverview()
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
+    ShowOverview()
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

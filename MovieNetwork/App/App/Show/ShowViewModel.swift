@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftData
 
 @MainActor
 final class ShowViewModel: ObservableObject {
@@ -19,8 +18,6 @@ final class ShowViewModel: ObservableObject {
     @Published var showingTrailer = false
     @Published var showingReviewForm = false
 
-    var modelContext: ModelContext
-
     var cast: [CastMember]? {
         show.credits?.cast.uniqued()
     }
@@ -29,9 +26,8 @@ final class ShowViewModel: ObservableObject {
         show.credits?.crew.uniqued().filterRelevantJobs()
     }
 
-    init(for show: Show, with modelContext: ModelContext) {
+    init(for show: Show) {
         self.show = show
-        self.modelContext = modelContext
         getShow()
         isInWatchlist()
     }
@@ -57,23 +53,20 @@ final class ShowViewModel: ObservableObject {
 
     func isInWatchlist() {
         Task {
-            if let user = await SupabaseManager.shared.currentSession()?.user {
-                inWatchlist = try await SupabaseManager.shared.isInWatchlist(show, for: user)
+            if let user = await RemoteDbManager.shared.currentSession()?.user {
+                inWatchlist = try await RemoteDbManager.shared.isInWatchlist(show, for: user)
             } else {
-                let descriptor = FetchDescriptor<LocalWatchlistItem>()
-                let watchlist = try modelContext.fetch(descriptor)
-                inWatchlist = watchlist.contains(where: { $0.showId == show.databaseId })
+                inWatchlist = try LocalDbManager.shared.isInWatchlist(show)
             }
         }
     }
 
     func addShowToWatchlist() {
         Task {
-            if let user = await SupabaseManager.shared.currentSession()?.user {
-                try await SupabaseManager.shared.addToWatchlist(show, for: user)
+            if let user = await RemoteDbManager.shared.currentSession()?.user {
+                try await RemoteDbManager.shared.addToWatchlist(show, for: user)
             } else {
-                let watchlistShow = LocalWatchlistItem(showId: show.databaseId)
-                modelContext.insert(watchlistShow)
+                LocalDbManager.shared.addToWatchlist(show)
             }
             inWatchlist = true
         }
@@ -81,14 +74,10 @@ final class ShowViewModel: ObservableObject {
 
     func removeShowFromWatchlist() {
         Task {
-            if let user = await SupabaseManager.shared.currentSession()?.user {
-                try await SupabaseManager.shared.removeFromWatchlist(show, for: user)
+            if let user = await RemoteDbManager.shared.currentSession()?.user {
+                try await RemoteDbManager.shared.removeFromWatchlist(show, for: user)
             } else {
-                let descriptor = FetchDescriptor<LocalWatchlistItem>()
-                let watchlist = try modelContext.fetch(descriptor)
-                if let watchItem = watchlist.first(where: { $0.showId == show.databaseId }) {
-                    modelContext.delete(watchItem)
-                }
+                try LocalDbManager.shared.removeFromWatchlist(show)
             }
             inWatchlist = false
         }
@@ -96,11 +85,10 @@ final class ShowViewModel: ObservableObject {
 
     func reviewShow(rating: Int, comment: String?) {
         Task {
-            if let user = await SupabaseManager.shared.currentSession()?.user {
-                try await SupabaseManager.shared.createReview(for: show, by: user, rating: rating, comment: comment)
+            if let user = await RemoteDbManager.shared.currentSession()?.user {
+                try await RemoteDbManager.shared.createReview(for: show, by: user, rating: rating, comment: comment)
             } else {
-                let review = LocalReview(showId: show.databaseId, rating: rating, comment: comment)
-                modelContext.insert(review)
+                LocalDbManager.shared.createReview(for: show, rating: rating, comment: comment)
             }
             removeShowFromWatchlist()
             showingReviewForm = false

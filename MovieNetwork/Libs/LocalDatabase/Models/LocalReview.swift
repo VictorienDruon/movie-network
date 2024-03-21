@@ -10,11 +10,13 @@ import SwiftData
 
 @Model
 final class LocalReview {
+    var id: UUID
     var showId: String
     var rating: Int
     var comment: String?
-    
-    init(showId: String, rating: Int, comment: String? = nil) {
+
+    init(id: UUID = UUID(), showId: String, rating: Int, comment: String? = nil) {
+        self.id = id
         self.showId = showId
         self.rating = rating
         self.comment = comment

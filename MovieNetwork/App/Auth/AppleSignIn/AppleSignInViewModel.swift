@@ -51,7 +51,7 @@ final class AppleSignInViewModel: ObservableObject {
 
     private func signInWithApple(idToken: String) async throws {
         do {
-            try await SupabaseManager.shared.signInWithIdToken(for: .apple, with: idToken)
+            try await RemoteDbManager.shared.signInWithIdToken(for: .apple, with: idToken)
         } catch {
             throw AppleSignInError.signInWithAppleFailed
         }
@@ -68,7 +68,7 @@ final class AppleSignInViewModel: ObservableObject {
         let userAttributes = UserAttributes(data: ["full_name": .string(fullName)])
 
         do {
-            try await SupabaseManager.shared.updateUser(from: userAttributes)
+            try await RemoteDbManager.shared.updateUser(from: userAttributes)
         } catch {
             throw AppleSignInError.userUpdateFailed
         }

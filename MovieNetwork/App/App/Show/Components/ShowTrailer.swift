@@ -5,7 +5,6 @@
 //  Created by Victorien Druon on 08/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ShowTrailer: View {
@@ -33,12 +32,6 @@ struct ShowTrailer: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContext = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    ).mainContext
-
-    return ShowTrailer()
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
+    ShowTrailer()
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

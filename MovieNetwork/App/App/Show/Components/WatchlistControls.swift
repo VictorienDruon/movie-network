@@ -5,7 +5,6 @@
 //  Created by Victorien Druon on 09/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct WatchlistControls: View {
@@ -44,12 +43,6 @@ struct WatchlistControls: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContext = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    ).mainContext
-
-    return WatchlistControls()
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
+    WatchlistControls()
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

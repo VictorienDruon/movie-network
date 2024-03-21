@@ -1,5 +1,5 @@
 //
-//  DiscoverFiltersControls.swift
+//  DiscoverFilters.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 29/02/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DiscoverFiltersControls: View {
+struct DiscoverFilters: View {
     @EnvironmentObject var viewModel: DiscoverViewModel
 
     var body: some View {
@@ -56,6 +56,6 @@ struct DiscoverFiltersControls: View {
 }
 
 #Preview {
-    DiscoverFiltersControls()
+    DiscoverFilters()
         .environmentObject(DiscoverViewModel())
 }

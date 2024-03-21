@@ -5,12 +5,9 @@
 //  Created by Victorien Druon on 07/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ShowView: View {
-    @Environment(\.modelContext) var modelContext
-
     var show: Show
 
     var body: some View {
@@ -34,17 +31,10 @@ struct ShowView: View {
         .navigationTitle(show.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { ShowToolbar() }
-        .environmentObject(ShowViewModel(for: show, with: modelContext))
+        .environmentObject(ShowViewModel(for: show))
     }
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContainer = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    )
-
-    return ShowView(show: sampleMovie.toShow())
-        .modelContainer(modelContainer)
+    ShowView(show: sampleMovie.toShow())
 }

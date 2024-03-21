@@ -1,5 +1,5 @@
 //
-//  SupabaseManager.swift
+//  RemoteDbManager.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 26/02/2024.
@@ -9,9 +9,10 @@ import Foundation
 import Supabase
 
 @MainActor
-final class SupabaseManager {
-    static let shared = SupabaseManager()
-    private var supabase: SupabaseClient
+final class RemoteDbManager {
+    static let shared = RemoteDbManager()
+    private let database: PostgrestClient
+    private let auth: AuthClient
 
     private init() {
         guard
@@ -19,25 +20,27 @@ final class SupabaseManager {
             let anonKey = ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"]
         else { fatalError("Missing environment variable.") }
 
-        supabase = SupabaseClient(supabaseURL: URL(string: projectUrl)!, supabaseKey: anonKey)
+        let supabase = SupabaseClient(supabaseURL: URL(string: projectUrl)!, supabaseKey: anonKey)
+        database = supabase.database
+        auth = supabase.auth
     }
 }
 
 // Auth
-extension SupabaseManager {
+extension RemoteDbManager {
     func signInWithIdToken(for provider: OpenIDConnectCredentials.Provider, with idToken: String) async throws {
-        try await supabase.auth.signInWithIdToken(
+        try await auth.signInWithIdToken(
             credentials: .init(provider: provider, idToken: idToken)
         )
     }
 
     func signOut() async throws {
-        try await supabase.auth.signOut()
+        try await auth.signOut()
     }
-    
+
     func currentSession() async -> Session? {
         do {
-            return try await supabase.auth.session
+            return try await auth.session
         } catch {
             return nil
         }
@@ -45,28 +48,28 @@ extension SupabaseManager {
 
     func currentUser() async -> User? {
         do {
-            return try await supabase.auth.user()
+            return try await auth.user()
         } catch {
             return nil
         }
     }
 
     func updateUser(from user: UserAttributes) async throws {
-        try await supabase.auth.update(user: user)
+        try await auth.update(user: user)
     }
 
     func authListener(onChange: (AuthChangeEvent, Session?) -> Void) async {
-        for await (event, session) in await supabase.auth.authStateChanges {
+        for await (event, session) in await auth.authStateChanges {
             onChange(event, session)
         }
     }
 }
 
 // Shows
-extension SupabaseManager {
+extension RemoteDbManager {
     func upsertShow(_ show: Show) async throws {
         let row = ShowsRow(id: show.databaseId)
-        try await supabase.database
+        try await database
             .from("shows")
             .upsert(row)
             .execute()
@@ -74,9 +77,9 @@ extension SupabaseManager {
 }
 
 // Watchlists
-extension SupabaseManager {
+extension RemoteDbManager {
     func isInWatchlist(_ show: Show, for user: User) async throws -> Bool {
-        let row: WatchlistsRow? = try await supabase.database
+        let row: WatchlistItem? = try await database
             .from("watchlists")
             .select()
             .eq("show_id", value: show.databaseId)
@@ -90,15 +93,15 @@ extension SupabaseManager {
     func addToWatchlist(_ show: Show, for user: User) async throws {
         try await upsertShow(show)
 
-        let row = WatchlistsRow(userId: user.id, showId: show.databaseId)
-        try await supabase.database
+        let row = WatchlistItem(userId: user.id, showId: show.databaseId)
+        try await database
             .from("watchlists")
             .insert(row)
             .execute()
     }
 
     func removeFromWatchlist(_ show: Show, for user: User) async throws {
-        try await supabase.database
+        try await database
             .from("watchlists")
             .delete()
             .eq("show_id", value: show.databaseId)
@@ -108,10 +111,10 @@ extension SupabaseManager {
 }
 
 // Reviews
-extension SupabaseManager {
+extension RemoteDbManager {
     func createReview(for show: Show, by user: User, rating: Int, comment: String?) async throws {
-        let row = ReviewsRow(userId: user.id, showId: show.databaseId, rating: rating, comment: comment)
-        try await supabase.database
+        let row = Review(userId: user.id, showId: show.databaseId, rating: rating, comment: comment)
+        try await database
             .from("reviews")
             .insert(row)
             .execute()

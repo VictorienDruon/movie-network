@@ -22,7 +22,7 @@ final class SessionManager: ObservableObject {
 
     init() {
         Task {
-            await SupabaseManager.shared.authListener { _, session in
+            await RemoteDbManager.shared.authListener { _, session in
                 self.session = session
             }
         }

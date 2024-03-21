@@ -5,7 +5,6 @@
 //  Created by Victorien Druon on 09/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ShowGenres: View {
@@ -26,12 +25,6 @@ struct ShowGenres: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContext = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    ).mainContext
-
-    return ShowGenres()
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
+    ShowGenres()
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

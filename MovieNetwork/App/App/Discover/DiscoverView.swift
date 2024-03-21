@@ -15,7 +15,7 @@ struct DiscoverView: View {
         ZStack(alignment: .bottom) {
             ScrollView {
                 LazyVStack(spacing: 24) {
-                    DiscoverFiltersControls()
+                    DiscoverFilters()
 
                     if let trendingShows = viewModel.filteredTrendingShows, !trendingShows.isEmpty {
                         Section("Trending") {

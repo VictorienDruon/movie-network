@@ -5,7 +5,6 @@
 //  Created by Victorien Druon on 19/03/2024.
 //
 
-import SwiftData
 import SwiftUI
 
 struct ReviewForm: View {
@@ -67,15 +66,9 @@ struct ReviewForm: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let modelContext = try! ModelContainer(
-        for: LocalWatchlistItem.self, LocalReview.self,
-        configurations: config
-    ).mainContext
-
-    return VStack {}
+    VStack {}
         .sheet(isPresented: .constant(true)) {
             ReviewForm()
         }
-        .environmentObject(ShowViewModel(for: sampleMovie.toShow(), with: modelContext))
+        .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }
