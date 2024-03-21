@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC08FD442BACDB6900FDC0B7 /* env.json in Resources */ = {isa = PBXBuildFile; fileRef = AC08FD432BACDB6900FDC0B7 /* env.json */; };
+		AC08FD462BACDC3600FDC0B7 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AC08FD452BACDC3600FDC0B7 /* .gitignore */; };
+		AC08FD482BACDF2800FDC0B7 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC08FD472BACDF2800FDC0B7 /* Env.swift */; };
 		AC1FABEE2BA99A5500468934 /* ReviewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FABED2BA99A5500468934 /* ReviewForm.swift */; };
 		AC1FABF22BAB3CD900468934 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FABF12BAB3CD900468934 /* Review.swift */; };
 		AC1FABF62BAB74F900468934 /* LocalWatchlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1FABF52BAB74F900468934 /* LocalWatchlistItem.swift */; };
@@ -130,6 +133,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC08FD402BACD88800FDC0B7 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
+		AC08FD432BACDB6900FDC0B7 /* env.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = env.json; sourceTree = SOURCE_ROOT; };
+		AC08FD452BACDC3600FDC0B7 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = MovieNetwork/.gitignore; sourceTree = SOURCE_ROOT; };
+		AC08FD472BACDF2800FDC0B7 /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		AC1FABED2BA99A5500468934 /* ReviewForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewForm.swift; sourceTree = "<group>"; };
 		AC1FABF12BAB3CD900468934 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		AC1FABF52BAB74F900468934 /* LocalWatchlistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalWatchlistItem.swift; sourceTree = "<group>"; };
@@ -266,6 +273,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC08FD3E2BACD70E00FDC0B7 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				AC08FD402BACD88800FDC0B7 /* ci_pre_xcodebuild.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		AC1FAC0B2BAC751D00468934 /* LocalDatabase */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				AC3F3C7B2B80CC8700D306C0 /* MovieNetwork */,
+				AC08FD3E2BACD70E00FDC0B7 /* ci_scripts */,
 				ACFC6BB42B9DC39400F7010C /* MovieNetwork.app */,
 			);
 			sourceTree = "<group>";
@@ -305,6 +321,8 @@
 				AC431CF52B8CD8F5003AC32E /* Info.plist */,
 				ACFDBCB02B8D018A00D8AA95 /* MovieNetwork.entitlements */,
 				ACFC6BB72B9DF89300F7010C /* Assets.xcassets */,
+				AC08FD432BACDB6900FDC0B7 /* env.json */,
+				AC08FD452BACDC3600FDC0B7 /* .gitignore */,
 			);
 			path = MovieNetwork;
 			sourceTree = "<group>";
@@ -663,6 +681,7 @@
 				AC5DDB382B9A53CD003F466B /* Sequences.swift */,
 				AC5DDB392B9A53CD003F466B /* UIKit.swift */,
 				AC6974132B9CBD9800F9D7DD /* Config.swift */,
+				AC08FD472BACDF2800FDC0B7 /* Env.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -789,6 +808,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACFC6BB82B9DF89300F7010C /* Assets.xcassets in Resources */,
+				AC08FD462BACDC3600FDC0B7 /* .gitignore in Resources */,
+				AC08FD442BACDB6900FDC0B7 /* env.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +841,7 @@
 				AC5DDB7D2B9A5867003F466B /* Network.swift in Sources */,
 				AC69741B2B9D190000F9D7DD /* Job.swift in Sources */,
 				AC5DDB522B9A562B003F466B /* ShowViewModel.swift in Sources */,
+				AC08FD482BACDF2800FDC0B7 /* Env.swift in Sources */,
 				AC1FAC022BAB888800468934 /* ShowCrew.swift in Sources */,
 				AC1FAC0A2BAC6D5500468934 /* LocalDbManager.swift in Sources */,
 				AC5DDB672B9A5791003F466B /* CrewMember.swift in Sources */,

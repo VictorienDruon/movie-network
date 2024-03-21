@@ -15,12 +15,7 @@ final class RemoteDbManager {
     private let auth: AuthClient
 
     private init() {
-        guard
-            let projectUrl = ProcessInfo.processInfo.environment["SUPABASE_URL"],
-            let anonKey = ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"]
-        else { fatalError("Missing environment variable.") }
-
-        let supabase = SupabaseClient(supabaseURL: URL(string: projectUrl)!, supabaseKey: anonKey)
+        let supabase = SupabaseClient(supabaseURL: Env.supabaseUrl, supabaseKey: Env.supabaseAnonKey)
         database = supabase.database
         auth = supabase.auth
     }

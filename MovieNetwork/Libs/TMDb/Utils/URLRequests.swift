@@ -13,14 +13,10 @@ struct TMDbRequest {
     var request: URLRequest
 
     init(path: String, queryItems: [URLQueryItem]? = nil) {
-        guard let apiKey = ProcessInfo.processInfo.environment["TMDB_ACCESS_TOKEN"] else {
-            fatalError("Missing environment variable.")
-        }
-
         request = URLRequest(url: BASE_URL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(Env.tmdbAccessToken)", forHTTPHeaderField: "Authorization")
         request.url?.append(path: path)
         if let queryItems {
             request.url?.append(queryItems: queryItems)
