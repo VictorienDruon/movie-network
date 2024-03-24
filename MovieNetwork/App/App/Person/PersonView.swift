@@ -29,8 +29,8 @@ struct PersonView: View {
                     TextBlock(title: "Biography", content: biography)
                 }
             }
-            .padding(.vertical)
         }
+        .contentMargins(.vertical, 16)
         .scrollIndicators(.hidden)
         .navigationTitle(viewModel.person.name)
         .navigationBarTitleDisplayMode(.large)

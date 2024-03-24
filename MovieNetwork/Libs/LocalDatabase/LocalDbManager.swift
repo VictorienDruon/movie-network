@@ -25,30 +25,87 @@ final class LocalDbManager {
 
 // Watchlists
 extension LocalDbManager {
-    func isInWatchlist(_ show: Show) throws -> Bool {
-        let descriptor = FetchDescriptor<LocalWatchlistItem>()
-        let watchlist = try database.fetch(descriptor)
-        return watchlist.contains(where: { $0.showId == show.databaseId })
+    func getWatchlistItem(_ showId: String) throws -> LocalWatchlistItem? {
+        let descriptor = FetchDescriptor<LocalWatchlistItem>(predicate: #Predicate { $0.show.id == showId })
+        return try database.fetch(descriptor).first
     }
 
-    func addToWatchlist(_ show: Show) {
-        let watchlistShow = LocalWatchlistItem(showId: show.databaseId)
-        database.insert(watchlistShow)
+    func getWatchlist(order: SortOrder = .reverse) throws -> [LocalWatchlistItem] {
+        let addedAtSort = SortDescriptor(\LocalWatchlistItem.addedAt, order: order)
+        let descriptor = FetchDescriptor<LocalWatchlistItem>(sortBy: [addedAtSort])
+        return try database.fetch(descriptor)
     }
 
-    func removeFromWatchlist(_ show: Show) throws {
-        let descriptor = FetchDescriptor<LocalWatchlistItem>()
-        let watchlist = try database.fetch(descriptor)
-        if let watchItem = watchlist.first(where: { $0.showId == show.databaseId }) {
-            database.delete(watchItem)
+    @discardableResult
+    func addToWatchlist(_ show: Show) throws -> LocalWatchlistItem {
+        let upsertedShow = try upsertShow(show)
+        let watchlistItem = LocalWatchlistItem(show: upsertedShow)
+        database.insert(watchlistItem)
+        return watchlistItem
+    }
+
+    func removeFromWatchlist(_ showId: String) throws {
+        if let watchlistItem = try getWatchlistItem(showId) {
+            database.delete(watchlistItem)
         }
     }
 }
 
 // Reviews
 extension LocalDbManager {
-    func createReview(for show: Show, rating: Int, comment: String?) {
-        let review = LocalReview(showId: show.databaseId, rating: rating, comment: comment)
+    func getReviews() throws -> [LocalReview] {
+        let descriptor = FetchDescriptor<LocalReview>()
+        return try database.fetch(descriptor)
+    }
+
+    func getReviews(for showId: String) throws -> [LocalReview] {
+        let descriptor = FetchDescriptor<LocalReview>(predicate: #Predicate { $0.show.id == showId })
+        return try database.fetch(descriptor)
+    }
+
+    @discardableResult
+    func createReview(for show: Show, rating: Int, comment: String?) throws -> LocalReview {
+        let upsertedShow = try upsertShow(show)
+        let review = LocalReview(show: upsertedShow, rating: rating, comment: comment)
         database.insert(review)
+        return review
+    }
+}
+
+// Shows
+extension LocalDbManager {
+    func getShow(_ id: String) throws -> LocalShow? {
+        let descriptor = FetchDescriptor<LocalShow>(predicate: #Predicate { $0.id == id })
+        return try database.fetch(descriptor).first
+    }
+
+    @discardableResult
+    func upsertShow(_ show: Show) throws -> LocalShow {
+        if let existingShow = try getShow(show.key) {
+            existingShow.title = show.title
+            existingShow.updatedAt = .now
+            existingShow.releaseDate = show.releaseDate
+            existingShow.overview = show.overview
+            existingShow.runtime = show.runtime
+            existingShow.numberOfSeasons = show.numberOfSeasons
+            existingShow.voteAverage = show.voteAverage
+            existingShow.posterPath = show.posterPath
+            existingShow.backdropPath = show.backdropPath
+            return existingShow
+        } else {
+            return LocalShow(
+                showId: show.key,
+                createdAt: .now,
+                updatedAt: nil,
+                title: show.title,
+                releaseDate: show.releaseDate,
+                overview: show.overview,
+                runtime: show.runtime,
+                numberOfSeasons: show.numberOfSeasons,
+                voteAverage: show.voteAverage,
+                posterPath: show.posterPath,
+                backdropPath: show.backdropPath
+            )
+        }
     }
 }

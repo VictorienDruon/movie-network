@@ -38,6 +38,20 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         case let .tvSeries(tvSeries): tvSeries.overview
         }
     }
+    
+    var runtime: Int? {
+        switch self {
+        case let .movie(movie): movie.runtime
+        default: nil
+        }
+    }
+    
+    var numberOfSeasons: Int? {
+        switch self {
+        case let .tvSeries(tvSeries): tvSeries.numberOfSeasons
+        default: nil
+        }
+    }
 
     var posterPath: URL? {
         switch self {
@@ -104,15 +118,15 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
 
     var link: URL {
         switch self {
-        case let .movie(movie): URL(string: "\(appScheme)movie/\(movie.id)")!
-        case let .tvSeries(tvSeries): URL(string: "\(appScheme)tv/\(tvSeries.id)")!
+        case let .movie(movie): movie.link
+        case let .tvSeries(tvSeries): tvSeries.link
         }
     }
 
-    var databaseId: String {
+    var key: String {
         switch self {
-        case .movie: "movie-\(self.id)"
-        case .tvSeries: "tv-\(self.id)"
+        case let .movie(movie): movie.databaseId
+        case let .tvSeries(tvSeries): tvSeries.databaseId
         }
     }
 }

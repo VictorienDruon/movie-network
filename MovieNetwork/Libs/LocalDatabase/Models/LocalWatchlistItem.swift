@@ -9,12 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-final class LocalWatchlistItem {
-    var showId: String
+final class LocalWatchlistItem: WatchlistItem {
     var addedAt: Date
+    var show: LocalShow
 
-    init(showId: String, addedAt: Date = .now) {
-        self.showId = showId
+    init(show: LocalShow, addedAt: Date = .now) {
+        self.show = show
         self.addedAt = addedAt
     }
 }

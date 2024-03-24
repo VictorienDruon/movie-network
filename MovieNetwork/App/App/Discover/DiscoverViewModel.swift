@@ -15,24 +15,24 @@ final class DiscoverViewModel: ObservableObject {
         !typeFilters.isEmpty && typeFilters.count != ShowType.allCases.count
     }
 
-    @Published var trendingShows: [Show]?
-    var filteredTrendingShows: [Show]? {
-        trendingShows?.filterByGenre(selectedGenre)
+    @Published var trendingShows = [Show]()
+    var filteredTrendingShows: [Show] {
+        trendingShows.filterByGenre(selectedGenre)
     }
 
-    @Published var trendingPeople: [Person]?
+    @Published var trendingPeople = [Person]()
 
-    @Published var nowPlayingMovies: [Show]?
-    @Published var nowPlayingTvSeries: [Show]?
-    var nowPlayingShows: [Show]? {
-        filterByType(movies: nowPlayingMovies, tvSeries: nowPlayingTvSeries)?
+    @Published var nowPlayingMovies = [Show]()
+    @Published var nowPlayingTvSeries = [Show]()
+    var nowPlayingShows: [Show] {
+        filterByType(movies: nowPlayingMovies, tvSeries: nowPlayingTvSeries)
             .filterByGenre(selectedGenre)
     }
 
-    @Published var upcomingMovies: [Show]?
-    @Published var upcomingTvSeries: [Show]?
-    var upcomingShows: [Show]? {
-        filterByType(movies: upcomingMovies, tvSeries: upcomingTvSeries)?
+    @Published var upcomingMovies = [Show]()
+    @Published var upcomingTvSeries = [Show]()
+    var upcomingShows: [Show] {
+        filterByType(movies: upcomingMovies, tvSeries: upcomingTvSeries)
             .filterByGenre(selectedGenre)
     }
 
@@ -130,11 +130,7 @@ final class DiscoverViewModel: ObservableObject {
         }
     }
 
-    private func filterByType(movies: [Show]?, tvSeries: [Show]?) -> [Show]? {
-        guard let movies, let tvSeries else {
-            return nil
-        }
-
+    private func filterByType(movies: [Show], tvSeries: [Show]) -> [Show] {
         if !isTypeFiltered {
             return movies + tvSeries
         } else if typeFilters.contains(.movie) {

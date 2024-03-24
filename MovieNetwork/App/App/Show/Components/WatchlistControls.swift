@@ -35,10 +35,7 @@ struct WatchlistControls: View {
         }
         .padding(.horizontal)
         .animation(.bouncy, value: viewModel.inWatchlist)
-        .sensoryFeedback(.success, trigger: viewModel.inWatchlist)
-        .sheet(isPresented: $viewModel.showingReviewForm) {
-            ReviewForm()
-        }
+        .sensoryFeedback(.success, trigger: viewModel.triggerWatchlistControlsHaptic)
     }
 }
 

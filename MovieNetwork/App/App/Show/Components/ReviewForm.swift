@@ -54,12 +54,16 @@ struct ReviewForm: View {
 
             Button("Submit") {
                 if let rating = viewModel.rating {
-                    viewModel.reviewShow(rating: rating, comment: viewModel.comment)
+                    let comment = viewModel.comment.isEmpty ? nil : viewModel.comment
+                    viewModel.reviewShow(rating: rating, comment: comment)
+                } else {
+                    viewModel.triggerReviewFormHaptic += 1
                 }
             }
             .buttonStyle(StyledButton(.primary, .full))
         }
         .padding()
+        .sensoryFeedback(.error, trigger: viewModel.triggerReviewFormHaptic)
         .presentationDetents([.medium])
         .interactiveDismissDisabled()
     }

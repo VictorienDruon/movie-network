@@ -18,6 +18,9 @@ final class ShowViewModel: ObservableObject {
     @Published var showingTrailer = false
     @Published var showingReviewForm = false
 
+    @Published var triggerWatchlistControlsHaptic = 0
+    @Published var triggerReviewFormHaptic = 0
+
     var cast: [CastMember]? {
         show.credits?.cast.uniqued()
     }
@@ -28,8 +31,16 @@ final class ShowViewModel: ObservableObject {
 
     init(for show: Show) {
         self.show = show
-        getShow()
-        isInWatchlist()
+        getAll()
+    }
+
+    func getAll() {
+        Task {
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { await self.getShow() }
+                group.addTask { await self.isInWatchlist() }
+            }
+        }
     }
 
     func getShow() {
@@ -54,9 +65,9 @@ final class ShowViewModel: ObservableObject {
     func isInWatchlist() {
         Task {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
-                inWatchlist = try await RemoteDbManager.shared.isInWatchlist(show, for: user)
+                inWatchlist = try await RemoteDbManager.shared.getWatchlistItem(show.key, of: user.id) != nil
             } else {
-                inWatchlist = try LocalDbManager.shared.isInWatchlist(show)
+                inWatchlist = try LocalDbManager.shared.getWatchlistItem(show.key) != nil
             }
         }
     }
@@ -64,31 +75,33 @@ final class ShowViewModel: ObservableObject {
     func addShowToWatchlist() {
         Task {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
-                try await RemoteDbManager.shared.addToWatchlist(show, for: user)
+                try await RemoteDbManager.shared.addToWatchlist(show, for: user.id)
             } else {
-                LocalDbManager.shared.addToWatchlist(show)
+                try LocalDbManager.shared.addToWatchlist(show)
             }
             inWatchlist = true
+            triggerWatchlistControlsHaptic += 1
         }
     }
 
     func removeShowFromWatchlist() {
         Task {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
-                try await RemoteDbManager.shared.removeFromWatchlist(show, for: user)
+                try await RemoteDbManager.shared.removeFromWatchlist(show.key, for: user.id)
             } else {
-                try LocalDbManager.shared.removeFromWatchlist(show)
+                try LocalDbManager.shared.removeFromWatchlist(show.key)
             }
             inWatchlist = false
+            triggerWatchlistControlsHaptic += 1
         }
     }
 
-    func reviewShow(rating: Int, comment: String?) {
+    func reviewShow(rating: Int, comment: String? = nil) {
         Task {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
-                try await RemoteDbManager.shared.createReview(for: show, by: user, rating: rating, comment: comment)
+                try await RemoteDbManager.shared.createReview(for: show, by: user.id, rating: rating, comment: comment)
             } else {
-                LocalDbManager.shared.createReview(for: show, rating: rating, comment: comment)
+                try LocalDbManager.shared.createReview(for: show, rating: rating, comment: comment)
             }
             removeShowFromWatchlist()
             showingReviewForm = false

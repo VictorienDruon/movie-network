@@ -60,58 +60,98 @@ extension RemoteDbManager {
     }
 }
 
-// Shows
-extension RemoteDbManager {
-    func upsertShow(_ show: Show) async throws {
-        let row = ShowsRow(id: show.databaseId)
-        try await database
-            .from("shows")
-            .upsert(row)
-            .execute()
-    }
-}
-
 // Watchlists
 extension RemoteDbManager {
-    func isInWatchlist(_ show: Show, for user: User) async throws -> Bool {
-        let row: WatchlistItem? = try await database
+    func getWatchlistItem(_ showId: String, of userId: UUID) async throws -> RemoteWatchlistItem? {
+        return try await database
             .from("watchlists")
             .select()
-            .eq("show_id", value: show.databaseId)
+            .eq("show_id", value: showId)
+            .eq("user_id", value: userId)
             .limit(1)
             .single()
             .execute()
             .value
-        return row != nil
     }
 
-    func addToWatchlist(_ show: Show, for user: User) async throws {
-        try await upsertShow(show)
-
-        let row = WatchlistItem(userId: user.id, showId: show.databaseId)
-        try await database
+    func getWatchlist(of userId: UUID, ascending: Bool = false) async throws -> [RemoteWatchlistItemWithShow] {
+        return try await database
             .from("watchlists")
-            .insert(row)
+            .select("added_at, shows(*)")
+            .eq("user_id", value: userId)
+            .order("added_at", ascending: ascending)
             .execute()
+            .value
     }
 
-    func removeFromWatchlist(_ show: Show, for user: User) async throws {
+    @discardableResult
+    func addToWatchlist(_ show: Show, for userId: UUID) async throws -> RemoteWatchlistItem {
+        try await upsertShow(show)
+        let watchlistItem = RemoteWatchlistItem(
+            userId: userId,
+            showId: show.key,
+            addedAt: .now
+        )
+        return try await database
+            .from("watchlists")
+            .insert(watchlistItem, returning: .representation)
+            .single()
+            .execute()
+            .value
+    }
+
+    func removeFromWatchlist(_ showId: String, for userId: UUID) async throws {
         try await database
             .from("watchlists")
             .delete()
-            .eq("show_id", value: show.databaseId)
-            .eq("user_id", value: user.id)
+            .eq("show_id", value: showId)
+            .eq("user_id", value: userId)
             .execute()
     }
 }
 
 // Reviews
 extension RemoteDbManager {
-    func createReview(for show: Show, by user: User, rating: Int, comment: String?) async throws {
-        let row = Review(userId: user.id, showId: show.databaseId, rating: rating, comment: comment)
-        try await database
+    @discardableResult
+    func createReview(for show: Show, by userId: UUID, rating: Int, comment: String?) async throws -> RemoteReview {
+        try await upsertShow(show)
+        let review = RemoteReview(
+            userId: userId,
+            showId: show.key,
+            createdAt: .now,
+            rating: rating,
+            comment: comment
+        )
+        return try await database
             .from("reviews")
-            .insert(row)
+            .insert(review, returning: .representation)
+            .single()
             .execute()
+            .value
+    }
+}
+
+// Shows
+extension RemoteDbManager {
+    @discardableResult
+    func upsertShow(_ show: Show) async throws -> RemoteShow {
+        let updatedShow = RemoteShow(
+            id: show.key,
+            updatedAt: .now,
+            title: show.title,
+            releaseDate: show.releaseDate,
+            overview: show.overview,
+            runtime: show.runtime,
+            numberOfSeasons: show.numberOfSeasons,
+            voteAverage: show.voteAverage,
+            posterPath: show.posterPath,
+            backdropPath: show.backdropPath
+        )
+        return try await database
+            .from("shows")
+            .upsert(updatedShow, returning: .representation)
+            .single()
+            .execute()
+            .value
     }
 }

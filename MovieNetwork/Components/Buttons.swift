@@ -125,7 +125,7 @@ struct ButtonVariantConfig {
 }
 
 enum ButtonSize {
-    case small, medium, large, full
+    case small, medium, large, full, extraLarge
 
     var config: ButtonSizeConfig {
         switch self {
@@ -137,6 +137,8 @@ enum ButtonSize {
             ButtonSizeConfig(height: 48, paddingX: 14, fontSize: 22)
         case .full:
             ButtonSize.large.config
+        case .extraLarge:
+            ButtonSizeConfig(height: 56, paddingX: 16, fontSize: 24)
         }
     }
 }

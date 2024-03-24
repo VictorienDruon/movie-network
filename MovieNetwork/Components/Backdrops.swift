@@ -45,7 +45,7 @@ struct ShowBackdrop: View {
     var show: Show
     var variant = BackdropVariant.raw
     var size = BackdropSize.medium
-    var withNavigation = false
+    var withNavigation = true
 
     @ViewBuilder
     var backdrop: some View {
@@ -90,7 +90,7 @@ enum BackdropVariant {
 }
 
 enum BackdropSize {
-    case small, medium, large, full
+    case small, medium, large, fullScreen
 
     var config: BackdropConfig {
         switch self {
@@ -118,9 +118,10 @@ enum BackdropSize {
                 shadowSize: .large,
                 imageSize: .w1280
             )
-        case .full:
+        case .fullScreen:
             var largeConfig = BackdropSize.large.config
             largeConfig.width = nil
+            largeConfig.buttonSize = .extraLarge
             return largeConfig
         }
     }

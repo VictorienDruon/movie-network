@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct ShowView: View {
-    var show: Show
+    @StateObject private var viewModel: ShowViewModel
+
+    init(for show: Show) {
+        _viewModel = StateObject(wrappedValue: ShowViewModel(for: show))
+    }
 
     var body: some View {
         ScrollView {
@@ -25,16 +29,21 @@ struct ShowView: View {
                 ShowCast()
                 ShowCrew()
             }
-            .padding(.vertical)
         }
+        .contentMargins(.vertical, 16)
         .scrollIndicators(.hidden)
-        .navigationTitle(show.title)
+        .navigationTitle(viewModel.show.title)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar { ShowToolbar() }
-        .environmentObject(ShowViewModel(for: show))
+        .sheet(isPresented: $viewModel.showingReviewForm) {
+            ReviewForm()
+        }
+        .toolbar {
+            ShowToolbar()
+        }
+        .environmentObject(viewModel)
     }
 }
 
 #Preview {
-    ShowView(show: sampleMovie.toShow())
+    ShowView(for: sampleMovie.toShow())
 }

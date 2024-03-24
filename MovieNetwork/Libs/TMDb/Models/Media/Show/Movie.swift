@@ -105,6 +105,16 @@ struct Movie: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropab
 }
 
 extension Movie {
+    var link: URL {
+        URL(string: "\(appScheme)movie/\(id)")!
+    }
+
+    var databaseId: String {
+        "movie-\(id)"
+    }
+}
+
+extension Movie {
     func toMedia() -> Media {
         return Media.movie(self)
     }
@@ -116,11 +126,11 @@ extension Movie {
 
 extension [Movie] {
     func toMedias() -> [Media] {
-        return self.map { $0.toMedia() }
+        return map { $0.toMedia() }
     }
 
     func toShows() -> [Show] {
-        return self.map { $0.toShow() }
+        return map { $0.toShow() }
     }
 }
 

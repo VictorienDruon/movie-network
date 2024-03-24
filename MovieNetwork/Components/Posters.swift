@@ -65,21 +65,32 @@ struct PosterWithBottomTitle: View {
 }
 
 struct PosterWithActions: View {
+    var title: String
     var url: URL?
     var size: PosterSize
+    var shareUrl: URL?
     var onPlay: () -> Void
-    var onShare: () -> Void
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Poster(url: url, size: size)
 
             HStack(spacing: size.config.titlePadding / 2) {
-                Button("Play", systemImage: "play.fill", action: onPlay)
+                if let shareUrl {
+                    ShareLink(
+                        item: shareUrl,
+                        preview: SharePreview(
+                            title,
+                            image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage())
+                        )
+                    ) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
                     .labelStyle(.iconOnly)
                     .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
+                }
 
-                Button("Share", systemImage: "square.and.arrow.up", action: onShare)
+                Button("Play", systemImage: "play.fill", action: onPlay)
                     .labelStyle(.iconOnly)
                     .buttonStyle(TransparentButton(size.config.buttonSize, iconOnly: true))
             }
@@ -92,7 +103,7 @@ struct ShowPoster: View {
     var show: Show
     var variant = PosterVariant.topTitle
     var size = PosterSize.medium
-    var withNavigation = false
+    var withNavigation = true
 
     @ViewBuilder
     var poster: some View {
@@ -113,6 +124,14 @@ struct ShowPoster: View {
                 title: show.title,
                 url: show.posterUrl(size.config.imageSize),
                 size: size
+            )
+        case let .actions(onPlay):
+            PosterWithActions(
+                title: show.title,
+                url: show.posterUrl(size.config.imageSize),
+                size: size,
+                shareUrl: show.link,
+                onPlay: onPlay
             )
         }
     }
@@ -155,16 +174,16 @@ struct ShowPosters: View {
 }
 
 enum PosterVariant {
-    case raw, topTitle, bottomTitle
+    case raw, topTitle, bottomTitle, actions(() -> Void)
 }
 
 enum PosterSize {
-    case small, medium, large
+    case small, medium, large, fullScreen
 
     var config: PosterConfig {
         switch self {
         case .small:
-            PosterConfig(
+            return PosterConfig(
                 width: 120,
                 radius: 14,
                 titleHeight: 20,
@@ -175,7 +194,7 @@ enum PosterSize {
                 imageSize: .w342
             )
         case .medium:
-            PosterConfig(
+            return PosterConfig(
                 width: 150,
                 radius: 16,
                 titleHeight: 26,
@@ -186,7 +205,7 @@ enum PosterSize {
                 imageSize: .w500
             )
         case .large:
-            PosterConfig(
+            return PosterConfig(
                 width: 250,
                 radius: 24,
                 titleHeight: 32,
@@ -196,12 +215,17 @@ enum PosterSize {
                 shadowSize: .large,
                 imageSize: .w780
             )
+        case .fullScreen:
+            var largeConfig = PosterSize.large.config
+            largeConfig.width = nil
+            largeConfig.buttonSize = .extraLarge
+            return largeConfig
         }
     }
 }
 
 struct PosterConfig {
-    var width: CGFloat
+    var width: CGFloat?
     var radius: CGFloat
     var titleHeight: CGFloat
     var titlePadding: CGFloat
@@ -213,8 +237,24 @@ struct PosterConfig {
 
 #Preview {
     VStack {
-        PosterWithTopTitle(title: sampleMovie.title, url: sampleMovie.posterUrl(.w780), size: .small)
-        PosterWithBottomTitle(title: sampleMovie.title, url: sampleMovie.posterUrl(.w780), size: .small)
-        PosterWithActions(url: sampleMovie.posterUrl(.w780), size: .small, onPlay: {}, onShare: {})
+        PosterWithTopTitle(
+            title: sampleMovie.title,
+            url: sampleMovie.posterUrl(.w780),
+            size: .small
+        )
+
+        PosterWithBottomTitle(
+            title: sampleMovie.title,
+            url: sampleMovie.posterUrl(.w780),
+            size: .small
+        )
+
+        PosterWithActions(
+            title: sampleMovie.title,
+            url: sampleMovie.posterUrl(.w780),
+            size: .small,
+            shareUrl: sampleMovie.link,
+            onPlay: {}
+        )
     }
 }

@@ -13,11 +13,11 @@ struct ShowTrailer: View {
     var body: some View {
         ZStack {
             if let key = viewModel.show.videos?.trailerKey, viewModel.showingTrailer {
-                BackdropVideo(key: key, size: .full)
+                BackdropVideo(key: key, size: .fullScreen)
             } else {
                 BackdropWithAction(
                     url: viewModel.show.backdropUrl(.w1280),
-                    size: .full,
+                    size: .fullScreen,
                     disabled: viewModel.show.videos?.trailerKey == nil
                 ) {
                     withAnimation {

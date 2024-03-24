@@ -114,6 +114,16 @@ struct TVSeries: Identifiable, Codable, Equatable, Hashable, Posterable, Backdro
 }
 
 extension TVSeries {
+    var link: URL {
+        URL(string: "\(appScheme)tv/\(id)")!
+    }
+
+    var databaseId: String {
+        "tv-\(id)"
+    }
+}
+
+extension TVSeries {
     func toMedia() -> Media {
         return Media.tvSeries(self)
     }
