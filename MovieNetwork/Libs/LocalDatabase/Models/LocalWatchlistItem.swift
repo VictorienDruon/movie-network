@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class LocalWatchlistItem: WatchlistItem {
+final class LocalWatchlistItem {
     var addedAt: Date
     var show: LocalShow
 

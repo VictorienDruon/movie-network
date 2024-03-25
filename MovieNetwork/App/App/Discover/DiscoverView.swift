@@ -17,9 +17,9 @@ struct DiscoverView: View {
                 LazyVStack(spacing: 24) {
                     DiscoverFilters()
 
-                    if !viewModel.trendingShows.isEmpty {
+                    if !viewModel.filteredTrendingShows.isEmpty {
                         Section("Trending") {
-                            ShowPosters(shows: viewModel.trendingShows)
+                            ShowPosters(shows: viewModel.filteredTrendingShows)
                         }
                     }
 
@@ -42,7 +42,8 @@ struct DiscoverView: View {
                     }
                 }
             }
-            .contentMargins(.vertical, 16)
+            .contentMargins(.top, 16)
+            .contentMargins(.bottom, 64)
             .scrollIndicators(.hidden)
             .environmentObject(viewModel)
 

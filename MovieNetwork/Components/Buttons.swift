@@ -103,12 +103,14 @@ struct Pressable: ButtonStyle {
 }
 
 enum ButtonVariant {
-    case primary, secondary, secondaryOutline
+    case primary, primaryOutline, secondary, secondaryOutline
 
     var config: ButtonVariantConfig {
         switch self {
         case .primary:
             ButtonVariantConfig(bgColor: .accent9, strokeColor: .accent10, strokeOpacity: 0.2, textColor: .white)
+        case .primaryOutline:
+            ButtonVariantConfig(bgColor: .neutral2, strokeColor: .neutral4, strokeOpacity: 0.6, textColor: .accent9)
         case .secondary:
             ButtonVariantConfig(bgColor: .neutral9, strokeColor: .neutral10, strokeOpacity: 0.2, textColor: .white)
         case .secondaryOutline:

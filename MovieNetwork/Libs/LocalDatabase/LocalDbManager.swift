@@ -79,6 +79,11 @@ extension LocalDbManager {
         return try database.fetch(descriptor).first
     }
 
+    func getShows() throws -> [LocalShow] {
+        let descriptor = FetchDescriptor<LocalShow>()
+        return try database.fetch(descriptor)
+    }
+
     @discardableResult
     func upsertShow(_ show: Show) throws -> LocalShow {
         if let existingShow = try getShow(show.key) {
@@ -89,6 +94,7 @@ extension LocalDbManager {
             existingShow.runtime = show.runtime
             existingShow.numberOfSeasons = show.numberOfSeasons
             existingShow.voteAverage = show.voteAverage
+            existingShow.genreIds = show.genres?.map { $0.id }
             existingShow.posterPath = show.posterPath
             existingShow.backdropPath = show.backdropPath
             return existingShow
@@ -103,6 +109,7 @@ extension LocalDbManager {
                 runtime: show.runtime,
                 numberOfSeasons: show.numberOfSeasons,
                 voteAverage: show.voteAverage,
+                genreIds: show.genres?.map { $0.id },
                 posterPath: show.posterPath,
                 backdropPath: show.backdropPath
             )

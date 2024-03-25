@@ -11,8 +11,10 @@ let sampleMovie = Movie(
     id: 693134,
     title: "Dune: Part Two",
     overview: "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
+    runtime: 166,
     posterPath: URL(string: "/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg"),
-    backdropPath: URL(string: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg")
+    backdropPath: URL(string: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg"),
+    voteAverage: 8.72446
 )
 
 let sampleTvSeries = TVSeries(

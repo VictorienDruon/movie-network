@@ -21,6 +21,7 @@ final class LocalShow: Showable {
     var runtime: Int?
     var numberOfSeasons: Int?
     var voteAverage: Double?
+    var genreIds: [Int]?
     var posterPath: URL?
     var backdropPath: URL?
 
@@ -37,6 +38,7 @@ final class LocalShow: Showable {
         runtime: Int?,
         numberOfSeasons: Int?,
         voteAverage: Double?,
+        genreIds: [Int]?,
         posterPath: URL?,
         backdropPath: URL?
     ) {
@@ -49,7 +51,53 @@ final class LocalShow: Showable {
         self.runtime = runtime
         self.numberOfSeasons = numberOfSeasons
         self.voteAverage = voteAverage
+        self.genreIds = genreIds
         self.posterPath = posterPath
         self.backdropPath = backdropPath
+    }
+}
+
+extension LocalShow {
+    func toShow() -> Show? {
+        let components = id.components(separatedBy: "-")
+        guard
+            components.count == 2,
+            let type = components.first,
+            let showIdString = components.last,
+            let showId = Int(showIdString)
+        else { return nil }
+
+        switch type {
+        case "movie":
+            return Show.movie(
+                Movie(
+                    id: showId,
+                    title: title,
+                    overview: overview,
+                    runtime: runtime,
+                    genreIds: genreIds,
+                    releaseDate: releaseDate,
+                    posterPath: posterPath,
+                    backdropPath: backdropPath,
+                    voteAverage: voteAverage
+                )
+            )
+        case "tv":
+            return Show.tvSeries(
+                TVSeries(
+                    id: showId,
+                    name: title,
+                    overview: overview,
+                    numberOfSeasons: numberOfSeasons,
+                    genreIds: genreIds,
+                    firstAirDate: releaseDate,
+                    posterPath: posterPath,
+                    backdropPath: backdropPath,
+                    voteAverage: voteAverage
+                )
+            )
+        default:
+            return nil
+        }
     }
 }

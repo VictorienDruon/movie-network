@@ -11,55 +11,58 @@ struct WatchlisthView: View {
     @StateObject var viewModel = WatchlistViewModel()
 
     var body: some View {
-        GeometryReader { screen in
-            ScrollView {
-                ScrollView(.horizontal) {
-                    LazyHStack(alignment: .top, spacing: 32) {
-                        ForEach(viewModel.shows) { show in
-                            var width = screen.size.width - 128
-
-                            VStack(spacing: 32) {
-                                ShowPoster(
-                                    show: show,
-                                    variant: .actions {},
-                                    size: .fullScreen
-                                )
-
-                                Title2(show.title)
-
-                                if let overview = show.overview {
-                                    BodyText(overview)
-                                        .lineLimit(12)
+        ZStack(alignment: .bottom) {
+            GeometryReader { screen in
+                ScrollView {
+                    ScrollViewReader { _ in
+                        ScrollView(.horizontal) {
+                            LazyHStack(alignment: .top, spacing: 28) {
+                                ForEach(viewModel.filteredWatchlist) { show in
+                                    WatchlistItemCard(show: show, width: screen.size.width - 112)
+                                        .scrollTransition(.animated, axis: .horizontal) { content, phase in
+                                            content
+                                                .offset(y: phase.isIdentity ? 0 : 72)
+                                        }
                                 }
                             }
-                            .frame(width: screen.size.width - 128)
+                            .scrollTargetLayout()
                         }
+                        .contentMargins(.horizontal, 56)
+                        .scrollIndicators(.hidden)
+                        .scrollTargetBehavior(.viewAligned)
+//                        .onChange(of: viewModel.shows) {
+//                            reader.scrollTo(Self.topId)
+//                        }
                     }
-                    .scrollTargetLayout()
                 }
-                .safeAreaPadding(.horizontal, 64)
-                .scrollTargetBehavior(.viewAligned)
+                .contentMargins(.top, 16)
+                .contentMargins(.bottom, 64)
                 .scrollIndicators(.hidden)
             }
-            .contentMargins(.vertical, 16)
-            .scrollIndicators(.hidden)
+
+            WatchlistsControls()
         }
+        .sheet(isPresented: $viewModel.showingFilters) {
+            WatchlistFilters()
+        }
+        .environmentObject(viewModel)
+        .task { viewModel.getWatchlist() }
     }
 }
 
-#Preview {
-    @StateObject var navigation = NavigationManager()
-
-    return
-        TabView {
-            NavigationStack(path: $navigation.watchlistStack) {
-                Tab.watchlist.view
-                    .navigationTitle(Tab.watchlist.name)
-                    .navigationBarTitleDisplayMode(.large)
-                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
-                    .toolbar { ProfileTrigger() }
-            }
-            .tag(Tab.watchlist)
-            .tabItem { Image(systemName: Tab.watchlist.icon) }
-        }
-}
+// #Preview {
+//    @StateObject var navigation = NavigationManager()
+//
+//    return
+//        TabView {
+//            NavigationStack(path: $navigation.watchlistStack) {
+//                Tab.watchlist.view
+//                    .navigationTitle(Tab.watchlist.name)
+//                    .navigationBarTitleDisplayMode(.large)
+//                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+//                    .toolbar { ProfileTrigger() }
+//            }
+//            .tag(Tab.watchlist)
+//            .tabItem { Image(systemName: Tab.watchlist.icon) }
+//        }
+// }

@@ -17,7 +17,7 @@ final class DiscoverViewModel: ObservableObject {
 
     @Published var trendingShows = [Show]()
     var filteredTrendingShows: [Show] {
-        trendingShows.filterByGenre(selectedGenre)
+        filterByGenre(trendingShows)
     }
 
     @Published var trendingPeople = [Person]()
@@ -25,15 +25,13 @@ final class DiscoverViewModel: ObservableObject {
     @Published var nowPlayingMovies = [Show]()
     @Published var nowPlayingTvSeries = [Show]()
     var nowPlayingShows: [Show] {
-        filterByType(movies: nowPlayingMovies, tvSeries: nowPlayingTvSeries)
-            .filterByGenre(selectedGenre)
+        filterByGenre(filterByType(movies: nowPlayingMovies, tvSeries: nowPlayingTvSeries))
     }
 
     @Published var upcomingMovies = [Show]()
     @Published var upcomingTvSeries = [Show]()
     var upcomingShows: [Show] {
-        filterByType(movies: upcomingMovies, tvSeries: upcomingTvSeries)
-            .filterByGenre(selectedGenre)
+        filterByGenre(filterByType(movies: upcomingMovies, tvSeries: upcomingTvSeries))
     }
 
     init() {
@@ -137,6 +135,14 @@ final class DiscoverViewModel: ObservableObject {
             return movies
         } else {
             return tvSeries
+        }
+    }
+
+    private func filterByGenre(_ shows: [Show]) -> [Show] {
+        if let selectedGenre {
+            return shows.filterByGenres([selectedGenre])
+        } else {
+            return shows
         }
     }
 }

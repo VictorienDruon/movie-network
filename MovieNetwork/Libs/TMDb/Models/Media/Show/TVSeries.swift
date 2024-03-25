@@ -131,6 +131,13 @@ extension TVSeries {
     func toShow() -> Show {
         return Show.tvSeries(self)
     }
+    
+    func belongsToAnyGenre(_ genreIdList: [Int]) -> Bool {
+        guard let genreIds, !genreIdList.isEmpty else {
+            return false
+        }
+        return genreIdList.contains(where: genreIds.contains)
+    }
 }
 
 extension [TVSeries] {

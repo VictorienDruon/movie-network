@@ -29,7 +29,7 @@ struct RemoteWatchlistItem: Codable {
     }
 }
 
-struct RemoteWatchlistItemWithShow: Decodable, WatchlistItem {
+struct RemoteWatchlistItemWithShow: Decodable {
     let addedAt: Date
     let show: RemoteShow
 

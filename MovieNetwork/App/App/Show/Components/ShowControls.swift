@@ -1,5 +1,5 @@
 //
-//  WatchlistControls.swift
+//  ShowControls.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 09/03/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WatchlistControls: View {
+struct ShowControls: View {
     @EnvironmentObject var viewModel: ShowViewModel
 
     var body: some View {
@@ -40,6 +40,6 @@ struct WatchlistControls: View {
 }
 
 #Preview {
-    WatchlistControls()
+    ShowControls()
         .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

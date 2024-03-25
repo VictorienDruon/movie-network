@@ -38,14 +38,14 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         case let .tvSeries(tvSeries): tvSeries.overview
         }
     }
-    
+
     var runtime: Int? {
         switch self {
         case let .movie(movie): movie.runtime
         default: nil
         }
     }
-    
+
     var numberOfSeasons: Int? {
         switch self {
         case let .tvSeries(tvSeries): tvSeries.numberOfSeasons
@@ -72,6 +72,17 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         case let .movie(movie): movie.voteAverage
         case let .tvSeries(tvSeries): tvSeries.voteAverage
         }
+    }
+
+    var genreIds: [Int]? {
+        switch self {
+        case let .movie(movie): movie.genreIds
+        case let .tvSeries(tvSeries): tvSeries.genreIds
+        }
+    }
+
+    var genreIdsString: String? {
+        return genres?.map { $0.id }.joined(separator: ",")
     }
 
     var genres: [Genre]? {
@@ -154,19 +165,12 @@ extension Show {
         }
     }
 
-    func belongsToGenre(_ genre: GenreInfo) -> Bool {
+    func belongsToAnyGenre(_ movieGenreIds: [Int], _ tvGenreIds: [Int]) -> Bool {
         switch self {
         case let .movie(movie):
-            guard let genreIds = movie.genreIds, let genreId = genre.movieId else {
-                return false
-            }
-            return genreIds.contains(genreId)
-
+            return movie.belongsToAnyGenre(movieGenreIds)
         case let .tvSeries(tvSeries):
-            guard let genreIds = tvSeries.genreIds, let genreId = genre.tvSeriesId else {
-                return false
-            }
-            return genreIds.contains(genreId)
+            return tvSeries.belongsToAnyGenre(tvGenreIds)
         }
     }
 }
@@ -180,11 +184,11 @@ extension [Show] {
         self.filter { $0.isTvSeries() }
     }
 
-    func filterByGenre(_ genre: GenreInfo?) -> [Show] {
-        guard let genre else {
-            return self
-        }
-        return self.filter { $0.belongsToGenre(genre) }
+    func filterByGenres(_ genres: [GenreInfo]) -> [Show] {
+        let movieGenreIds = genres.compactMap { $0.movieId }
+        let tvSeriesGenreIds = genres.compactMap { $0.tvId }
+
+        return self.filter { $0.belongsToAnyGenre(movieGenreIds, tvSeriesGenreIds) }
     }
 
     func filterByJobs(_ jobs: [String]) -> [Show] {

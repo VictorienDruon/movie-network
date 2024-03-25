@@ -144,6 +144,7 @@ extension RemoteDbManager {
             runtime: show.runtime,
             numberOfSeasons: show.numberOfSeasons,
             voteAverage: show.voteAverage,
+            genreIds: show.genreIdsString,
             posterPath: show.posterPath,
             backdropPath: show.backdropPath
         )

@@ -9,22 +9,66 @@ import Foundation
 
 @MainActor
 final class WatchlistViewModel: ObservableObject {
-    @Published var watchlist = [any WatchlistItem]()
-    var shows: [Show] {
-        watchlist.compactMap { $0.show.toShow() }
+    @Published var typeFilters = ShowType.allCases
+    @Published var genreFilters = [GenreInfo]()
+    @Published var isShuffled = false
+
+    var isTypeFiltered: Bool {
+        !typeFilters.isEmpty && typeFilters.count != ShowType.allCases.count
     }
 
-    init() {
-        getWatchlist()
+    var isGenreFiltered: Bool {
+        !genreFilters.isEmpty
     }
+
+    var isFiltered: Bool {
+        isTypeFiltered || isGenreFiltered
+    }
+
+    var numberOfFilters: Int {
+        (isTypeFiltered ? typeFilters.count : 0) + genreFilters.count
+    }
+
+    @Published var watchlist = [Show]()
+    var filteredWatchlist: [Show] {
+        shuffle(filterByGenres(filterByType(watchlist)))
+    }
+
+    @Published var showingFilters = false
 
     func getWatchlist() {
         Task {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
-                watchlist = try await RemoteDbManager.shared.getWatchlist(of: user.id)
+                watchlist = try await RemoteDbManager.shared.getWatchlist(of: user.id).compactMap { $0.show.toShow() }
             } else {
-                watchlist = try LocalDbManager.shared.getWatchlist()
+                watchlist = try LocalDbManager.shared.getWatchlist().compactMap { $0.show.toShow() }
             }
+        }
+    }
+
+    private func filterByType(_ shows: [Show]) -> [Show] {
+        if !isTypeFiltered {
+            return shows
+        } else if typeFilters.contains(.movie) {
+            return shows.filterMovies()
+        } else {
+            return shows.filterTvSeries()
+        }
+    }
+
+    private func filterByGenres(_ shows: [Show]) -> [Show] {
+        if isGenreFiltered {
+            return shows.filterByGenres(genreFilters)
+        } else {
+            return shows
+        }
+    }
+
+    private func shuffle(_ shows: [Show]) -> [Show] {
+        if isShuffled {
+            return shows.shuffled()
+        } else {
+            return shows
         }
     }
 }

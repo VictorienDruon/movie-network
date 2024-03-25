@@ -21,7 +21,7 @@ struct ShowView: View {
                     ShowTrailer()
                     ShowHeader()
                     ShowGenres()
-                    WatchlistControls()
+                    ShowControls()
                 }
                 NeutralDivider()
                 ShowOverview()
@@ -35,7 +35,7 @@ struct ShowView: View {
         .navigationTitle(viewModel.show.title)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $viewModel.showingReviewForm) {
-            ReviewForm()
+            ShowReviewForm()
         }
         .toolbar {
             ShowToolbar()
@@ -44,6 +44,6 @@ struct ShowView: View {
     }
 }
 
-#Preview {
-    ShowView(for: sampleMovie.toShow())
-}
+// #Preview {
+//    ShowView(for: sampleMovie.toShow())
+// }

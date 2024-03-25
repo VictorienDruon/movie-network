@@ -1,5 +1,5 @@
 //
-//  ReviewForm.swift
+//  ShowReviewForm.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 19/03/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ReviewForm: View {
+struct ShowReviewForm: View {
     @EnvironmentObject var viewModel: ShowViewModel
 
     var body: some View {
@@ -61,9 +61,9 @@ struct ReviewForm: View {
                 }
             }
             .buttonStyle(StyledButton(.primary, .full))
+            .sensoryFeedback(.error, trigger: viewModel.triggerReviewFormHaptic)
         }
         .padding()
-        .sensoryFeedback(.error, trigger: viewModel.triggerReviewFormHaptic)
         .presentationDetents([.medium])
         .interactiveDismissDisabled()
     }
@@ -72,7 +72,7 @@ struct ReviewForm: View {
 #Preview {
     VStack {}
         .sheet(isPresented: .constant(true)) {
-            ReviewForm()
+            ShowReviewForm()
         }
         .environmentObject(ShowViewModel(for: sampleMovie.toShow()))
 }

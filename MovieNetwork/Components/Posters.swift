@@ -178,12 +178,12 @@ enum PosterVariant {
 }
 
 enum PosterSize {
-    case small, medium, large, fullScreen
+    case small, medium, large, custom(CGFloat)
 
     var config: PosterConfig {
         switch self {
         case .small:
-            return PosterConfig(
+            PosterConfig(
                 width: 120,
                 radius: 14,
                 titleHeight: 20,
@@ -194,7 +194,7 @@ enum PosterSize {
                 imageSize: .w342
             )
         case .medium:
-            return PosterConfig(
+            PosterConfig(
                 width: 150,
                 radius: 16,
                 titleHeight: 26,
@@ -205,7 +205,7 @@ enum PosterSize {
                 imageSize: .w500
             )
         case .large:
-            return PosterConfig(
+            PosterConfig(
                 width: 250,
                 radius: 24,
                 titleHeight: 32,
@@ -215,11 +215,17 @@ enum PosterSize {
                 shadowSize: .large,
                 imageSize: .w780
             )
-        case .fullScreen:
-            var largeConfig = PosterSize.large.config
-            largeConfig.width = nil
-            largeConfig.buttonSize = .extraLarge
-            return largeConfig
+        case let .custom(width):
+            PosterConfig(
+                width: width,
+                radius: 24,
+                titleHeight: 32,
+                titlePadding: 14,
+                titleFontSize: 24,
+                buttonSize: .extraLarge,
+                shadowSize: .large,
+                imageSize: .w780
+            )
         }
     }
 }
