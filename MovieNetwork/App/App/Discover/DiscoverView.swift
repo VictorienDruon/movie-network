@@ -43,7 +43,7 @@ struct DiscoverView: View {
                 }
             }
             .contentMargins(.top, 16)
-            .contentMargins(.bottom, 64)
+            .contentMargins(.bottom, 96)
             .scrollIndicators(.hidden)
             .environmentObject(viewModel)
 

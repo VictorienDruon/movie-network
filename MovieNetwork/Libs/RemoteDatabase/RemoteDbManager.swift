@@ -63,15 +63,15 @@ extension RemoteDbManager {
 // Watchlists
 extension RemoteDbManager {
     func getWatchlistItem(_ showId: String, of userId: UUID) async throws -> RemoteWatchlistItem? {
-        return try await database
+        let watchlist: [RemoteWatchlistItem] = try await database
             .from("watchlists")
             .select()
             .eq("show_id", value: showId)
             .eq("user_id", value: userId)
             .limit(1)
-            .single()
             .execute()
             .value
+        return watchlist.first
     }
 
     func getWatchlist(of userId: UUID, ascending: Bool = false) async throws -> [RemoteWatchlistItemWithShow] {

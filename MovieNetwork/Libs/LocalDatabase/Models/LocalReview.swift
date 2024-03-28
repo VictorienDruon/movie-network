@@ -10,14 +10,13 @@ import SwiftData
 
 @Model
 final class LocalReview {
-    var show: LocalShow
+    var show: LocalShow?
     var createdAt: Date
     var updatedAt: Date?
     var rating: Int
     var comment: String?
 
-    init(show: LocalShow, createdAt: Date = .now, updatedAt: Date? = nil, rating: Int, comment: String?) {
-        self.show = show
+    init(createdAt: Date = .now, updatedAt: Date? = nil, rating: Int, comment: String?) {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.rating = rating

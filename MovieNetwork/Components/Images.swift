@@ -17,6 +17,17 @@ struct RawImage: View {
                 image
                     .resizable()
                     .scaledToFill()
+            case .failure:
+                // Fix bug in loading cancellation from List and LazyVStack
+                AsyncImage(url: url, transaction: Transaction(animation: .easeOut)) { phase in
+                    switch phase {
+                    case let .success(image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    default: Color.neutral9
+                    }
+                }
             default: Color.neutral9
             }
         }

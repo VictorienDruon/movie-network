@@ -64,6 +64,7 @@ struct StyledButton: ButtonStyle {
                         .strokeBorder(.white.opacity(isDark ? 0 : variant.config.strokeOpacity), lineWidth: 2)
                 }
             }
+            .animation(.none, value: isPressed)
     }
 }
 
@@ -98,7 +99,7 @@ struct Pressable: ButtonStyle {
         configuration
             .label
             .scaleEffect(isPressed ? 0.975 : 1)
-            .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
+            .animation(.easeOut(duration: 0.1), value: isPressed)
     }
 }
 

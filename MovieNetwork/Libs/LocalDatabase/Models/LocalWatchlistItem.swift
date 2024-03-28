@@ -11,10 +11,9 @@ import SwiftData
 @Model
 final class LocalWatchlistItem {
     var addedAt: Date
-    var show: LocalShow
+    var show: LocalShow?
 
-    init(show: LocalShow, addedAt: Date = .now) {
-        self.show = show
+    init(addedAt: Date = .now) {
         self.addedAt = addedAt
     }
 }

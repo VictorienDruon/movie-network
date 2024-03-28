@@ -8,11 +8,12 @@
 import Foundation
 import SwiftData
 
-@MainActor
 final class LocalDbManager {
+    @MainActor
     static let shared = LocalDbManager()
     private let database: ModelContext
 
+    @MainActor
     private init() {
         do {
             let container = try ModelContainer(for: LocalWatchlistItem.self, LocalReview.self)
@@ -26,7 +27,7 @@ final class LocalDbManager {
 // Watchlists
 extension LocalDbManager {
     func getWatchlistItem(_ showId: String) throws -> LocalWatchlistItem? {
-        let descriptor = FetchDescriptor<LocalWatchlistItem>(predicate: #Predicate { $0.show.id == showId })
+        let descriptor = FetchDescriptor<LocalWatchlistItem>(predicate: #Predicate { $0.show?.id == showId })
         return try database.fetch(descriptor).first
     }
 
@@ -39,8 +40,9 @@ extension LocalDbManager {
     @discardableResult
     func addToWatchlist(_ show: Show) throws -> LocalWatchlistItem {
         let upsertedShow = try upsertShow(show)
-        let watchlistItem = LocalWatchlistItem(show: upsertedShow)
+        let watchlistItem = LocalWatchlistItem()
         database.insert(watchlistItem)
+        watchlistItem.show = upsertedShow
         return watchlistItem
     }
 
@@ -59,15 +61,16 @@ extension LocalDbManager {
     }
 
     func getReviews(for showId: String) throws -> [LocalReview] {
-        let descriptor = FetchDescriptor<LocalReview>(predicate: #Predicate { $0.show.id == showId })
+        let descriptor = FetchDescriptor<LocalReview>(predicate: #Predicate { $0.show?.id == showId })
         return try database.fetch(descriptor)
     }
 
     @discardableResult
     func createReview(for show: Show, rating: Int, comment: String?) throws -> LocalReview {
         let upsertedShow = try upsertShow(show)
-        let review = LocalReview(show: upsertedShow, rating: rating, comment: comment)
+        let review = LocalReview(rating: rating, comment: comment)
         database.insert(review)
+        review.show = upsertedShow
         return review
     }
 }
@@ -87,20 +90,20 @@ extension LocalDbManager {
     @discardableResult
     func upsertShow(_ show: Show) throws -> LocalShow {
         if let existingShow = try getShow(show.key) {
-            existingShow.title = show.title
             existingShow.updatedAt = .now
+            existingShow.title = show.title
             existingShow.releaseDate = show.releaseDate
             existingShow.overview = show.overview
             existingShow.runtime = show.runtime
             existingShow.numberOfSeasons = show.numberOfSeasons
             existingShow.voteAverage = show.voteAverage
-            existingShow.genreIds = show.genres?.map { $0.id }
+            existingShow.genreIds = show.genreIds
             existingShow.posterPath = show.posterPath
             existingShow.backdropPath = show.backdropPath
             return existingShow
         } else {
             return LocalShow(
-                showId: show.key,
+                id: show.key,
                 createdAt: .now,
                 updatedAt: nil,
                 title: show.title,
@@ -109,7 +112,7 @@ extension LocalDbManager {
                 runtime: show.runtime,
                 numberOfSeasons: show.numberOfSeasons,
                 voteAverage: show.voteAverage,
-                genreIds: show.genres?.map { $0.id },
+                genreIds: show.genreIds,
                 posterPath: show.posterPath,
                 backdropPath: show.backdropPath
             )

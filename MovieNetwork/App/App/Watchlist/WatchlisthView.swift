@@ -13,31 +13,19 @@ struct WatchlisthView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             GeometryReader { screen in
-                ScrollView {
-                    ScrollViewReader { _ in
-                        ScrollView(.horizontal) {
-                            LazyHStack(alignment: .top, spacing: 28) {
-                                ForEach(viewModel.filteredWatchlist) { show in
-                                    WatchlistItemCard(show: show, width: screen.size.width - 112)
-                                        .scrollTransition(.animated, axis: .horizontal) { content, phase in
-                                            content
-                                                .offset(y: phase.isIdentity ? 0 : 72)
-                                        }
-                                }
-                            }
-                            .scrollTargetLayout()
+                ScrollView(.horizontal) {
+                    LazyHStack(alignment: .top, spacing: 28) {
+                        ForEach(viewModel.filteredWatchlist) { show in
+                            WatchlistItemCard(show: show, width: screen.size.width - 112)
                         }
-                        .contentMargins(.horizontal, 56)
-                        .scrollIndicators(.hidden)
-                        .scrollTargetBehavior(.viewAligned)
-//                        .onChange(of: viewModel.shows) {
-//                            reader.scrollTo(Self.topId)
-//                        }
+                        .transition(.scale)
                     }
+                    .animation(.easeOut, value: viewModel.filteredWatchlist)
+                    .scrollTargetLayout()
                 }
-                .contentMargins(.top, 16)
-                .contentMargins(.bottom, 64)
+                .contentMargins(.horizontal, 56)
                 .scrollIndicators(.hidden)
+                .scrollTargetBehavior(.viewAligned)
             }
 
             WatchlistsControls()

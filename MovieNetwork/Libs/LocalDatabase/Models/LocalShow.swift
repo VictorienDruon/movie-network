@@ -29,7 +29,7 @@ final class LocalShow: Showable {
     @Relationship(deleteRule: .cascade, inverse: \LocalReview.show) var reviews = [LocalReview]()
 
     init(
-        showId: String,
+        id: String,
         createdAt: Date,
         updatedAt: Date?,
         title: String,
@@ -42,7 +42,7 @@ final class LocalShow: Showable {
         posterPath: URL?,
         backdropPath: URL?
     ) {
-        self.id = showId
+        self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.title = title

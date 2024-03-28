@@ -74,22 +74,19 @@ enum Show: Identifiable, Codable, Equatable, Hashable, Posterable, Backdropable 
         }
     }
 
-    var genreIds: [Int]? {
-        switch self {
-        case let .movie(movie): movie.genreIds
-        case let .tvSeries(tvSeries): tvSeries.genreIds
-        }
-    }
-
-    var genreIdsString: String? {
-        return genres?.map { $0.id }.joined(separator: ",")
-    }
-
     var genres: [Genre]? {
         switch self {
         case let .movie(movie): movie.genres
         case let .tvSeries(tvSeries): tvSeries.genres
         }
+    }
+    
+    var genreIds: [Int]? {
+        return self.genres?.map { $0.id }
+    }
+
+    var genreIdsString: String? {
+        return genreIds?.joined(separator: ",")
     }
 
     var character: String? {

@@ -30,8 +30,11 @@ final class WatchlistViewModel: ObservableObject {
     }
 
     @Published var watchlist = [Show]()
+    @Published var shuffledWatchlist = [Show]()
     var filteredWatchlist: [Show] {
-        shuffle(filterByGenres(filterByType(watchlist)))
+        filterByGenres(filterByType(
+            isShuffled ? shuffledWatchlist : watchlist
+        ))
     }
 
     @Published var showingFilters = false
@@ -41,8 +44,9 @@ final class WatchlistViewModel: ObservableObject {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
                 watchlist = try await RemoteDbManager.shared.getWatchlist(of: user.id).compactMap { $0.show.toShow() }
             } else {
-                watchlist = try LocalDbManager.shared.getWatchlist().compactMap { $0.show.toShow() }
+                watchlist = try LocalDbManager.shared.getWatchlist().compactMap { $0.show?.toShow() }
             }
+            shuffledWatchlist = watchlist.shuffled()
         }
     }
 
@@ -59,14 +63,6 @@ final class WatchlistViewModel: ObservableObject {
     private func filterByGenres(_ shows: [Show]) -> [Show] {
         if isGenreFiltered {
             return shows.filterByGenres(genreFilters)
-        } else {
-            return shows
-        }
-    }
-
-    private func shuffle(_ shows: [Show]) -> [Show] {
-        if isShuffled {
-            return shows.shuffled()
         } else {
             return shows
         }
