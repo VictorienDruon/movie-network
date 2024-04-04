@@ -112,13 +112,22 @@ final class ShowViewModel: ObservableObject {
                 isDisabled = true
                 if let user = await RemoteDbManager.shared.currentSession()?.user {
                     try await RemoteDbManager.shared.createReview(for: show, by: user.id, rating: rating, comment: comment)
+                    try await RemoteDbManager.shared.removeFromWatchlist(show.key, for: user.id)
                 } else {
                     try LocalDbManager.shared.createReview(for: show, rating: rating, comment: comment)
+                    try LocalDbManager.shared.removeFromWatchlist(show.key)
                 }
-                removeShowFromWatchlist()
+                inWatchlist = false
+                triggerWatchlistControlsHaptic += 1
                 showingReviewForm = false
+                refreshReview()
                 isDisabled = false
             }
         }
+    }
+
+    func refreshReview() {
+        rating = nil
+        comment = ""
     }
 }
