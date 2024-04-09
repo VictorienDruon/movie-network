@@ -52,8 +52,8 @@ enum LabelSpacing {
     var value: CGFloat {
         switch self {
         case .small: 2
-        case .medium: 4
-        case .large: 6
+        case .medium: 6
+        case .large: 8
         }
     }
 }

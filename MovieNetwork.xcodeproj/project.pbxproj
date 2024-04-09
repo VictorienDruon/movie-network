@@ -38,6 +38,20 @@
 		AC5960BD2B9BE76F00857FB2 /* TextBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5960BC2B9BE76F00857FB2 /* TextBlock.swift */; };
 		AC5960BF2B9BEFDC00857FB2 /* ShowControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5960BE2B9BEFDC00857FB2 /* ShowControls.swift */; };
 		AC5960C12B9BF27D00857FB2 /* ShowGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5960C02B9BF27D00857FB2 /* ShowGenres.swift */; };
+		AC5B74A82BC3EB700050E1CB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74A72BC3EB700050E1CB /* ProfileViewModel.swift */; };
+		AC5B74AA2BC3F7010050E1CB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74A92BC3F7010050E1CB /* User.swift */; };
+		AC5B74AD2BC403990050E1CB /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74AC2BC403990050E1CB /* AuthUser.swift */; };
+		AC5B74AF2BC53BC00050E1CB /* Gradients.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74AE2BC53BC00050E1CB /* Gradients.swift */; };
+		AC5B74B12BC53CA90050E1CB /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74B02BC53CA90050E1CB /* Avatar.swift */; };
+		AC5B74B32BC53EEA0050E1CB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74B22BC53EEA0050E1CB /* Colors.swift */; };
+		AC5B74B52BC5525A0050E1CB /* ProfileControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74B42BC5525A0050E1CB /* ProfileControls.swift */; };
+		AC5B74B82BC572440050E1CB /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74B72BC572440050E1CB /* Auth.swift */; };
+		AC5B74BA2BC572610050E1CB /* Watchlists.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74B92BC572610050E1CB /* Watchlists.swift */; };
+		AC5B74BC2BC572720050E1CB /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74BB2BC572720050E1CB /* Reviews.swift */; };
+		AC5B74BE2BC572870050E1CB /* Shows.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74BD2BC572870050E1CB /* Shows.swift */; };
+		AC5B74C02BC573110050E1CB /* Follows.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74BF2BC573110050E1CB /* Follows.swift */; };
+		AC5B74C22BC5B13B0050E1CB /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74C12BC5B13B0050E1CB /* Follow.swift */; };
+		AC5B74C42BC5F9430050E1CB /* Profiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5B74C32BC5F9430050E1CB /* Profiles.swift */; };
 		AC5DDAE12B9A52FE003F466B /* MovieNetworkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5DDAE02B9A52FE003F466B /* MovieNetworkApp.swift */; };
 		AC5DDAF82B9A5338003F466B /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5DDAEE2B9A5338003F466B /* Alerts.swift */; };
 		AC5DDAF92B9A5338003F466B /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5DDAEF2B9A5338003F466B /* Buttons.swift */; };
@@ -103,7 +117,6 @@
 		AC69740F2B9C93A600F9D7DD /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC69740E2B9C93A600F9D7DD /* Tag.swift */; };
 		AC6974122B9C9E1000F9D7DD /* ShowToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6974112B9C9E1000F9D7DD /* ShowToolbar.swift */; };
 		AC6974142B9CBD9800F9D7DD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6974132B9CBD9800F9D7DD /* Config.swift */; };
-		AC6974172B9CED8900F9D7DD /* ProfileToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6974162B9CED8900F9D7DD /* ProfileToolbar.swift */; };
 		AC6974192B9D0D7A00F9D7DD /* PersonCredits.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6974182B9D0D7A00F9D7DD /* PersonCredits.swift */; };
 		AC69741B2B9D190000F9D7DD /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC69741A2B9D190000F9D7DD /* Job.swift */; };
 		AC69741D2B9D19A500F9D7DD /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC69741C2B9D19A500F9D7DD /* Role.swift */; };
@@ -173,6 +186,20 @@
 		AC5960BC2B9BE76F00857FB2 /* TextBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBlock.swift; sourceTree = "<group>"; };
 		AC5960BE2B9BEFDC00857FB2 /* ShowControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowControls.swift; sourceTree = "<group>"; };
 		AC5960C02B9BF27D00857FB2 /* ShowGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowGenres.swift; sourceTree = "<group>"; };
+		AC5B74A72BC3EB700050E1CB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		AC5B74A92BC3F7010050E1CB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AC5B74AC2BC403990050E1CB /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
+		AC5B74AE2BC53BC00050E1CB /* Gradients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradients.swift; sourceTree = "<group>"; };
+		AC5B74B02BC53CA90050E1CB /* Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
+		AC5B74B22BC53EEA0050E1CB /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		AC5B74B42BC5525A0050E1CB /* ProfileControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileControls.swift; sourceTree = "<group>"; };
+		AC5B74B72BC572440050E1CB /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		AC5B74B92BC572610050E1CB /* Watchlists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Watchlists.swift; sourceTree = "<group>"; };
+		AC5B74BB2BC572720050E1CB /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
+		AC5B74BD2BC572870050E1CB /* Shows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shows.swift; sourceTree = "<group>"; };
+		AC5B74BF2BC573110050E1CB /* Follows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follows.swift; sourceTree = "<group>"; };
+		AC5B74C12BC5B13B0050E1CB /* Follow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
+		AC5B74C32BC5F9430050E1CB /* Profiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profiles.swift; sourceTree = "<group>"; };
 		AC5DDAE02B9A52FE003F466B /* MovieNetworkApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieNetworkApp.swift; sourceTree = "<group>"; };
 		AC5DDAEE2B9A5338003F466B /* Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		AC5DDAEF2B9A5338003F466B /* Buttons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
@@ -238,7 +265,6 @@
 		AC69740E2B9C93A600F9D7DD /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		AC6974112B9C9E1000F9D7DD /* ShowToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowToolbar.swift; sourceTree = "<group>"; };
 		AC6974132B9CBD9800F9D7DD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		AC6974162B9CED8900F9D7DD /* ProfileToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToolbar.swift; sourceTree = "<group>"; };
 		AC6974182B9D0D7A00F9D7DD /* PersonCredits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCredits.swift; sourceTree = "<group>"; };
 		AC69741A2B9D190000F9D7DD /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		AC69741C2B9D19A500F9D7DD /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
@@ -309,6 +335,8 @@
 		AC2798AF2BA5D5B200B599D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AC5B74A92BC3F7010050E1CB /* User.swift */,
+				AC5B74C12BC5B13B0050E1CB /* Follow.swift */,
 				AC2798B02BA5DA8600B599D3 /* RemoteWatchlistItem.swift */,
 				AC1FABF12BAB3CD900468934 /* RemoteReview.swift */,
 				AC2798B22BA5DC7C00B599D3 /* RemoteShow.swift */,
@@ -372,6 +400,27 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		AC5B74AB2BC403770050E1CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AC5B74AC2BC403990050E1CB /* AuthUser.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AC5B74B62BC5722F0050E1CB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AC5B74B72BC572440050E1CB /* Auth.swift */,
+				AC5B74C32BC5F9430050E1CB /* Profiles.swift */,
+				AC5B74BF2BC573110050E1CB /* Follows.swift */,
+				AC5B74B92BC572610050E1CB /* Watchlists.swift */,
+				AC5B74BB2BC572720050E1CB /* Reviews.swift */,
+				AC5B74BD2BC572870050E1CB /* Shows.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		AC5DDAE22B9A531F003F466B /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				AC5DDB4C2B9A5615003F466B /* ProfileView.swift */,
+				AC5B74A72BC3EB700050E1CB /* ProfileViewModel.swift */,
 				AC6974152B9CED7E00F9D7DD /* Components */,
 			);
 			path = Profile;
@@ -505,6 +555,7 @@
 				AC5DDAF22B9A5338003F466B /* Posters.swift */,
 				AC5960A82B9B75EC00857FB2 /* Backdrops.swift */,
 				AC5DDAF62B9A5338003F466B /* Thumbnails.swift */,
+				AC5B74B02BC53CA90050E1CB /* Avatar.swift */,
 				AC5DDAF42B9A5338003F466B /* Shadows.swift */,
 			);
 			path = Components;
@@ -542,7 +593,9 @@
 			children = (
 				AC5DDB942B9A5923003F466B /* RemoteDbManager.swift */,
 				AC5DDB8C2B9A58F2003F466B /* SessionManager.swift */,
+				AC5B74B62BC5722F0050E1CB /* Services */,
 				AC2798AF2BA5D5B200B599D3 /* Models */,
+				AC5B74AB2BC403770050E1CB /* Extensions */,
 			);
 			path = RemoteDatabase;
 			sourceTree = "<group>";
@@ -699,6 +752,8 @@
 				AC5960B62B9BDAC400857FB2 /* Dates.swift */,
 				AC5DDB372B9A53CD003F466B /* Arrays.swift */,
 				AC5DDB382B9A53CD003F466B /* Sequences.swift */,
+				AC5B74B22BC53EEA0050E1CB /* Colors.swift */,
+				AC5B74AE2BC53BC00050E1CB /* Gradients.swift */,
 				AC5DDB392B9A53CD003F466B /* UIKit.swift */,
 				AC6974132B9CBD9800F9D7DD /* Config.swift */,
 				AC08FD472BACDF2800FDC0B7 /* Env.swift */,
@@ -710,7 +765,7 @@
 			isa = PBXGroup;
 			children = (
 				AC5DDB4D2B9A5615003F466B /* ProfileTrigger.swift */,
-				AC6974162B9CED8900F9D7DD /* ProfileToolbar.swift */,
+				AC5B74B42BC5525A0050E1CB /* ProfileControls.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -854,7 +909,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC5DDB792B9A584A003F466B /* Movie.swift in Sources */,
+				AC5B74B32BC53EEA0050E1CB /* Colors.swift in Sources */,
 				AC5DDB492B9A55A6003F466B /* FeedView.swift in Sources */,
+				AC5B74A82BC3EB700050E1CB /* ProfileViewModel.swift in Sources */,
 				AC5960C12B9BF27D00857FB2 /* ShowGenres.swift in Sources */,
 				AC5DDB062B9A534F003F466B /* ShowType.swift in Sources */,
 				AC6974142B9CBD9800F9D7DD /* Config.swift in Sources */,
@@ -862,6 +919,7 @@
 				AC5960AE2B9B8B6700857FB2 /* Videos.swift in Sources */,
 				ACB232E72BAF1F4100A964A5 /* WatchlistViewModel.swift in Sources */,
 				AC7D4EFC2BA22F9500029841 /* MediaRow.swift in Sources */,
+				AC5B74AD2BC403990050E1CB /* AuthUser.swift in Sources */,
 				AC8F58A12BB1C9DD004F3F80 /* WatchlistItemCard.swift in Sources */,
 				AC5DDB952B9A5923003F466B /* RemoteDbManager.swift in Sources */,
 				AC1FABEE2BA99A5500468934 /* ShowReviewForm.swift in Sources */,
@@ -870,6 +928,7 @@
 				AC1FAC042BAB88DD00468934 /* ShowRecommendations.swift in Sources */,
 				AC5960B32B9BD07100857FB2 /* TMDbSampleData.swift in Sources */,
 				AC5DDB432B9A556A003F466B /* DiscoverFilters.swift in Sources */,
+				AC5B74C02BC573110050E1CB /* Follows.swift in Sources */,
 				AC5DDB892B9A58AF003F466B /* Profilable.swift in Sources */,
 				ACD8AD4C2B9FA36A00470DA1 /* PersonService.swift in Sources */,
 				AC5DDB7D2B9A5867003F466B /* Network.swift in Sources */,
@@ -894,14 +953,19 @@
 				AC5DDB462B9A557E003F466B /* DiscoverViewModel.swift in Sources */,
 				AC5DDAFE2B9A5338003F466B /* Shadows.swift in Sources */,
 				AC5DDBA52B9A59AC003F466B /* TrendingService.swift in Sources */,
+				AC5B74C42BC5F9430050E1CB /* Profiles.swift in Sources */,
 				AC5960A32B9B651600857FB2 /* VideoMetadata.swift in Sources */,
+				AC5B74BA2BC572610050E1CB /* Watchlists.swift in Sources */,
+				AC5B74B82BC572440050E1CB /* Auth.swift in Sources */,
 				AC5960A12B9B64E300857FB2 /* VideoType.swift in Sources */,
 				AC5DDAFB2B9A5338003F466B /* Labels.swift in Sources */,
 				AC5DDB9F2B9A5948003F466B /* URLRequests.swift in Sources */,
 				AC5DDB5D2B9A565D003F466B /* AppleSignInViewModel.swift in Sources */,
 				AC5DDB3C2B9A53CD003F466B /* Sequences.swift in Sources */,
+				AC5B74AF2BC53BC00050E1CB /* Gradients.swift in Sources */,
 				AC5DDAFF2B9A5338003F466B /* Texts.swift in Sources */,
 				AC5DDB662B9A5791003F466B /* CastMember.swift in Sources */,
+				AC5B74BE2BC572870050E1CB /* Shows.swift in Sources */,
 				AC69740F2B9C93A600F9D7DD /* Tag.swift in Sources */,
 				AC5960A72B9B674500857FB2 /* ShowCredits.swift in Sources */,
 				AC5DDBA72B9A59E8003F466B /* AppView.swift in Sources */,
@@ -912,9 +976,11 @@
 				AC5DDB752B9A5832003F466B /* ImageURL.swift in Sources */,
 				AC5DDAFA2B9A5338003F466B /* Images.swift in Sources */,
 				AC7D4EF12BA1B5D500029841 /* SearchView.swift in Sources */,
+				AC5B74C22BC5B13B0050E1CB /* Follow.swift in Sources */,
 				AC5DDB922B9A591C003F466B /* SpokenLanguage.swift in Sources */,
 				AC5DDB6F2B9A57DF003F466B /* Genres.swift in Sources */,
 				AC8F58A92BB1E40F004F3F80 /* WatchlistsControls.swift in Sources */,
+				AC5B74B52BC5525A0050E1CB /* ProfileControls.swift in Sources */,
 				AC1FAC082BAB896100468934 /* Dividers.swift in Sources */,
 				AC7C4F2E2BB0D84A00F78598 /* Showable.swift in Sources */,
 				AC5DDB4B2B9A55E6003F466B /* WatchlisthView.swift in Sources */,
@@ -931,14 +997,15 @@
 				AC5DDB572B9A563E003F466B /* PersonView.swift in Sources */,
 				AC5960B92B9BDAFD00857FB2 /* Numbers.swift in Sources */,
 				AC7D4EF62BA1FB0700029841 /* SearchViewModel.swift in Sources */,
+				AC5B74BC2BC572720050E1CB /* Reviews.swift in Sources */,
 				AC5DDB862B9A58A2003F466B /* ProductionCompany.swift in Sources */,
 				AC6974192B9D0D7A00F9D7DD /* PersonCredits.swift in Sources */,
 				AC5DDAFC2B9A5338003F466B /* Posters.swift in Sources */,
 				AC5960B72B9BDAC400857FB2 /* Dates.swift in Sources */,
-				AC6974172B9CED8900F9D7DD /* ProfileToolbar.swift in Sources */,
 				AC5DDB632B9A5785003F466B /* Backdropable.swift in Sources */,
 				AC5DDB3D2B9A53CD003F466B /* UIKit.swift in Sources */,
 				AC5DDB5C2B9A565D003F466B /* AppleSignInButton.swift in Sources */,
+				AC5B74B12BC53CA90050E1CB /* Avatar.swift in Sources */,
 				AC5DDB002B9A5338003F466B /* Thumbnails.swift in Sources */,
 				AC5DDB692B9A579D003F466B /* Stack.swift in Sources */,
 				AC8F58AB2BB1E688004F3F80 /* WatchlistFilters.swift in Sources */,
@@ -956,6 +1023,7 @@
 				AC5DDB872B9A58A2003F466B /* ProductionCountry.swift in Sources */,
 				AC5960B12B9B8C6500857FB2 /* ShowTrailer.swift in Sources */,
 				ACD8AD462B9FA00200470DA1 /* DiscoverService.swift in Sources */,
+				AC5B74AA2BC3F7010050E1CB /* User.swift in Sources */,
 				AC1FABF62BAB74F900468934 /* LocalWatchlistItem.swift in Sources */,
 				AC1FABFA2BAB753100468934 /* LocalReview.swift in Sources */,
 				AC5DDB832B9A5889003F466B /* Posterable.swift in Sources */,

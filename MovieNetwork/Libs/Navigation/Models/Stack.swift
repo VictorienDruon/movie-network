@@ -12,4 +12,5 @@ typealias Stack = [Destination]
 enum Destination: Hashable {
     case show(Show)
     case person(Person)
+    case profile(User, User)
 }

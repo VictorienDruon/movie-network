@@ -8,43 +8,47 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var session: SessionManager
+    @StateObject private var viewModel: ProfileViewModel
+
+    init(for user: User, with currentUser: User) {
+        _viewModel = StateObject(wrappedValue: ProfileViewModel(for: user, with: currentUser))
+    }
 
     var body: some View {
-        if !session.isAuthenticated {
-            AuthRequiredView(message: "You need to sign up to have a profile.")
-        }
+        ScrollView {
+            LazyVStack(spacing: 16) {
+                Avatar(id: viewModel.user.id, url: viewModel.user.avatarUrl, size: .medium)
 
-        else {
-            List {
-                Button("Dis-onboard") {
-                    UserDefaults.standard.set(false, forKey: "isOnBoarded")
+                Title2(viewModel.user.name ?? "Unknown")
+
+                HStack {
+                    Headline("\(viewModel.followingCount) Following")
+                    Headline("•")
+                    Headline("\(viewModel.followersCount) Followers")
                 }
 
-                Button("Sign out") {
-                    Task {
-                        try? await RemoteDbManager.shared.signOut()
-                    }
-                }
+                ProfileControls()
             }
         }
+        .contentMargins(.vertical, 16)
+        .scrollIndicators(.hidden)
+        .navigationTitle(viewModel.user.name ?? "Unknown")
+        .navigationBarTitleDisplayMode(.inline)
+        .environmentObject(viewModel)
     }
 }
 
 #Preview {
-    @StateObject var session = SessionManager()
     @StateObject var navigation = NavigationManager()
+    let user = User(id: UUID(), name: "John Doe", avatarUrl: nil)
+    let currentUser = User(id: UUID(), name: "Lorem Ipsum", avatarUrl: nil)
 
     return
         NavigationStack(path: $navigation.profileStack) {
-            ProfileView()
-                .navigationTitle("Profile")
-                .navigationBarTitleDisplayMode(.inline)
+            ProfileView(for: user, with: currentUser)
                 .navigationDestination(
                     for: Destination.self,
                     destination: navigation.routeTo
                 )
-                .toolbar { ProfileToolbar() }
         }
-        .environmentObject(session)
 }

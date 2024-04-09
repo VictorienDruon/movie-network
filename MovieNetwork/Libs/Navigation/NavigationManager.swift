@@ -54,6 +54,8 @@ final class NavigationManager: ObservableObject {
             ShowView(for: show)
         case let .person(person):
             PersonView(for: person)
+        case let .profile(user, currentUser):
+            ProfileView(for: user, with: currentUser)
         }
     }
 
@@ -85,6 +87,15 @@ final class NavigationManager: ObservableObject {
                 let person = try await TMDbManager.shared.person(for: id)
                 withActiveStack { stack in
                     stack.append(.person(person))
+                }
+            case "user":
+                guard
+                    let id = UUID(uuidString: parameter),
+                    let currentUser = await RemoteDbManager.shared.currentSession()?.user.format(),
+                    let user = try await RemoteDbManager.shared.getUser(id)
+                else { return }
+                withActiveStack { stack in
+                    stack.append(.profile(user, currentUser))
                 }
             default:
                 return

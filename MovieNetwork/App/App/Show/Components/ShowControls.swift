@@ -12,7 +12,7 @@ struct ShowControls: View {
 
     var body: some View {
         HStack {
-            if viewModel.inWatchlist {
+            if viewModel.isInWatchlist {
                 Button("Remove", systemImage: "trash") {
                     viewModel.removeShowFromWatchlist()
                 }
@@ -21,10 +21,10 @@ struct ShowControls: View {
             }
 
             Button(
-                viewModel.inWatchlist ? "Review" : "Add to watchlist",
-                systemImage: viewModel.inWatchlist ? "star.fill" : "plus"
+                viewModel.isInWatchlist ? "Review" : "Add to watchlist",
+                systemImage: viewModel.isInWatchlist ? "star.fill" : "plus"
             ) {
-                if viewModel.inWatchlist {
+                if viewModel.isInWatchlist {
                     viewModel.showingReviewForm = true
                 } else {
                     viewModel.addShowToWatchlist()
@@ -34,8 +34,8 @@ struct ShowControls: View {
             .contentTransition(.numericText())
         }
         .padding(.horizontal)
-        .animation(.bouncy, value: viewModel.inWatchlist)
-        .sensoryFeedback(.success, trigger: viewModel.triggerWatchlistControlsHaptic)
+        .animation(.bouncy, value: viewModel.isInWatchlist)
+        .sensoryFeedback(.success, trigger: viewModel.triggerControlsHaptic)
     }
 }
 

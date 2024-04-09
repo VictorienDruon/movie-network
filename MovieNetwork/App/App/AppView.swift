@@ -36,14 +36,17 @@ struct AppView: View {
         }
         .sheet(isPresented: $navigation.showingProfile) {
             NavigationStack(path: $navigation.profileStack) {
-                ProfileView()
-                    .navigationTitle("Profile")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationDestination(
-                        for: Destination.self,
-                        destination: navigation.routeTo
-                    )
-                    .toolbar { ProfileToolbar() }
+                ZStack {
+                    if let user = session.user {
+                        ProfileView(for: user, with: user)
+                    } else {
+                        AuthRequiredView(message: "You need to sign up to have a profile.")
+                    }
+                }
+                .navigationDestination(
+                    for: Destination.self,
+                    destination: navigation.routeTo
+                )
             }
         }
         .sheet(isPresented: $navigation.showingSearch) {

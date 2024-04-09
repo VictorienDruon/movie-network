@@ -13,7 +13,7 @@ final class SessionManager: ObservableObject {
     @Published var session: Session? = nil
 
     var user: User? {
-        session?.user
+        session?.user.format()
     }
 
     var isAuthenticated: Bool {

@@ -10,8 +10,7 @@ import Foundation
 @MainActor
 final class ShowViewModel: ObservableObject {
     @Published var show: Show
-    @Published var inWatchlist = false
-    @Published var isDisabled = true
+    @Published var isInWatchlist = false
 
     @Published var rating: Int?
     @Published var comment = ""
@@ -19,7 +18,9 @@ final class ShowViewModel: ObservableObject {
     @Published var showingTrailer = false
     @Published var showingReviewForm = false
 
-    @Published var triggerWatchlistControlsHaptic = 0
+    @Published var isDisabled = true
+
+    @Published var triggerControlsHaptic = 0
     @Published var triggerReviewFormHaptic = 0
 
     var cast: [CastMember]? {
@@ -39,8 +40,9 @@ final class ShowViewModel: ObservableObject {
         Task {
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.getShow() }
-                group.addTask { await self.isInWatchlist() }
+                group.addTask { await self.isInUserWatchlist() }
             }
+            isDisabled = false
         }
     }
 
@@ -63,14 +65,13 @@ final class ShowViewModel: ObservableObject {
         }
     }
 
-    func isInWatchlist() {
+    func isInUserWatchlist() {
         Task {
             if let user = await RemoteDbManager.shared.currentSession()?.user {
-                inWatchlist = try await RemoteDbManager.shared.getWatchlistItem(show.key, of: user.id) != nil
+                isInWatchlist = try await RemoteDbManager.shared.getWatchlistItem(show.key, of: user.id) != nil
             } else {
-                inWatchlist = try LocalDbManager.shared.getWatchlistItem(show.key) != nil
+                isInWatchlist = try LocalDbManager.shared.getWatchlistItem(show.key) != nil
             }
-            isDisabled = false
         }
     }
 
@@ -83,8 +84,8 @@ final class ShowViewModel: ObservableObject {
                 } else {
                     try LocalDbManager.shared.addToWatchlist(show)
                 }
-                inWatchlist = true
-                triggerWatchlistControlsHaptic += 1
+                isInWatchlist = true
+                triggerControlsHaptic += 1
                 isDisabled = false
             }
         }
@@ -99,8 +100,8 @@ final class ShowViewModel: ObservableObject {
                 } else {
                     try LocalDbManager.shared.removeFromWatchlist(show.key)
                 }
-                inWatchlist = false
-                triggerWatchlistControlsHaptic += 1
+                isInWatchlist = false
+                triggerControlsHaptic += 1
                 isDisabled = false
             }
         }
@@ -117,8 +118,8 @@ final class ShowViewModel: ObservableObject {
                     try LocalDbManager.shared.createReview(for: show, rating: rating, comment: comment)
                     try LocalDbManager.shared.removeFromWatchlist(show.key)
                 }
-                inWatchlist = false
-                triggerWatchlistControlsHaptic += 1
+                isInWatchlist = false
+                triggerControlsHaptic += 1
                 showingReviewForm = false
                 refreshReview()
                 isDisabled = false

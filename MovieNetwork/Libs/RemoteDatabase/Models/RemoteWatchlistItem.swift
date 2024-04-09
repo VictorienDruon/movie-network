@@ -12,16 +12,6 @@ struct RemoteWatchlistItem: Codable {
     let showId: String
     let addedAt: Date
 
-    init(
-        userId: UUID,
-        showId: String,
-        addedAt: Date
-    ) {
-        self.userId = userId
-        self.showId = showId
-        self.addedAt = addedAt
-    }
-
     private enum CodingKeys: String, CodingKey {
         case userId = "user_id"
         case showId = "show_id"
