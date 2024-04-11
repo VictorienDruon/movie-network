@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
 
-    init(for user: User, with currentUser: User) {
+    init(of user: User, for currentUser: User) {
         _viewModel = StateObject(wrappedValue: ProfileViewModel(for: user, with: currentUser))
     }
 
@@ -19,7 +19,7 @@ struct ProfileView: View {
             LazyVStack(spacing: 16) {
                 Avatar(id: viewModel.user.id, url: viewModel.user.avatarUrl, size: .medium)
 
-                Title2(viewModel.user.name ?? "Unknown")
+                Title2(viewModel.user.name)
 
                 HStack {
                     Headline("\(viewModel.followingCount) Following")
@@ -32,20 +32,19 @@ struct ProfileView: View {
         }
         .contentMargins(.vertical, 16)
         .scrollIndicators(.hidden)
-        .navigationTitle(viewModel.user.name ?? "Unknown")
+        .navigationTitle(viewModel.user.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar { ProfileToolbar() }
         .environmentObject(viewModel)
     }
 }
 
 #Preview {
     @StateObject var navigation = NavigationManager()
-    let user = User(id: UUID(), name: "John Doe", avatarUrl: nil)
-    let currentUser = User(id: UUID(), name: "Lorem Ipsum", avatarUrl: nil)
 
     return
         NavigationStack(path: $navigation.profileStack) {
-            ProfileView(for: user, with: currentUser)
+            ProfileView(of: sampleUser1, for: sampleUser2)
                 .navigationDestination(
                     for: Destination.self,
                     destination: navigation.routeTo

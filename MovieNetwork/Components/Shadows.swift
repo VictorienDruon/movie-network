@@ -23,10 +23,12 @@ extension View {
 }
 
 enum ShadowSize {
-    case small, medium, large
+    case extraSmall, small, medium, large
 
     var config: ShadowConfig {
         switch self {
+        case .extraSmall:
+            ShadowConfig(radius: 4, y: 2)
         case .small:
             ShadowConfig(radius: 6, y: 4)
         case .medium:

@@ -42,6 +42,7 @@ struct TextBlock: View {
                                 Button("OK") {
                                     showingSheet = false
                                 }
+                                .fontDesign(.rounded)
                             }
                         }
                 }

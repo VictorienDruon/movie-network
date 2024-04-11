@@ -18,25 +18,25 @@ struct DiscoverView: View {
                     DiscoverFilters()
 
                     if !viewModel.filteredTrendingShows.isEmpty {
-                        Section("Trending") {
+                        HeaderSection("Trending") {
                             ShowPosters(shows: viewModel.filteredTrendingShows)
                         }
                     }
 
                     if !viewModel.trendingPeople.isEmpty {
-                        Section("Stars") {
+                        HeaderSection("Stars") {
                             PersonThumbnails(people: viewModel.trendingPeople)
                         }
                     }
 
                     if !viewModel.nowPlayingShows.isEmpty {
-                        Section("Now Playing") {
+                        HeaderSection("Now Playing") {
                             ShowPosters(shows: viewModel.nowPlayingShows)
                         }
                     }
 
                     if !viewModel.upcomingShows.isEmpty {
-                        Section("Upcoming") {
+                        HeaderSection("Upcoming") {
                             ShowPosters(shows: viewModel.upcomingShows)
                         }
                     }
@@ -48,7 +48,7 @@ struct DiscoverView: View {
             .environmentObject(viewModel)
 
             Button("Search", systemImage: "magnifyingglass") {
-                navigation.showingSearch = true
+                navigation.showingMediaSearch = true
             }
             .labelStyle(LabelLayout(.left, .medium))
             .buttonStyle(StyledButton(.secondaryOutline, .medium))
@@ -63,14 +63,17 @@ struct DiscoverView: View {
     return
         TabView {
             NavigationStack(path: $navigation.discoverStack) {
-                Tab.discover.view
-                    .navigationTitle(Tab.discover.name)
+                DiscoverView()
+                    .navigationTitle("Discover")
                     .navigationBarTitleDisplayMode(.large)
-                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+                    .navigationDestination(
+                        for: Destination.self,
+                        destination: navigation.routeTo
+                    )
                     .toolbar { ProfileTrigger() }
             }
             .tag(Tab.discover)
-            .tabItem { Image(systemName: Tab.discover.icon) }
+            .tabItem { Image(systemName: "sparkles") }
         }
         .environmentObject(navigation)
 }

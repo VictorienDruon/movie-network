@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct ProfileTrigger: ToolbarContent {
+    @EnvironmentObject var session: SessionManager
     @EnvironmentObject var navigation: NavigationManager
 
     var body: some ToolbarContent {
         ToolbarItem {
-            Button("Profile", systemImage: "person.crop.circle") {
+            ZStack {
+                if let user = session.user {
+                    Avatar(id: user.id, url: user.avatarUrl, size: .extraSmall)
+                } else {
+                    Image(systemName: "person.crop.circle")
+                        .foregroundStyle(.accent9)
+                }
+            }
+            .onTapGesture {
                 navigation.showingProfile = true
             }
-            .labelStyle(.iconOnly)
         }
     }
 }
@@ -26,5 +34,7 @@ struct ProfileTrigger: ToolbarContent {
             .navigationTitle("Test")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ProfileTrigger() }
+            .environmentObject(SessionManager())
+            .environmentObject(NavigationManager())
     }
 }

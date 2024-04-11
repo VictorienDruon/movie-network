@@ -13,51 +13,95 @@ struct AppView: View {
 
     var body: some View {
         TabView(selection: $navigation.activeTab) {
-            ForEach(Tab.allCases) { tab in
-                let path = switch tab {
-                case .discover: $navigation.discoverStack
-                case .watchlist: $navigation.watchlistStack
-                case .feed: $navigation.discoverStack
-                }
-
-                NavigationStack(path: path) {
-                    tab.view
-                        .navigationTitle(tab.name)
-                        .navigationBarTitleDisplayMode(.large)
-                        .navigationDestination(
-                            for: Destination.self,
-                            destination: navigation.routeTo
-                        )
-                        .toolbar { ProfileTrigger() }
-                }
-                .tag(tab)
-                .tabItem { Image(systemName: tab.icon) }
+            NavigationStack(path: $navigation.discoverStack) {
+                DiscoverView()
+                    .navigationTitle("Discover")
+                    .navigationBarTitleDisplayMode(.large)
+                    .navigationDestination(
+                        for: Destination.self,
+                        destination: navigation.routeTo
+                    )
+                    .toolbar { ProfileTrigger() }
             }
+            .tag(Tab.discover)
+            .tabItem { Image(systemName: "sparkles") }
+
+            NavigationStack(path: $navigation.watchlistStack) {
+                WatchlisthView()
+                    .navigationTitle("Watchlist")
+                    .navigationBarTitleDisplayMode(.large)
+                    .navigationDestination(
+                        for: Destination.self,
+                        destination: navigation.routeTo
+                    )
+                    .toolbar { ProfileTrigger() }
+            }
+            .tag(Tab.watchlist)
+            .tabItem { Image(systemName: "sparkles.tv.fill") }
+
+            NavigationStack(path: $navigation.feedStack) {
+                ZStack {
+                    if let user = session.user {
+                        FeedView(for: user)
+                    } else {
+                        AuthRequiredView(message: "You need to sign up to see the feed.")
+                    }
+                }
+                .navigationTitle("Feed")
+                .navigationBarTitleDisplayMode(.large)
+                .navigationDestination(
+                    for: Destination.self,
+                    destination: navigation.routeTo
+                )
+                .toolbar { ProfileTrigger() }
+            }
+            .tag(Tab.feed)
+            .tabItem { Image(systemName: "bolt.fill") }
         }
         .sheet(isPresented: $navigation.showingProfile) {
             NavigationStack(path: $navigation.profileStack) {
                 ZStack {
                     if let user = session.user {
-                        ProfileView(for: user, with: user)
+                        ProfileView(of: user, for: user)
                     } else {
                         AuthRequiredView(message: "You need to sign up to have a profile.")
                     }
                 }
+                .navigationTitle("Profile")
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationDestination(
                     for: Destination.self,
                     destination: navigation.routeTo
                 )
             }
         }
-        .sheet(isPresented: $navigation.showingSearch) {
-            NavigationStack(path: $navigation.searchStack) {
-                SearchView()
+        .sheet(isPresented: $navigation.showingMediaSearch) {
+            NavigationStack(path: $navigation.mediaSearchStack) {
+                MediaSearchView()
                     .navigationTitle("Search")
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationDestination(
                         for: Destination.self,
                         destination: navigation.routeTo
                     )
+            }
+            .presentationBackground(.thinMaterial)
+        }
+        .sheet(isPresented: $navigation.showingUserSearch) {
+            NavigationStack(path: $navigation.userSearchStack) {
+                ZStack {
+                    if let user = session.user {
+                        UserSearchView(for: user)
+                    } else {
+                        AuthRequiredView(message: "You need to sign up to search other profiles.")
+                    }
+                }
+                .navigationTitle("Search")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(
+                    for: Destination.self,
+                    destination: navigation.routeTo
+                )
             }
             .presentationBackground(.thinMaterial)
         }

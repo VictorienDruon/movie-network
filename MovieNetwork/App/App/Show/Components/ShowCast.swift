@@ -12,7 +12,7 @@ struct ShowCast: View {
 
     var body: some View {
         if let cast = viewModel.cast, !cast.isEmpty {
-            Section("Cast") {
+            HeaderSection("Cast") {
                 CastThumbnails(cast: cast)
             }
         }

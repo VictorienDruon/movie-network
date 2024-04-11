@@ -19,7 +19,7 @@ struct PersonView: View {
             LazyVStack(spacing: 32) {
                 ForEach(viewModel.filmography) { section in
                     if let shows = section.shows, !shows.isEmpty {
-                        Section(section.name) {
+                        HeaderSection(section.name) {
                             ShowPosters(shows: shows, variant: .bottomTitle, size: .small)
                         }
                     }

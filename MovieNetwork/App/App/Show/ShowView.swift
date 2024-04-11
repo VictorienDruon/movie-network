@@ -37,9 +37,7 @@ struct ShowView: View {
         .sheet(isPresented: $viewModel.showingReviewForm) {
             ShowReviewForm()
         }
-        .toolbar {
-            ShowToolbar()
-        }
+        .toolbar { ShowToolbar() }
         .environmentObject(viewModel)
     }
 }

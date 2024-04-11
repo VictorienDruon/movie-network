@@ -12,7 +12,7 @@ struct ShowCrew: View {
 
     var body: some View {
         if let crew = viewModel.crew, !crew.isEmpty {
-            Section("Crew") {
+            HeaderSection("Crew") {
                 CrewThumbnails(crew: crew)
             }
         }

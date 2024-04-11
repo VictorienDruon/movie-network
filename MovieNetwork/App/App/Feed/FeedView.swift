@@ -8,34 +8,49 @@
 import SwiftUI
 
 struct FeedView: View {
-    @EnvironmentObject var session: SessionManager
+    @EnvironmentObject var navigation: NavigationManager
+
+    var currentUser: User
+
+    init(for currentUser: User) {
+        self.currentUser = currentUser
+    }
 
     var body: some View {
-        if !session.isAuthenticated {
-            AuthRequiredView(message: "You need to sign up to access the Feed.")
-        }
+        ZStack(alignment: .bottom) {
+            ScrollView {}
+                .contentMargins(.top, 16)
+                .contentMargins(.bottom, 96)
+                .scrollIndicators(.hidden)
 
-        else {
-            Title3("Feed")
+            Button("Search", systemImage: "magnifyingglass") {
+                navigation.showingUserSearch = true
+            }
+            .labelStyle(LabelLayout(.left, .medium))
+            .buttonStyle(StyledButton(.secondaryOutline, .medium))
+            .padding()
         }
     }
 }
 
 #Preview {
-    @StateObject var session = SessionManager()
     @StateObject var navigation = NavigationManager()
+    let currentUser = User(id: UUID(), name: "Lorem Ipsum", avatarUrl: nil)
 
     return
         TabView {
             NavigationStack(path: $navigation.feedStack) {
-                Tab.feed.view
-                    .navigationTitle(Tab.feed.name)
+                FeedView(for: currentUser)
+                    .navigationTitle("Feed")
                     .navigationBarTitleDisplayMode(.large)
-                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+                    .navigationDestination(
+                        for: Destination.self,
+                        destination: navigation.routeTo
+                    )
                     .toolbar { ProfileTrigger() }
             }
             .tag(Tab.feed)
-            .tabItem { Image(systemName: Tab.feed.icon) }
+            .tabItem { Image(systemName: "bolt.fill") }
         }
-        .environmentObject(session)
+        .environmentObject(navigation)
 }

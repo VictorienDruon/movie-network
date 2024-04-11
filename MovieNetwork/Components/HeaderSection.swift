@@ -1,5 +1,5 @@
 //
-//  Section.swift
+//  HeaderSection.swift
 //  MovieNetwork
 //
 //  Created by Victorien Druon on 07/03/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Section<Content: View>: View {
+struct HeaderSection<Content: View>: View {
     var title: String
     @ViewBuilder var content: Content
 

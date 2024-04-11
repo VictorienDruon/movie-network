@@ -38,9 +38,6 @@ struct ProfileControls: View {
 }
 
 #Preview {
-    let user = User(id: UUID(), name: "John Doe", avatarUrl: nil)
-    let currentUser = User(id: UUID(), name: "Lorem Ipsum", avatarUrl: nil)
-
-    return ProfileControls()
-        .environmentObject(ProfileViewModel(for: user, with: currentUser))
+    ProfileControls()
+        .environmentObject(ProfileViewModel(for: sampleUser1, with: sampleUser2))
 }

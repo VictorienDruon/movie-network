@@ -231,10 +231,18 @@ enum ThumbnailVariant {
 }
 
 enum ThumbnailSize {
-    case small, medium, large
+    case extraSmall, small, medium, large
 
     var config: ThumbnailConfig {
         switch self {
+        case .extraSmall:
+            ThumbnailConfig(
+                width: 32,
+                nameFontSize: 8,
+                descriptionFontSize: 6,
+                shadowSize: .extraSmall,
+                imageSize: .w185
+            )
         case .small:
             ThumbnailConfig(
                 width: 64,

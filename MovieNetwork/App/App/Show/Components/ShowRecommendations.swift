@@ -12,7 +12,7 @@ struct ShowRecommendations: View {
 
     var body: some View {
         if let recommendations = viewModel.show.recommendations, !recommendations.isEmpty {
-            Section("Recommendations") {
+            HeaderSection("Recommendations") {
                 ShowPosters(shows: recommendations, variant: .bottomTitle, size: .small)
             }
         }

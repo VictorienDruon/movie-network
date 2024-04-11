@@ -8,38 +8,6 @@
 import Foundation
 import SwiftUI
 
-enum Tab: CaseIterable, Identifiable {
+enum Tab {
     case discover, watchlist, feed
-
-    var id: Self {
-        return self
-    }
-
-    var name: String {
-        switch self {
-        case .discover: "Discover"
-        case .watchlist: "Watchlist"
-        case .feed: "Feed"
-        }
-    }
-
-    var icon: String {
-        switch self {
-        case .discover: "sparkles"
-        case .watchlist: "sparkles.tv.fill"
-        case .feed: "bolt.fill"
-        }
-    }
-
-    @ViewBuilder
-    var view: some View {
-        switch self {
-        case .discover:
-            DiscoverView()
-        case .watchlist:
-            WatchlisthView()
-        case .feed:
-            FeedView()
-        }
-    }
 }

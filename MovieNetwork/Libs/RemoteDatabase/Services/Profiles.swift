@@ -18,4 +18,13 @@ extension RemoteDbManager {
             .value
         return users.first
     }
+
+    func searchUsers(_ query: String) async throws -> [User] {
+        return try await database
+            .from("profiles")
+            .select()
+            .ilike("name", value: "%\(query)%")
+            .execute()
+            .value
+    }
 }

@@ -44,13 +44,16 @@ struct WatchlisthView: View {
 //    return
 //        TabView {
 //            NavigationStack(path: $navigation.watchlistStack) {
-//                Tab.watchlist.view
-//                    .navigationTitle(Tab.watchlist.name)
+//                WatchlisthView()
+//                    .navigationTitle("Watchlist")
 //                    .navigationBarTitleDisplayMode(.large)
-//                    .navigationDestination(for: Destination.self, destination: navigation.routeTo)
+//                    .navigationDestination(
+//                        for: Destination.self,
+//                        destination: navigation.routeTo
+//                    )
 //                    .toolbar { ProfileTrigger() }
 //            }
 //            .tag(Tab.watchlist)
-//            .tabItem { Image(systemName: Tab.watchlist.icon) }
+//            .tabItem { Image(systemName: "sparkles.tv.fill") }
 //        }
 // }
